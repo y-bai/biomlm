@@ -1,0 +1,1415 @@
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+03/23/2024 20:34:59 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1, distributed training: True, 16-bits training: False
+03/23/2024 20:34:59 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1, distributed training: True, 16-bits training: False
+03/23/2024 20:34:59 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1, distributed training: True, 16-bits training: False
+03/23/2024 20:34:59 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1, distributed training: True, 16-bits training: False
+03/23/2024 20:34:59 - INFO - __main__ - Start generate dataset for T2T
+Using custom data configuration complete_seq-9bb2ce8b856455e8
+03/23/2024 20:35:00 - INFO - datasets.builder - Using custom data configuration complete_seq-9bb2ce8b856455e8
+Loading Dataset Infos from /home/share/huadjyin/home/baiyong01/.cache/huggingface/modules/datasets_modules/datasets/_dataset_t2t/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+03/23/2024 20:35:00 - INFO - datasets.info - Loading Dataset Infos from /home/share/huadjyin/home/baiyong01/.cache/huggingface/modules/datasets_modules/datasets/_dataset_t2t/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/huggingface_hub/repocard.py:105: UserWarning: Repo card metadata block was not found. Setting CardData to empty.
+  warnings.warn("Repo card metadata block was not found. Setting CardData to empty.")
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/huggingface_hub/repocard.py:105: UserWarning: Repo card metadata block was not found. Setting CardData to empty.
+  warnings.warn("Repo card metadata block was not found. Setting CardData to empty.")
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/huggingface_hub/repocard.py:105: UserWarning: Repo card metadata block was not found. Setting CardData to empty.
+  warnings.warn("Repo card metadata block was not found. Setting CardData to empty.")
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/huggingface_hub/repocard.py:105: UserWarning: Repo card metadata block was not found. Setting CardData to empty.
+  warnings.warn("Repo card metadata block was not found. Setting CardData to empty.")
+Overwrite dataset info from restored data version if exists.
+03/23/2024 20:35:00 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+03/23/2024 20:35:00 - INFO - datasets.info - Loading Dataset info from /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+Found cached dataset _dataset_t2t (/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a)
+03/23/2024 20:35:00 - INFO - datasets.builder - Found cached dataset _dataset_t2t (/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a)
+Loading Dataset info from /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+03/23/2024 20:35:00 - INFO - datasets.info - Loading Dataset info from /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a
+03/23/2024 20:35:00 - INFO - __main__ - DatasetDict({
+    train: Dataset({
+        features: ['sequence', 'chromosome', 'start_pos', 'end_pos'],
+        num_rows: 21
+    })
+    validation: Dataset({
+        features: ['sequence', 'chromosome', 'start_pos', 'end_pos'],
+        num_rows: 1
+    })
+    test: Dataset({
+        features: ['sequence', 'chromosome', 'start_pos', 'end_pos'],
+        num_rows: 1
+    })
+})
+03/23/2024 20:35:00 - INFO - __main__ - Loading initial tokenizer: BPE
+Process #0 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00000_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #0 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00000_of_00010.arrow
+Process #1 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00001_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #1 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00001_of_00010.arrow
+Process #2 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00002_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #2 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00002_of_00010.arrow
+Process #3 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00003_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #3 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00003_of_00010.arrow
+Process #4 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00004_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #4 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00004_of_00010.arrow
+Process #5 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00005_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #5 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00005_of_00010.arrow
+Process #6 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00006_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #6 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00006_of_00010.arrow
+Process #7 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00007_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #7 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00007_of_00010.arrow
+Process #8 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00008_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #8 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00008_of_00010.arrow
+Process #9 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00009_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Process #9 will write at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_00009_of_00010.arrow
+Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_*_of_00010.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-b562ce0d79523372_*_of_00010.arrow
+Concatenating 10 shards
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Concatenating 10 shards
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:00 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-bd482e34b47d27b9.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-bd482e34b47d27b9.arrow
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:00 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-538af756a3975479.arrow
+03/23/2024 20:35:00 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/datasets/_dataset_t2t/complete_seq-9bb2ce8b856455e8/1.0.0/33f0e592e527265de7249b9277974fb39160bb81983a13b827bafe365b87aa8a/cache-538af756a3975479.arrow
+03/23/2024 20:35:02 - INFO - __main__ - DatasetDict({
+    train: Dataset({
+        features: ['input_ids', 'attention_mask', 'labels'],
+        num_rows: 1160366
+    })
+    validation: Dataset({
+        features: ['input_ids', 'attention_mask', 'labels'],
+        num_rows: 17802
+    })
+    test: Dataset({
+        features: ['input_ids', 'attention_mask', 'labels'],
+        num_rows: 20012
+    })
+})
+03/23/2024 20:35:02 - INFO - __main__ - token length: 512
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - WARNING - datasets.arrow_dataset - num_proc must be <= 1. Reducing num_proc to 1 for dataset of size 1.
+03/23/2024 20:35:02 - INFO - __main__ - ^^^^^^^^tf32 is set: True
+03/23/2024 20:35:02 - INFO - __main__ - model size: 323.1M parameters
+03/23/2024 20:35:02 - WARNING - accelerate.utils.other - Detected kernel version 4.19.90, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+03/23/2024 20:35:03 - INFO - __main__ - >>>>>>>>>>>>>>>>Start training and evaluatoin......
+[INFO|trainer.py:1812] 2024-03-23 20:35:03,435 >> ***** Running training *****
+[INFO|trainer.py:1813] 2024-03-23 20:35:03,435 >>   Num examples = 1,160,366
+[INFO|trainer.py:1814] 2024-03-23 20:35:03,435 >>   Num Epochs = 10
+[INFO|trainer.py:1815] 2024-03-23 20:35:03,435 >>   Instantaneous batch size per device = 32
+[INFO|trainer.py:1818] 2024-03-23 20:35:03,435 >>   Total train batch size (w. parallel, distributed & accumulation) = 256
+[INFO|trainer.py:1819] 2024-03-23 20:35:03,435 >>   Gradient Accumulation steps = 2
+[INFO|trainer.py:1820] 2024-03-23 20:35:03,435 >>   Total optimization steps = 45,330
+[INFO|trainer.py:1821] 2024-03-23 20:35:03,437 >>   Number of trainable parameters = 323,118,080
+{'loss': 6.9919, 'grad_norm': 0.2859657108783722, 'learning_rate': 0.00016666666666666666, 'epoch': 0.04}
+[INFO|trainer.py:3376] 2024-03-23 20:41:04,186 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 20:41:04,186 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 20:41:04,186 >>   Batch size = 64
+{'eval_loss': 6.321193695068359, 'eval_accuracy': 0.05478726526692509, 'eval_runtime': 179.4775, 'eval_samples_per_second': 99.188, 'eval_steps_per_second': 0.39, 'epoch': 0.04}
+{'loss': 5.9353, 'grad_norm': 0.25796204805374146, 'learning_rate': 0.0003333333333333333, 'epoch': 0.09}
+[INFO|trainer.py:3376] 2024-03-23 20:49:59,659 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 20:49:59,659 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 20:49:59,659 >>   Batch size = 64
+{'eval_loss': 5.67515230178833, 'eval_accuracy': 0.11150135728719326, 'eval_runtime': 78.5657, 'eval_samples_per_second': 226.588, 'eval_steps_per_second': 0.891, 'epoch': 0.09}
+{'loss': 5.6323, 'grad_norm': 0.19329579174518585, 'learning_rate': 0.0005, 'epoch': 0.13}
+[INFO|trainer.py:3376] 2024-03-23 20:57:16,563 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 20:57:16,565 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 20:57:16,565 >>   Batch size = 64
+{'eval_loss': 5.380635738372803, 'eval_accuracy': 0.14567417060595447, 'eval_runtime': 78.2346, 'eval_samples_per_second': 227.546, 'eval_steps_per_second': 0.895, 'epoch': 0.13}
+{'loss': 5.5053, 'grad_norm': 0.17855234444141388, 'learning_rate': 0.0004881570943691128, 'epoch': 0.18}
+[INFO|trainer.py:3376] 2024-03-23 21:04:33,676 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:04:33,676 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:04:33,676 >>   Batch size = 64
+{'eval_loss': 5.189774513244629, 'eval_accuracy': 0.17219255251998994, 'eval_runtime': 79.2257, 'eval_samples_per_second': 224.7, 'eval_steps_per_second': 0.884, 'epoch': 0.18}
+{'loss': 5.4262, 'grad_norm': 0.1715293675661087, 'learning_rate': 0.0004537504127867079, 'epoch': 0.22}
+[INFO|trainer.py:3376] 2024-03-23 21:11:50,483 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:11:50,484 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:11:50,484 >>   Batch size = 64
+{'eval_loss': 5.08376407623291, 'eval_accuracy': 0.18538902926758377, 'eval_runtime': 78.4025, 'eval_samples_per_second': 227.059, 'eval_steps_per_second': 0.893, 'epoch': 0.22}
+[INFO|tokenization_utils_base.py:2459] 2024-03-23 21:13:14,138 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-1000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-23 21:13:14,141 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-1000/special_tokens_map.json
+{'loss': 5.3544, 'grad_norm': 0.15345411002635956, 'learning_rate': 0.00040003975591720463, 'epoch': 0.26}
+[INFO|trainer.py:3376] 2024-03-23 21:19:13,956 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:19:13,956 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:19:13,956 >>   Batch size = 64
+{'eval_loss': 5.027897357940674, 'eval_accuracy': 0.19076486271799095, 'eval_runtime': 79.8575, 'eval_samples_per_second': 222.922, 'eval_steps_per_second': 0.877, 'epoch': 0.26}
+{'loss': 5.31, 'grad_norm': 0.17408043146133423, 'learning_rate': 0.000332113845686031, 'epoch': 0.31}
+[INFO|trainer.py:3376] 2024-03-23 21:26:31,390 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:26:31,390 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:26:31,390 >>   Batch size = 64
+{'eval_loss': 4.977948188781738, 'eval_accuracy': 0.19682049401428323, 'eval_runtime': 79.4602, 'eval_samples_per_second': 224.037, 'eval_steps_per_second': 0.881, 'epoch': 0.31}
+{'loss': 5.2753, 'grad_norm': 0.19505053758621216, 'learning_rate': 0.0002564082032512661, 'epoch': 0.35}
+[INFO|trainer.py:3376] 2024-03-23 21:33:48,455 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:33:48,456 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:33:48,456 >>   Batch size = 64
+{'eval_loss': 4.938952445983887, 'eval_accuracy': 0.20129161590718164, 'eval_runtime': 79.3718, 'eval_samples_per_second': 224.286, 'eval_steps_per_second': 0.882, 'epoch': 0.35}
+{'loss': 5.2328, 'grad_norm': 1.811847448348999, 'learning_rate': 0.00018009542684555485, 'epoch': 0.4}
+[INFO|trainer.py:3376] 2024-03-23 21:41:04,893 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:41:04,894 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:41:04,894 >>   Batch size = 64
+{'eval_loss': 4.895867824554443, 'eval_accuracy': 0.2058678294463715, 'eval_runtime': 79.4637, 'eval_samples_per_second': 224.027, 'eval_steps_per_second': 0.881, 'epoch': 0.4}
+{'loss': 5.2094, 'grad_norm': 0.3788144886493683, 'learning_rate': 0.00011040563654412794, 'epoch': 0.44}
+[INFO|trainer.py:3376] 2024-03-23 21:50:01,961 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:50:01,962 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:50:01,962 >>   Batch size = 64
+{'eval_loss': 4.865725517272949, 'eval_accuracy': 0.21025067875352513, 'eval_runtime': 79.7278, 'eval_samples_per_second': 223.285, 'eval_steps_per_second': 0.878, 'epoch': 0.44}
+[INFO|tokenization_utils_base.py:2459] 2024-03-23 21:51:25,472 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-2000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-23 21:51:25,475 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-2000/special_tokens_map.json
+{'loss': 5.1808, 'grad_norm': 0.38516995310783386, 'learning_rate': 5.3941469226794495e-05, 'epoch': 0.49}
+[INFO|trainer.py:3376] 2024-03-23 21:57:25,293 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 21:57:25,293 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 21:57:25,293 >>   Batch size = 64
+{'eval_loss': 4.8455891609191895, 'eval_accuracy': 0.21280200931709997, 'eval_runtime': 79.7286, 'eval_samples_per_second': 223.283, 'eval_steps_per_second': 0.878, 'epoch': 0.49}
+{'loss': 5.1826, 'grad_norm': 0.16915471851825714, 'learning_rate': 1.6052523334080666e-05, 'epoch': 0.53}
+[INFO|trainer.py:3376] 2024-03-23 22:06:23,004 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:06:23,004 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:06:23,004 >>   Batch size = 64
+{'eval_loss': 4.835408687591553, 'eval_accuracy': 0.21398176198237143, 'eval_runtime': 79.6442, 'eval_samples_per_second': 223.519, 'eval_steps_per_second': 0.879, 'epoch': 0.53}
+{'loss': 5.1711, 'grad_norm': 0.17432989180088043, 'learning_rate': 3.285205512763012e-07, 'epoch': 0.57}
+[INFO|trainer.py:3376] 2024-03-23 22:13:41,287 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:13:41,287 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:13:41,287 >>   Batch size = 64
+{'eval_loss': 4.83288049697876, 'eval_accuracy': 0.21436860037494412, 'eval_runtime': 78.3007, 'eval_samples_per_second': 227.354, 'eval_steps_per_second': 0.894, 'epoch': 0.57}
+{'loss': 5.2272, 'grad_norm': 0.21850870549678802, 'learning_rate': 0.0004917407960728463, 'epoch': 0.62}
+[INFO|trainer.py:3376] 2024-03-23 22:20:58,047 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:20:58,047 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:20:58,047 >>   Batch size = 64
+{'eval_loss': 4.920206546783447, 'eval_accuracy': 0.2018707192467875, 'eval_runtime': 79.3655, 'eval_samples_per_second': 224.304, 'eval_steps_per_second': 0.882, 'epoch': 0.62}
+{'loss': 5.2264, 'grad_norm': 0.20207703113555908, 'learning_rate': 0.0004609068052167586, 'epoch': 0.66}
+[INFO|trainer.py:3376] 2024-03-23 22:29:54,686 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:29:54,686 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:29:54,686 >>   Batch size = 64
+{'eval_loss': 4.882020473480225, 'eval_accuracy': 0.20639636567583713, 'eval_runtime': 79.43, 'eval_samples_per_second': 224.122, 'eval_steps_per_second': 0.881, 'epoch': 0.66}
+[INFO|tokenization_utils_base.py:2459] 2024-03-23 22:31:18,409 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-3000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-23 22:31:18,413 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-3000/special_tokens_map.json
+{'loss': 5.1971, 'grad_norm': 0.15678060054779053, 'learning_rate': 0.00041009081923191917, 'epoch': 0.71}
+[INFO|trainer.py:3376] 2024-03-23 22:37:17,833 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:37:17,833 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:37:17,833 >>   Batch size = 64
+{'eval_loss': 4.848188400268555, 'eval_accuracy': 0.21124465225328143, 'eval_runtime': 79.6102, 'eval_samples_per_second': 223.614, 'eval_steps_per_second': 0.879, 'epoch': 0.71}
+{'loss': 5.1721, 'grad_norm': 0.14766472578048706, 'learning_rate': 0.0003441073095307992, 'epoch': 0.75}
+[INFO|trainer.py:3376] 2024-03-23 22:44:35,400 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:44:35,400 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:44:35,400 >>   Batch size = 64
+{'eval_loss': 4.823591232299805, 'eval_accuracy': 0.21382544365493797, 'eval_runtime': 79.6948, 'eval_samples_per_second': 223.377, 'eval_steps_per_second': 0.878, 'epoch': 0.75}
+{'loss': 5.1436, 'grad_norm': 0.15463480353355408, 'learning_rate': 0.0002692077679420798, 'epoch': 0.79}
+[INFO|trainer.py:3376] 2024-03-23 22:51:51,917 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 22:51:51,917 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 22:51:51,917 >>   Batch size = 64
+{'eval_loss': 4.799911975860596, 'eval_accuracy': 0.21659597164812064, 'eval_runtime': 79.3912, 'eval_samples_per_second': 224.231, 'eval_steps_per_second': 0.882, 'epoch': 0.79}
+{'loss': 5.1317, 'grad_norm': 0.8165708780288696, 'learning_rate': 0.00019248842008841633, 'epoch': 0.84}
+[INFO|trainer.py:3376] 2024-03-23 23:00:48,683 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:00:48,683 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:00:48,683 >>   Batch size = 64
+{'eval_loss': 4.773707389831543, 'eval_accuracy': 0.21995263840492868, 'eval_runtime': 79.4047, 'eval_samples_per_second': 224.193, 'eval_steps_per_second': 0.882, 'epoch': 0.84}
+{'loss': 5.0992, 'grad_norm': 0.5759771466255188, 'learning_rate': 0.00012121790594336147, 'epoch': 0.88}
+[INFO|trainer.py:3376] 2024-03-23 23:08:05,145 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:08:05,145 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:08:05,145 >>   Batch size = 64
+{'eval_loss': 4.753551483154297, 'eval_accuracy': 0.22269612398703637, 'eval_runtime': 79.6152, 'eval_samples_per_second': 223.6, 'eval_steps_per_second': 0.879, 'epoch': 0.88}
+[INFO|tokenization_utils_base.py:2459] 2024-03-23 23:11:09,362 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-4000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-23 23:11:09,366 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-4000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-23 23:11:11,789 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-1000] due to args.save_total_limit
+{'loss': 5.1004, 'grad_norm': 0.34195682406425476, 'learning_rate': 6.214862529319312e-05, 'epoch': 0.93}
+[INFO|trainer.py:3376] 2024-03-23 23:17:09,143 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:17:09,143 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:17:09,143 >>   Batch size = 64
+{'eval_loss': 4.739864826202393, 'eval_accuracy': 0.2243259239325558, 'eval_runtime': 79.963, 'eval_samples_per_second': 222.628, 'eval_steps_per_second': 0.875, 'epoch': 0.93}
+{'loss': 5.0825, 'grad_norm': 0.13439086079597473, 'learning_rate': 2.087699346930605e-05, 'epoch': 0.97}
+[INFO|trainer.py:3376] 2024-03-23 23:26:06,289 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:26:06,289 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:26:06,289 >>   Batch size = 64
+{'eval_loss': 4.73073148727417, 'eval_accuracy': 0.22540300337854252, 'eval_runtime': 179.888, 'eval_samples_per_second': 98.962, 'eval_steps_per_second': 0.389, 'epoch': 0.97}
+{'loss': 5.06, 'grad_norm': 0.13848163187503815, 'learning_rate': 1.3132187990842758e-06, 'epoch': 1.01}
+[INFO|trainer.py:3376] 2024-03-23 23:35:03,783 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:35:03,783 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:35:03,783 >>   Batch size = 64
+{'eval_loss': 4.728371620178223, 'eval_accuracy': 0.22577192342556554, 'eval_runtime': 80.403, 'eval_samples_per_second': 221.41, 'eval_steps_per_second': 0.871, 'epoch': 1.01}
+{'loss': 5.0918, 'grad_norm': 0.14151351153850555, 'learning_rate': 0.0004946891632198452, 'epoch': 1.06}
+[INFO|trainer.py:3376] 2024-03-23 23:42:21,022 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:42:21,022 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:42:21,022 >>   Batch size = 64
+{'eval_loss': 4.81583833694458, 'eval_accuracy': 0.21339078636473266, 'eval_runtime': 79.4488, 'eval_samples_per_second': 224.069, 'eval_steps_per_second': 0.881, 'epoch': 1.06}
+{'loss': 5.12, 'grad_norm': 0.32820990681648254, 'learning_rate': 0.0004675088998874675, 'epoch': 1.1}
+[INFO|trainer.py:3376] 2024-03-23 23:49:37,819 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:49:37,819 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:49:37,819 >>   Batch size = 64
+{'eval_loss': 4.80219030380249, 'eval_accuracy': 0.21485646305929698, 'eval_runtime': 79.3676, 'eval_samples_per_second': 224.298, 'eval_steps_per_second': 0.882, 'epoch': 1.1}
+[INFO|tokenization_utils_base.py:2459] 2024-03-23 23:51:00,730 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-5000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-23 23:51:00,734 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-5000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-23 23:51:03,259 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-2000] due to args.save_total_limit
+{'loss': 5.0998, 'grad_norm': 1.0803303718566895, 'learning_rate': 0.0004197211375531268, 'epoch': 1.15}
+[INFO|trainer.py:3376] 2024-03-23 23:56:59,713 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-23 23:56:59,713 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-23 23:56:59,713 >>   Batch size = 64
+{'eval_loss': 4.7765398025512695, 'eval_accuracy': 0.21872880441103498, 'eval_runtime': 79.5148, 'eval_samples_per_second': 223.883, 'eval_steps_per_second': 0.88, 'epoch': 1.15}
+{'loss': 5.0835, 'grad_norm': 0.1881326287984848, 'learning_rate': 0.00035585344389391793, 'epoch': 1.19}
+[INFO|trainer.py:3376] 2024-03-24 00:04:16,223 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:04:16,223 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:04:16,223 >>   Batch size = 64
+{'eval_loss': 4.757239818572998, 'eval_accuracy': 0.22087790659199444, 'eval_runtime': 79.8469, 'eval_samples_per_second': 222.952, 'eval_steps_per_second': 0.877, 'epoch': 1.19}
+{'loss': 5.0739, 'grad_norm': 0.1274961233139038, 'learning_rate': 0.00028195685146078874, 'epoch': 1.24}
+[INFO|trainer.py:3376] 2024-03-24 00:11:33,485 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:11:33,485 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:11:33,486 >>   Batch size = 64
+{'eval_loss': 4.7334184646606445, 'eval_accuracy': 0.22400064550015378, 'eval_runtime': 79.3293, 'eval_samples_per_second': 224.406, 'eval_steps_per_second': 0.882, 'epoch': 1.24}
+{'loss': 5.0721, 'grad_norm': 0.2214655876159668, 'learning_rate': 0.00020503256321877602, 'epoch': 1.28}
+[INFO|trainer.py:3376] 2024-03-24 00:18:49,972 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:18:49,973 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:18:49,973 >>   Batch size = 64
+{'eval_loss': 4.7171454429626465, 'eval_accuracy': 0.2261397441875855, 'eval_runtime': 79.6606, 'eval_samples_per_second': 223.473, 'eval_steps_per_second': 0.879, 'epoch': 1.28}
+{'loss': 5.0486, 'grad_norm': 0.28261852264404297, 'learning_rate': 0.00013236863585886668, 'epoch': 1.32}
+[INFO|trainer.py:3376] 2024-03-24 00:26:07,228 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:26:07,228 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:26:07,228 >>   Batch size = 64
+{'eval_loss': 4.698365211486816, 'eval_accuracy': 0.22871613844922986, 'eval_runtime': 80.1018, 'eval_samples_per_second': 222.242, 'eval_steps_per_second': 0.874, 'epoch': 1.32}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 00:27:31,914 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-6000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 00:27:31,917 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-6000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 00:27:34,269 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-3000] due to args.save_total_limit
+{'loss': 5.0286, 'grad_norm': 0.13414648175239563, 'learning_rate': 7.084948565700517e-05, 'epoch': 1.37}
+[INFO|trainer.py:3376] 2024-03-24 00:33:30,521 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:33:30,522 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:33:30,522 >>   Batch size = 64
+{'eval_loss': 4.68449068069458, 'eval_accuracy': 0.2302960308556109, 'eval_runtime': 78.3305, 'eval_samples_per_second': 227.268, 'eval_steps_per_second': 0.894, 'epoch': 1.37}
+{'loss': 5.0342, 'grad_norm': 0.5801019072532654, 'learning_rate': 2.6303636535855796e-05, 'epoch': 1.41}
+[INFO|trainer.py:3376] 2024-03-24 00:40:47,067 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:40:47,067 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:40:47,067 >>   Batch size = 64
+{'eval_loss': 4.67711877822876, 'eval_accuracy': 0.23139619528666164, 'eval_runtime': 79.6855, 'eval_samples_per_second': 223.403, 'eval_steps_per_second': 0.878, 'epoch': 1.41}
+{'loss': 5.0147, 'grad_norm': 0.13924232125282288, 'learning_rate': 2.951506794534292e-06, 'epoch': 1.46}
+[INFO|trainer.py:3376] 2024-03-24 00:49:43,887 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:49:43,887 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:49:43,887 >>   Batch size = 64
+{'eval_loss': 4.6742024421691895, 'eval_accuracy': 0.23182128879734043, 'eval_runtime': 79.4647, 'eval_samples_per_second': 224.024, 'eval_steps_per_second': 0.881, 'epoch': 1.46}
+{'loss': 5.0613, 'grad_norm': 0.14092808961868286, 'learning_rate': 0.0004969944470165055, 'epoch': 1.5}
+[INFO|trainer.py:3376] 2024-03-24 00:57:01,533 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 00:57:01,533 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 00:57:01,533 >>   Batch size = 64
+{'eval_loss': 4.752962112426758, 'eval_accuracy': 0.22063650360532502, 'eval_runtime': 79.3806, 'eval_samples_per_second': 224.261, 'eval_steps_per_second': 0.882, 'epoch': 1.5}
+{'loss': 5.0789, 'grad_norm': 0.13281601667404175, 'learning_rate': 0.00047353934540858816, 'epoch': 1.54}
+[INFO|trainer.py:3376] 2024-03-24 01:05:59,162 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:05:59,162 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:05:59,162 >>   Batch size = 64
+{'eval_loss': 4.74609899520874, 'eval_accuracy': 0.22162695939307156, 'eval_runtime': 80.1278, 'eval_samples_per_second': 222.17, 'eval_steps_per_second': 0.874, 'epoch': 1.54}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 01:07:22,699 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-7000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 01:07:22,702 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-7000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 01:07:25,184 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-4000] due to args.save_total_limit
+{'loss': 5.0662, 'grad_norm': 0.12008203566074371, 'learning_rate': 0.00042890540082095687, 'epoch': 1.59}
+[INFO|trainer.py:3376] 2024-03-24 01:13:21,845 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:13:21,845 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:13:21,845 >>   Batch size = 64
+{'eval_loss': 4.729349613189697, 'eval_accuracy': 0.223646236015171, 'eval_runtime': 79.4996, 'eval_samples_per_second': 223.926, 'eval_steps_per_second': 0.881, 'epoch': 1.59}
+{'loss': 5.0488, 'grad_norm': 0.7965689301490784, 'learning_rate': 0.00036732137800309675, 'epoch': 1.63}
+[INFO|trainer.py:3376] 2024-03-24 01:20:39,637 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:20:39,637 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:20:39,637 >>   Batch size = 64
+{'eval_loss': 4.710468292236328, 'eval_accuracy': 0.22610203871198095, 'eval_runtime': 79.714, 'eval_samples_per_second': 223.323, 'eval_steps_per_second': 0.878, 'epoch': 1.63}
+{'loss': 5.0367, 'grad_norm': 1.735145092010498, 'learning_rate': 0.00029462194711982545, 'epoch': 1.68}
+[INFO|trainer.py:3376] 2024-03-24 01:27:56,716 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:27:56,717 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:27:56,717 >>   Batch size = 64
+{'eval_loss': 4.691473007202148, 'eval_accuracy': 0.22852552242970128, 'eval_runtime': 78.9644, 'eval_samples_per_second': 225.443, 'eval_steps_per_second': 0.886, 'epoch': 1.68}
+{'loss': 5.0333, 'grad_norm': 0.26634681224823, 'learning_rate': 0.00021769488816610253, 'epoch': 1.72}
+[INFO|trainer.py:3376] 2024-03-24 01:35:14,538 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:35:14,538 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:35:14,538 >>   Batch size = 64
+{'eval_loss': 4.672997951507568, 'eval_accuracy': 0.2310495907252005, 'eval_runtime': 79.7107, 'eval_samples_per_second': 223.333, 'eval_steps_per_second': 0.878, 'epoch': 1.72}
+{'loss': 5.0175, 'grad_norm': 0.3139713406562805, 'learning_rate': 0.00014382852033913244, 'epoch': 1.76}
+[INFO|trainer.py:3376] 2024-03-24 01:42:32,468 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:42:32,469 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:42:32,469 >>   Batch size = 64
+{'eval_loss': 4.654199600219727, 'eval_accuracy': 0.2335473861091269, 'eval_runtime': 79.2854, 'eval_samples_per_second': 224.531, 'eval_steps_per_second': 0.883, 'epoch': 1.76}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 01:43:56,124 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-8000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 01:43:56,128 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-8000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 01:43:58,754 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-5000] due to args.save_total_limit
+{'loss': 5.0106, 'grad_norm': 0.5166982412338257, 'learning_rate': 8.00211830266846e-05, 'epoch': 1.81}
+[INFO|trainer.py:3376] 2024-03-24 01:49:56,183 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:49:56,183 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:49:56,183 >>   Batch size = 64
+{'eval_loss': 4.641372203826904, 'eval_accuracy': 0.235285245770446, 'eval_runtime': 179.7047, 'eval_samples_per_second': 99.063, 'eval_steps_per_second': 0.39, 'epoch': 1.81}
+{'loss': 4.9812, 'grad_norm': 0.2494165450334549, 'learning_rate': 3.231819042355555e-05, 'epoch': 1.85}
+[INFO|trainer.py:3376] 2024-03-24 01:58:53,763 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 01:58:53,763 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 01:58:53,763 >>   Batch size = 64
+{'eval_loss': 4.632958889007568, 'eval_accuracy': 0.23635891743292328, 'eval_runtime': 179.5291, 'eval_samples_per_second': 99.159, 'eval_steps_per_second': 0.39, 'epoch': 1.85}
+{'loss': 4.9932, 'grad_norm': 0.19441109895706177, 'learning_rate': 5.239078847423001e-06, 'epoch': 1.9}
+[INFO|trainer.py:3376] 2024-03-24 02:07:49,980 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:07:49,980 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:07:49,983 >>   Batch size = 64
+{'eval_loss': 4.629342555999756, 'eval_accuracy': 0.23678785844111272, 'eval_runtime': 79.1974, 'eval_samples_per_second': 224.78, 'eval_steps_per_second': 0.884, 'epoch': 1.9}
+{'loss': 4.9981, 'grad_norm': 0.1716739535331726, 'learning_rate': 0.0004986505887979975, 'epoch': 1.94}
+[INFO|trainer.py:3376] 2024-03-24 02:15:06,976 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:15:06,976 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:15:06,976 >>   Batch size = 64
+{'eval_loss': 4.697771072387695, 'eval_accuracy': 0.22747768396479562, 'eval_runtime': 79.3233, 'eval_samples_per_second': 224.423, 'eval_steps_per_second': 0.882, 'epoch': 1.94}
+{'loss': 5.0402, 'grad_norm': 0.19730165600776672, 'learning_rate': 0.00047898229277782393, 'epoch': 1.99}
+[INFO|trainer.py:3376] 2024-03-24 02:24:03,291 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:24:03,291 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:24:03,291 >>   Batch size = 64
+{'eval_loss': 4.700298309326172, 'eval_accuracy': 0.22682075124697396, 'eval_runtime': 78.342, 'eval_samples_per_second': 227.235, 'eval_steps_per_second': 0.894, 'epoch': 1.99}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 02:25:26,930 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-9000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 02:25:26,934 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-9000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 02:30:27,445 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-6000] due to args.save_total_limit
+{'loss': 5.0182, 'grad_norm': 0.12476088851690292, 'learning_rate': 0.0004376194712815548, 'epoch': 2.03}
+[INFO|trainer.py:3376] 2024-03-24 02:36:24,641 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:36:24,641 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:36:24,641 >>   Batch size = 64
+{'eval_loss': 4.684381008148193, 'eval_accuracy': 0.2291516751674376, 'eval_runtime': 79.0151, 'eval_samples_per_second': 225.299, 'eval_steps_per_second': 0.886, 'epoch': 2.03}
+{'loss': 4.9887, 'grad_norm': 0.13066062331199646, 'learning_rate': 0.0003784809722420509, 'epoch': 2.07}
+[INFO|trainer.py:3376] 2024-03-24 02:45:20,689 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:45:20,689 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:45:20,689 >>   Batch size = 64
+{'eval_loss': 4.670938968658447, 'eval_accuracy': 0.23074343985185156, 'eval_runtime': 179.4351, 'eval_samples_per_second': 99.211, 'eval_steps_per_second': 0.39, 'epoch': 2.07}
+{'loss': 4.9886, 'grad_norm': 0.6024091839790344, 'learning_rate': 0.00030716976896552785, 'epoch': 2.12}
+[INFO|trainer.py:3376] 2024-03-24 02:54:16,814 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 02:54:16,814 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 02:54:16,814 >>   Batch size = 64
+{'eval_loss': 4.650103569030762, 'eval_accuracy': 0.2336841371635061, 'eval_runtime': 79.7778, 'eval_samples_per_second': 223.145, 'eval_steps_per_second': 0.877, 'epoch': 2.12}
+{'loss': 4.9733, 'grad_norm': 5.390730381011963, 'learning_rate': 0.0002304421162586191, 'epoch': 2.16}
+[INFO|trainer.py:3376] 2024-03-24 03:01:33,074 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:01:33,075 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:01:33,075 >>   Batch size = 64
+{'eval_loss': 4.638342380523682, 'eval_accuracy': 0.23520961496223627, 'eval_runtime': 79.2189, 'eval_samples_per_second': 224.719, 'eval_steps_per_second': 0.884, 'epoch': 2.16}
+{'loss': 4.9594, 'grad_norm': 0.13176855444908142, 'learning_rate': 0.00015556744092362195, 'epoch': 2.21}
+[INFO|trainer.py:3376] 2024-03-24 03:08:49,329 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:08:49,330 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:08:49,331 >>   Batch size = 64
+{'eval_loss': 4.6214919090271, 'eval_accuracy': 0.2377202719806983, 'eval_runtime': 79.3352, 'eval_samples_per_second': 224.39, 'eval_steps_per_second': 0.882, 'epoch': 2.21}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 03:10:13,282 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-10000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 03:10:13,286 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-10000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 03:10:15,723 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-7000] due to args.save_total_limit
+{'loss': 4.9626, 'grad_norm': 0.26748761534690857, 'learning_rate': 8.963961267362269e-05, 'epoch': 2.25}
+[INFO|trainer.py:3376] 2024-03-24 03:16:12,220 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:16:12,220 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:16:12,220 >>   Batch size = 64
+{'eval_loss': 4.6105875968933105, 'eval_accuracy': 0.23921068258783124, 'eval_runtime': 79.6372, 'eval_samples_per_second': 223.539, 'eval_steps_per_second': 0.879, 'epoch': 2.25}
+{'loss': 4.9479, 'grad_norm': 0.1436002403497696, 'learning_rate': 3.890484789593396e-05, 'epoch': 2.29}
+[INFO|trainer.py:3376] 2024-03-24 03:23:28,764 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:23:28,764 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:23:28,764 >>   Batch size = 64
+{'eval_loss': 4.602723598480225, 'eval_accuracy': 0.24026478697725426, 'eval_runtime': 79.3826, 'eval_samples_per_second': 224.256, 'eval_steps_per_second': 0.882, 'epoch': 2.29}
+{'loss': 4.9479, 'grad_norm': 0.1288997083902359, 'learning_rate': 8.169922842295341e-06, 'epoch': 2.34}
+[INFO|trainer.py:3376] 2024-03-24 03:30:44,793 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:30:44,793 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:30:44,793 >>   Batch size = 64
+{'eval_loss': 4.59912109375, 'eval_accuracy': 0.24076716022364733, 'eval_runtime': 79.0644, 'eval_samples_per_second': 225.158, 'eval_steps_per_second': 0.885, 'epoch': 2.34}
+{'loss': 4.937, 'grad_norm': 0.13491986691951752, 'learning_rate': 0.0004996532359514326, 'epoch': 2.38}
+[INFO|trainer.py:3376] 2024-03-24 03:39:41,238 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:39:41,238 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:39:41,238 >>   Batch size = 64
+{'eval_loss': 4.639630317687988, 'eval_accuracy': 0.23505417606280524, 'eval_runtime': 79.17, 'eval_samples_per_second': 224.858, 'eval_steps_per_second': 0.884, 'epoch': 2.38}
+{'loss': 5.0045, 'grad_norm': 0.1470169574022293, 'learning_rate': 0.00048382343703461296, 'epoch': 2.43}
+[INFO|trainer.py:3376] 2024-03-24 03:46:57,049 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:46:57,049 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:46:57,049 >>   Batch size = 64
+{'eval_loss': 4.66582727432251, 'eval_accuracy': 0.23082511672757805, 'eval_runtime': 79.6943, 'eval_samples_per_second': 223.379, 'eval_steps_per_second': 0.878, 'epoch': 2.43}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 03:50:00,885 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-11000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 03:50:00,889 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-11000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 03:50:03,300 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-8000] due to args.save_total_limit
+{'loss': 4.9912, 'grad_norm': 0.2882433831691742, 'learning_rate': 0.0004458404469250683, 'epoch': 2.47}
+[INFO|trainer.py:3376] 2024-03-24 03:55:59,529 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 03:55:59,529 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 03:55:59,529 >>   Batch size = 64
+{'eval_loss': 4.653418064117432, 'eval_accuracy': 0.23252406169978923, 'eval_runtime': 79.1561, 'eval_samples_per_second': 224.897, 'eval_steps_per_second': 0.884, 'epoch': 2.47}
+{'loss': 4.9856, 'grad_norm': 0.17976443469524384, 'learning_rate': 0.00038930289736236866, 'epoch': 2.51}
+[INFO|trainer.py:3376] 2024-03-24 04:03:16,253 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 04:03:16,253 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 04:03:16,253 >>   Batch size = 64
+{'eval_loss': 4.640880584716797, 'eval_accuracy': 0.23434744573434546, 'eval_runtime': 79.355, 'eval_samples_per_second': 224.334, 'eval_steps_per_second': 0.882, 'epoch': 2.51}
+{'loss': 4.9641, 'grad_norm': 0.1835900843143463, 'learning_rate': 0.0003195673392590961, 'epoch': 2.56}
+[INFO|trainer.py:3376] 2024-03-24 04:10:32,235 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 04:10:32,235 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 04:10:32,235 >>   Batch size = 64
+{'eval_loss': 4.625983715057373, 'eval_accuracy': 0.23642685324611165, 'eval_runtime': 79.5921, 'eval_samples_per_second': 223.665, 'eval_steps_per_second': 0.879, 'epoch': 2.56}
+{'loss': 4.9662, 'grad_norm': 0.20917850732803345, 'learning_rate': 0.00024324074568512311, 'epoch': 2.6}
+[INFO|trainer.py:3376] 2024-03-24 04:17:49,067 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 04:17:49,067 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 04:17:49,068 >>   Batch size = 64
+{'eval_loss': 4.6125030517578125, 'eval_accuracy': 0.23828013783275082, 'eval_runtime': 79.8987, 'eval_samples_per_second': 222.807, 'eval_steps_per_second': 0.876, 'epoch': 2.6}
+{'loss': 4.9598, 'grad_norm': 0.11591549962759018, 'learning_rate': 0.00016755454579904077, 'epoch': 2.65}
+[INFO|trainer.py:3376] 2024-03-24 04:26:45,237 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 04:26:45,237 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 04:26:45,237 >>   Batch size = 64
+{'eval_loss': 4.598613262176514, 'eval_accuracy': 0.24015518826245033, 'eval_runtime': 79.2013, 'eval_samples_per_second': 224.769, 'eval_steps_per_second': 0.884, 'epoch': 2.65}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 04:43:08,710 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-12000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 04:43:08,714 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-12000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 04:47:19,502 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-9000] due to args.save_total_limit
+{'loss': 4.9405, 'grad_norm': 0.23919162154197693, 'learning_rate': 9.967949578333979e-05, 'epoch': 2.69}
+[INFO|trainer.py:3376] 2024-03-24 04:53:16,678 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 04:53:16,678 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 04:53:16,678 >>   Batch size = 64
+{'eval_loss': 4.584485054016113, 'eval_accuracy': 0.24219985836812022, 'eval_runtime': 79.4806, 'eval_samples_per_second': 223.979, 'eval_steps_per_second': 0.881, 'epoch': 2.69}
+{'loss': 4.936, 'grad_norm': 0.45564642548561096, 'learning_rate': 4.604629813424055e-05, 'epoch': 2.74}
+[INFO|trainer.py:3376] 2024-03-24 05:00:33,518 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:00:33,519 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:00:33,519 >>   Batch size = 64
+{'eval_loss': 4.575374603271484, 'eval_accuracy': 0.24357220576592573, 'eval_runtime': 79.2257, 'eval_samples_per_second': 224.7, 'eval_steps_per_second': 0.884, 'epoch': 2.74}
+{'loss': 4.9236, 'grad_norm': 0.24758093059062958, 'learning_rate': 1.1736336039271712e-05, 'epoch': 2.78}
+[INFO|trainer.py:3376] 2024-03-24 05:07:50,984 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:07:50,984 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:07:50,984 >>   Batch size = 64
+{'eval_loss': 4.57106876373291, 'eval_accuracy': 0.24414735167952062, 'eval_runtime': 179.526, 'eval_samples_per_second': 99.161, 'eval_steps_per_second': 0.39, 'epoch': 2.78}
+{'loss': 4.921, 'grad_norm': 0.11917844414710999, 'learning_rate': 0.0004999997533552463, 'epoch': 2.82}
+[INFO|trainer.py:3376] 2024-03-24 05:16:48,974 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:16:48,975 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:16:48,975 >>   Batch size = 64
+{'eval_loss': 4.570396900177002, 'eval_accuracy': 0.2442339753377608, 'eval_runtime': 79.4361, 'eval_samples_per_second': 224.105, 'eval_steps_per_second': 0.881, 'epoch': 2.82}
+{'loss': 4.9758, 'grad_norm': 0.2184557318687439, 'learning_rate': 0.0004880500548559146, 'epoch': 2.87}
+[INFO|trainer.py:3376] 2024-03-24 05:24:07,036 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:24:07,036 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:24:07,037 >>   Batch size = 64
+{'eval_loss': 4.633813858032227, 'eval_accuracy': 0.23501866915720676, 'eval_runtime': 79.9373, 'eval_samples_per_second': 222.699, 'eval_steps_per_second': 0.876, 'epoch': 2.87}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 05:27:10,364 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-13000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 05:27:10,368 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-13000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 05:27:12,900 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-10000] due to args.save_total_limit
+{'loss': 4.9819, 'grad_norm': 0.14979936182498932, 'learning_rate': 0.0004535467216758933, 'epoch': 2.91}
+[INFO|trainer.py:3376] 2024-03-24 05:33:09,050 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:33:09,050 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:33:09,050 >>   Batch size = 64
+{'eval_loss': 4.628433704376221, 'eval_accuracy': 0.2354952092060282, 'eval_runtime': 79.1677, 'eval_samples_per_second': 224.864, 'eval_steps_per_second': 0.884, 'epoch': 2.91}
+{'loss': 4.9768, 'grad_norm': 0.10678313672542572, 'learning_rate': 0.00039975871156560066, 'epoch': 2.96}
+[INFO|trainer.py:3376] 2024-03-24 05:42:05,679 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:42:05,679 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:42:05,679 >>   Batch size = 64
+{'eval_loss': 4.617247581481934, 'eval_accuracy': 0.23727693033896893, 'eval_runtime': 79.2861, 'eval_samples_per_second': 224.529, 'eval_steps_per_second': 0.883, 'epoch': 2.96}
+{'loss': 4.9632, 'grad_norm': 0.17945124208927155, 'learning_rate': 0.00033178207514750923, 'epoch': 3.0}
+[INFO|trainer.py:3376] 2024-03-24 05:51:02,498 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 05:51:02,498 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 05:51:02,498 >>   Batch size = 64
+{'eval_loss': 4.602297306060791, 'eval_accuracy': 0.2393535896382275, 'eval_runtime': 78.658, 'eval_samples_per_second': 226.322, 'eval_steps_per_second': 0.89, 'epoch': 3.0}
+{'loss': 4.9143, 'grad_norm': 0.10720697790384293, 'learning_rate': 0.0002560571395432577, 'epoch': 3.04}
+[INFO|trainer.py:3376] 2024-03-24 06:00:00,169 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:00:00,169 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:00:00,169 >>   Batch size = 64
+{'eval_loss': 4.58992338180542, 'eval_accuracy': 0.2411958813748362, 'eval_runtime': 179.6318, 'eval_samples_per_second': 99.103, 'eval_steps_per_second': 0.39, 'epoch': 3.04}
+{'loss': 4.8943, 'grad_norm': 0.24881726503372192, 'learning_rate': 0.00017975833088297485, 'epoch': 3.09}
+[INFO|trainer.py:3376] 2024-03-24 06:08:56,965 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:08:56,965 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:08:56,965 >>   Batch size = 64
+{'eval_loss': 4.5788960456848145, 'eval_accuracy': 0.2429661699437452, 'eval_runtime': 79.4379, 'eval_samples_per_second': 224.1, 'eval_steps_per_second': 0.881, 'epoch': 3.09}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 06:12:00,657 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-14000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 06:12:00,661 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-14000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 06:12:03,169 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-11000] due to args.save_total_limit
+{'loss': 4.8929, 'grad_norm': 0.14899088442325592, 'learning_rate': 0.00011011444589236411, 'epoch': 3.13}
+[INFO|trainer.py:3376] 2024-03-24 06:18:00,104 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:18:00,104 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:18:00,104 >>   Batch size = 64
+{'eval_loss': 4.565883636474609, 'eval_accuracy': 0.24480373475484077, 'eval_runtime': 79.2123, 'eval_samples_per_second': 224.738, 'eval_steps_per_second': 0.884, 'epoch': 3.13}
+{'loss': 4.89, 'grad_norm': 0.24492822587490082, 'learning_rate': 5.3723772233121416e-05, 'epoch': 3.18}
+[INFO|trainer.py:3376] 2024-03-24 06:25:16,307 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:25:16,307 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:25:16,307 >>   Batch size = 64
+{'eval_loss': 4.557787895202637, 'eval_accuracy': 0.24605637001581432, 'eval_runtime': 79.2236, 'eval_samples_per_second': 224.706, 'eval_steps_per_second': 0.884, 'epoch': 3.18}
+{'loss': 4.8834, 'grad_norm': 0.35922685265541077, 'learning_rate': 1.592894531811598e-05, 'epoch': 3.22}
+[INFO|trainer.py:3376] 2024-03-24 06:32:33,236 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:32:33,236 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:32:33,236 >>   Batch size = 64
+{'eval_loss': 4.553181171417236, 'eval_accuracy': 0.24663921092443053, 'eval_runtime': 79.4501, 'eval_samples_per_second': 224.065, 'eval_steps_per_second': 0.881, 'epoch': 3.22}
+{'loss': 4.8851, 'grad_norm': 0.107355035841465, 'learning_rate': 3.107696952694139e-07, 'epoch': 3.26}
+[INFO|trainer.py:3376] 2024-03-24 06:39:49,687 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:39:49,687 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:39:49,687 >>   Batch size = 64
+{'eval_loss': 4.552157878875732, 'eval_accuracy': 0.24684719564700727, 'eval_runtime': 79.9515, 'eval_samples_per_second': 222.66, 'eval_steps_per_second': 0.876, 'epoch': 3.26}
+{'loss': 4.9127, 'grad_norm': 0.3581552505493164, 'learning_rate': 0.0004916510379951951, 'epoch': 3.31}
+[INFO|trainer.py:3376] 2024-03-24 06:47:06,772 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:47:06,772 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:47:06,772 >>   Batch size = 64
+{'eval_loss': 4.61052942276001, 'eval_accuracy': 0.238136681139853, 'eval_runtime': 179.7276, 'eval_samples_per_second': 99.05, 'eval_steps_per_second': 0.389, 'epoch': 3.31}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 06:50:09,573 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-15000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 06:50:09,577 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-15000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 06:50:12,131 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-12000] due to args.save_total_limit
+{'loss': 4.9309, 'grad_norm': 0.6650280356407166, 'learning_rate': 0.00046071804217699507, 'epoch': 3.35}
+[INFO|trainer.py:3376] 2024-03-24 06:56:09,237 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 06:56:09,237 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 06:56:09,237 >>   Batch size = 64
+{'eval_loss': 4.609907627105713, 'eval_accuracy': 0.2384525057212288, 'eval_runtime': 79.7638, 'eval_samples_per_second': 223.184, 'eval_steps_per_second': 0.878, 'epoch': 3.35}
+{'loss': 4.9415, 'grad_norm': 0.34254273772239685, 'learning_rate': 0.00040982093525297584, 'epoch': 3.4}
+[INFO|trainer.py:3376] 2024-03-24 07:03:26,121 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:03:26,121 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:03:26,122 >>   Batch size = 64
+{'eval_loss': 4.600100040435791, 'eval_accuracy': 0.2397724172243889, 'eval_runtime': 78.0392, 'eval_samples_per_second': 228.116, 'eval_steps_per_second': 0.897, 'epoch': 3.4}
+{'loss': 4.9398, 'grad_norm': 2.0137691497802734, 'learning_rate': 0.0003437818742966272, 'epoch': 3.44}
+[INFO|trainer.py:3376] 2024-03-24 07:10:42,540 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:10:42,540 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:10:42,540 >>   Batch size = 64
+{'eval_loss': 4.585916519165039, 'eval_accuracy': 0.24122754078292397, 'eval_runtime': 78.2498, 'eval_samples_per_second': 227.502, 'eval_steps_per_second': 0.895, 'epoch': 3.44}
+{'loss': 4.9069, 'grad_norm': 0.49139052629470825, 'learning_rate': 0.0002688576142428171, 'epoch': 3.49}
+[INFO|trainer.py:3376] 2024-03-24 07:17:59,243 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:17:59,244 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:17:59,244 >>   Batch size = 64
+{'eval_loss': 4.571591377258301, 'eval_accuracy': 0.2437353396603781, 'eval_runtime': 79.5943, 'eval_samples_per_second': 223.659, 'eval_steps_per_second': 0.879, 'epoch': 3.49}
+{'loss': 4.914, 'grad_norm': 0.32206371426582336, 'learning_rate': 0.0001921467226217967, 'epoch': 3.53}
+[INFO|trainer.py:3376] 2024-03-24 07:25:15,789 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:25:15,789 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:25:15,789 >>   Batch size = 64
+{'eval_loss': 4.558089733123779, 'eval_accuracy': 0.24560698230656816, 'eval_runtime': 79.7667, 'eval_samples_per_second': 223.176, 'eval_steps_per_second': 0.878, 'epoch': 3.53}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 07:28:19,396 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-16000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 07:28:19,400 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-16000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 07:28:21,942 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-13000] due to args.save_total_limit
+{'loss': 4.8954, 'grad_norm': 0.541661262512207, 'learning_rate': 0.00012091703823619657, 'epoch': 3.57}
+[INFO|trainer.py:3376] 2024-03-24 07:34:18,552 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:34:18,553 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:34:18,553 >>   Batch size = 64
+{'eval_loss': 4.546525955200195, 'eval_accuracy': 0.24729559399975068, 'eval_runtime': 79.9186, 'eval_samples_per_second': 222.752, 'eval_steps_per_second': 0.876, 'epoch': 3.57}
+{'loss': 4.8959, 'grad_norm': 0.43959012627601624, 'learning_rate': 6.19170925283891e-05, 'epoch': 3.62}
+[INFO|trainer.py:3376] 2024-03-24 07:41:34,898 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:41:34,898 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:41:34,898 >>   Batch size = 64
+{'eval_loss': 4.537527084350586, 'eval_accuracy': 0.24872092693470313, 'eval_runtime': 179.5548, 'eval_samples_per_second': 99.145, 'eval_steps_per_second': 0.39, 'epoch': 3.62}
+{'loss': 4.8837, 'grad_norm': 0.10153623670339584, 'learning_rate': 2.0736731812335763e-05, 'epoch': 3.66}
+[INFO|trainer.py:3376] 2024-03-24 07:50:30,805 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:50:30,805 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:50:30,805 >>   Batch size = 64
+{'eval_loss': 4.53230094909668, 'eval_accuracy': 0.2494708591637827, 'eval_runtime': 79.7021, 'eval_samples_per_second': 223.357, 'eval_steps_per_second': 0.878, 'epoch': 3.66}
+{'loss': 4.872, 'grad_norm': 0.1192975863814354, 'learning_rate': 1.2775170944849535e-06, 'epoch': 3.71}
+[INFO|trainer.py:3376] 2024-03-24 07:57:46,969 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 07:57:46,970 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 07:57:46,970 >>   Batch size = 64
+{'eval_loss': 4.5307440757751465, 'eval_accuracy': 0.24969082609289267, 'eval_runtime': 78.8323, 'eval_samples_per_second': 225.821, 'eval_steps_per_second': 0.888, 'epoch': 3.71}
+{'loss': 4.9106, 'grad_norm': 0.28782615065574646, 'learning_rate': 0.0004946169224767263, 'epoch': 3.75}
+[INFO|trainer.py:3376] 2024-03-24 08:05:03,537 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:05:03,537 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:05:03,537 >>   Batch size = 64
+{'eval_loss': 4.585119247436523, 'eval_accuracy': 0.2412557924075023, 'eval_runtime': 79.5287, 'eval_samples_per_second': 223.844, 'eval_steps_per_second': 0.88, 'epoch': 3.75}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 08:06:27,961 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-17000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 08:06:27,965 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-17000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 08:06:30,466 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-14000] due to args.save_total_limit
+{'loss': 4.9445, 'grad_norm': 0.18708683550357819, 'learning_rate': 0.00046733556101905807, 'epoch': 3.79}
+[INFO|trainer.py:3376] 2024-03-24 08:12:26,692 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:12:26,693 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:12:26,693 >>   Batch size = 64
+{'eval_loss': 4.588100433349609, 'eval_accuracy': 0.24083344710933116, 'eval_runtime': 79.1569, 'eval_samples_per_second': 224.895, 'eval_steps_per_second': 0.884, 'epoch': 3.79}
+{'loss': 4.9439, 'grad_norm': 0.23333680629730225, 'learning_rate': 0.0004194631232463127, 'epoch': 3.84}
+[INFO|trainer.py:3376] 2024-03-24 08:19:42,696 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:19:42,697 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:19:42,697 >>   Batch size = 64
+{'eval_loss': 4.578895092010498, 'eval_accuracy': 0.24211840134939433, 'eval_runtime': 78.3846, 'eval_samples_per_second': 227.111, 'eval_steps_per_second': 0.893, 'epoch': 3.84}
+{'loss': 4.9217, 'grad_norm': 0.5861894488334656, 'learning_rate': 0.00035553519926139534, 'epoch': 3.88}
+[INFO|trainer.py:3376] 2024-03-24 08:26:58,351 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:26:58,352 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:26:58,352 >>   Batch size = 64
+{'eval_loss': 4.567579746246338, 'eval_accuracy': 0.24390880683385913, 'eval_runtime': 79.2566, 'eval_samples_per_second': 224.612, 'eval_steps_per_second': 0.883, 'epoch': 3.88}
+{'loss': 4.8925, 'grad_norm': 0.6440961956977844, 'learning_rate': 0.0002816085280317613, 'epoch': 3.93}
+[INFO|trainer.py:3376] 2024-03-24 08:34:14,508 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:34:14,508 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:34:14,510 >>   Batch size = 64
+{'eval_loss': 4.5556511878967285, 'eval_accuracy': 0.24551409272381058, 'eval_runtime': 79.0417, 'eval_samples_per_second': 225.223, 'eval_steps_per_second': 0.886, 'epoch': 3.93}
+{'loss': 4.9097, 'grad_norm': 0.4088907837867737, 'learning_rate': 0.00020468716228523733, 'epoch': 3.97}
+[INFO|trainer.py:3376] 2024-03-24 08:41:31,188 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:41:31,188 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:41:31,188 >>   Batch size = 64
+{'eval_loss': 4.5430989265441895, 'eval_accuracy': 0.24720105548948854, 'eval_runtime': 180.6407, 'eval_samples_per_second': 98.549, 'eval_steps_per_second': 0.388, 'epoch': 3.97}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 08:44:35,217 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-18000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 08:44:35,221 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-18000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 08:44:37,697 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-15000] due to args.save_total_limit
+{'loss': 4.8803, 'grad_norm': 0.32525908946990967, 'learning_rate': 0.0001320588818261012, 'epoch': 4.02}
+[INFO|trainer.py:3376] 2024-03-24 08:50:34,699 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:50:34,699 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:50:34,699 >>   Batch size = 64
+{'eval_loss': 4.532453536987305, 'eval_accuracy': 0.24908028320219963, 'eval_runtime': 79.218, 'eval_samples_per_second': 224.722, 'eval_steps_per_second': 0.884, 'epoch': 4.02}
+{'loss': 4.8274, 'grad_norm': 0.28432539105415344, 'learning_rate': 7.060472562724251e-05, 'epoch': 4.06}
+[INFO|trainer.py:3376] 2024-03-24 08:57:51,355 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 08:57:51,355 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 08:57:51,355 >>   Batch size = 64
+{'eval_loss': 4.5269246101379395, 'eval_accuracy': 0.25032500361115123, 'eval_runtime': 79.2931, 'eval_samples_per_second': 224.509, 'eval_steps_per_second': 0.883, 'epoch': 4.06}
+{'loss': 4.8339, 'grad_norm': 0.0993402823805809, 'learning_rate': 2.614705986857463e-05, 'epoch': 4.1}
+[INFO|trainer.py:3376] 2024-03-24 09:06:47,916 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:06:47,916 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:06:47,917 >>   Batch size = 64
+{'eval_loss': 4.521155834197998, 'eval_accuracy': 0.2511561730019561, 'eval_runtime': 79.0097, 'eval_samples_per_second': 225.314, 'eval_steps_per_second': 0.886, 'epoch': 4.1}
+{'loss': 4.819, 'grad_norm': 0.1005135029554367, 'learning_rate': 2.897948071291956e-06, 'epoch': 4.15}
+[INFO|trainer.py:3376] 2024-03-24 09:15:43,791 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:15:43,791 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:15:43,792 >>   Batch size = 64
+{'eval_loss': 4.51947021484375, 'eval_accuracy': 0.25141725319018005, 'eval_runtime': 80.0258, 'eval_samples_per_second': 222.453, 'eval_steps_per_second': 0.875, 'epoch': 4.15}
+{'loss': 4.8504, 'grad_norm': 0.26335233449935913, 'learning_rate': 0.000496939913468469, 'epoch': 4.19}
+[INFO|trainer.py:3376] 2024-03-24 09:23:00,409 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:23:00,409 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:23:00,409 >>   Batch size = 64
+{'eval_loss': 4.5665507316589355, 'eval_accuracy': 0.2437109355333104, 'eval_runtime': 79.5056, 'eval_samples_per_second': 223.909, 'eval_steps_per_second': 0.88, 'epoch': 4.19}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 09:26:04,593 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-19000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 09:26:04,597 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-19000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 09:26:07,015 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-16000] due to args.save_total_limit
+{'loss': 4.887, 'grad_norm': 0.1655246913433075, 'learning_rate': 0.0004733818862745777, 'epoch': 4.24}
+[INFO|trainer.py:3376] 2024-03-24 09:32:03,300 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:32:03,300 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:32:03,301 >>   Batch size = 64
+{'eval_loss': 4.572332859039307, 'eval_accuracy': 0.24315183918076005, 'eval_runtime': 78.3973, 'eval_samples_per_second': 227.074, 'eval_steps_per_second': 0.893, 'epoch': 4.24}
+{'loss': 4.8938, 'grad_norm': 0.6410760283470154, 'learning_rate': 0.00042865993429029093, 'epoch': 4.28}
+[INFO|trainer.py:3376] 2024-03-24 09:40:59,438 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:40:59,438 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:40:59,438 >>   Batch size = 64
+{'eval_loss': 4.567872047424316, 'eval_accuracy': 0.24373050280636469, 'eval_runtime': 80.1944, 'eval_samples_per_second': 221.986, 'eval_steps_per_second': 0.873, 'epoch': 4.28}
+{'loss': 4.8794, 'grad_norm': 1.5544909238815308, 'learning_rate': 0.0003670111603714408, 'epoch': 4.32}
+[INFO|trainer.py:3376] 2024-03-24 09:48:15,911 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:48:15,911 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:48:15,911 >>   Batch size = 64
+{'eval_loss': 4.553130149841309, 'eval_accuracy': 0.24595424643903113, 'eval_runtime': 79.6064, 'eval_samples_per_second': 223.625, 'eval_steps_per_second': 0.879, 'epoch': 4.32}
+{'loss': 4.8837, 'grad_norm': 0.42087116837501526, 'learning_rate': 0.000294276369412274, 'epoch': 4.37}
+[INFO|trainer.py:3376] 2024-03-24 09:57:12,319 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 09:57:12,319 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 09:57:12,319 >>   Batch size = 64
+{'eval_loss': 4.542259216308594, 'eval_accuracy': 0.24747917459525975, 'eval_runtime': 79.3415, 'eval_samples_per_second': 224.372, 'eval_steps_per_second': 0.882, 'epoch': 4.37}
+{'loss': 4.8841, 'grad_norm': 0.5836969017982483, 'learning_rate': 0.00021734669153608422, 'epoch': 4.41}
+[INFO|trainer.py:3376] 2024-03-24 10:04:28,738 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:04:28,738 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:04:28,738 >>   Batch size = 64
+{'eval_loss': 4.529950141906738, 'eval_accuracy': 0.24937939865152908, 'eval_runtime': 79.3675, 'eval_samples_per_second': 224.298, 'eval_steps_per_second': 0.882, 'epoch': 4.41}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 10:05:51,981 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-20000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 10:05:51,984 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-20000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 10:05:54,566 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-17000] due to args.save_total_limit
+{'loss': 4.8592, 'grad_norm': 0.8150234818458557, 'learning_rate': 0.0001435106940652897, 'epoch': 4.46}
+[INFO|trainer.py:3376] 2024-03-24 10:11:51,096 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:11:51,096 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:11:51,096 >>   Batch size = 64
+{'eval_loss': 4.5173258781433105, 'eval_accuracy': 0.2512617043622487, 'eval_runtime': 79.1603, 'eval_samples_per_second': 224.886, 'eval_steps_per_second': 0.884, 'epoch': 4.46}
+{'loss': 4.8603, 'grad_norm': 0.8252286314964294, 'learning_rate': 7.976383900156286e-05, 'epoch': 4.5}
+[INFO|trainer.py:3376] 2024-03-24 10:19:07,629 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:19:07,630 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:19:07,630 >>   Batch size = 64
+{'eval_loss': 4.5088372230529785, 'eval_accuracy': 0.2525930484294405, 'eval_runtime': 79.2175, 'eval_samples_per_second': 224.723, 'eval_steps_per_second': 0.884, 'epoch': 4.5}
+{'loss': 4.852, 'grad_norm': 0.5221167206764221, 'learning_rate': 3.2145710255188835e-05, 'epoch': 4.54}
+[INFO|trainer.py:3376] 2024-03-24 10:26:23,712 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:26:23,713 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:26:23,713 >>   Batch size = 64
+{'eval_loss': 4.503643989562988, 'eval_accuracy': 0.2534553275858316, 'eval_runtime': 79.5421, 'eval_samples_per_second': 223.806, 'eval_steps_per_second': 0.88, 'epoch': 4.54}
+{'loss': 4.8557, 'grad_norm': 0.1146911159157753, 'learning_rate': 5.1678038666679585e-06, 'epoch': 4.59}
+[INFO|trainer.py:3376] 2024-03-24 10:33:39,794 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:33:39,794 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:33:39,794 >>   Batch size = 64
+{'eval_loss': 4.501060485839844, 'eval_accuracy': 0.2538601942524543, 'eval_runtime': 79.2581, 'eval_samples_per_second': 224.608, 'eval_steps_per_second': 0.883, 'epoch': 4.59}
+{'loss': 4.8651, 'grad_norm': 2.351313591003418, 'learning_rate': 0.0004986139057681735, 'epoch': 4.63}
+[INFO|trainer.py:3376] 2024-03-24 10:40:55,628 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:40:55,628 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:40:55,628 >>   Batch size = 64
+{'eval_loss': 4.540829658508301, 'eval_accuracy': 0.2479128425289623, 'eval_runtime': 79.8898, 'eval_samples_per_second': 222.832, 'eval_steps_per_second': 0.876, 'epoch': 4.63}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 10:42:18,938 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-21000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 10:42:18,943 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-21000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 10:42:21,410 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-18000] due to args.save_total_limit
+{'loss': 4.8817, 'grad_norm': 0.29746168851852417, 'learning_rate': 0.00047884112720670413, 'epoch': 4.68}
+[INFO|trainer.py:3376] 2024-03-24 10:48:17,929 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:48:17,929 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:48:17,929 >>   Batch size = 64
+{'eval_loss': 4.551489353179932, 'eval_accuracy': 0.24575252764097175, 'eval_runtime': 180.0824, 'eval_samples_per_second': 98.855, 'eval_steps_per_second': 0.389, 'epoch': 4.68}
+{'loss': 4.9123, 'grad_norm': 0.4182182252407074, 'learning_rate': 0.000437387197653437, 'epoch': 4.72}
+[INFO|trainer.py:3376] 2024-03-24 10:57:14,396 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 10:57:14,397 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 10:57:14,397 >>   Batch size = 64
+{'eval_loss': 4.5518412590026855, 'eval_accuracy': 0.24546308589966914, 'eval_runtime': 79.5305, 'eval_samples_per_second': 223.839, 'eval_steps_per_second': 0.88, 'epoch': 4.72}
+{'loss': 4.9013, 'grad_norm': 0.10645682364702225, 'learning_rate': 0.00037817959691420066, 'epoch': 4.77}
+[INFO|trainer.py:3376] 2024-03-24 11:04:30,835 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:04:30,836 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:04:30,836 >>   Batch size = 64
+{'eval_loss': 4.54150915145874, 'eval_accuracy': 0.24710168012521297, 'eval_runtime': 79.1162, 'eval_samples_per_second': 225.011, 'eval_steps_per_second': 0.885, 'epoch': 4.77}
+{'loss': 4.8949, 'grad_norm': 1.3578909635543823, 'learning_rate': 0.00030682784521448404, 'epoch': 4.81}
+[INFO|trainer.py:3376] 2024-03-24 11:11:47,198 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:11:47,198 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:11:47,199 >>   Batch size = 64
+{'eval_loss': 4.5272674560546875, 'eval_accuracy': 0.24931245219484344, 'eval_runtime': 78.9231, 'eval_samples_per_second': 225.561, 'eval_steps_per_second': 0.887, 'epoch': 4.81}
+{'loss': 4.8669, 'grad_norm': 0.1735406517982483, 'learning_rate': 0.00023009203905011288, 'epoch': 4.85}
+[INFO|trainer.py:3376] 2024-03-24 11:20:43,260 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:20:43,260 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:20:43,260 >>   Batch size = 64
+{'eval_loss': 4.515372276306152, 'eval_accuracy': 0.2510528402116695, 'eval_runtime': 78.9166, 'eval_samples_per_second': 225.58, 'eval_steps_per_second': 0.887, 'epoch': 4.85}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 11:22:06,968 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-22000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 11:22:06,971 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-22000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 11:22:09,602 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-19000] due to args.save_total_limit
+{'loss': 4.8634, 'grad_norm': 1.0164376497268677, 'learning_rate': 0.00015524237770840501, 'epoch': 4.9}
+[INFO|trainer.py:3376] 2024-03-24 11:28:05,852 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:28:05,852 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:28:05,852 >>   Batch size = 64
+{'eval_loss': 4.50327205657959, 'eval_accuracy': 0.2532111763866546, 'eval_runtime': 79.7462, 'eval_samples_per_second': 223.233, 'eval_steps_per_second': 0.878, 'epoch': 4.9}
+{'loss': 4.8569, 'grad_norm': 0.8082883954048157, 'learning_rate': 8.93703609955501e-05, 'epoch': 4.94}
+[INFO|trainer.py:3376] 2024-03-24 11:35:22,309 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:35:22,309 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:35:22,309 >>   Batch size = 64
+{'eval_loss': 4.494002819061279, 'eval_accuracy': 0.25446205279162326, 'eval_runtime': 79.4435, 'eval_samples_per_second': 224.084, 'eval_steps_per_second': 0.881, 'epoch': 4.94}
+{'loss': 4.851, 'grad_norm': 0.16952013969421387, 'learning_rate': 3.8716917532721384e-05, 'epoch': 4.99}
+[INFO|trainer.py:3376] 2024-03-24 11:42:38,928 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:42:38,928 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:42:38,928 >>   Batch size = 64
+{'eval_loss': 4.487590789794922, 'eval_accuracy': 0.2555980539137734, 'eval_runtime': 79.5538, 'eval_samples_per_second': 223.773, 'eval_steps_per_second': 0.88, 'epoch': 4.99}
+{'loss': 4.8063, 'grad_norm': 0.13279087841510773, 'learning_rate': 8.081118926395237e-06, 'epoch': 5.03}
+[INFO|trainer.py:3376] 2024-03-24 11:49:57,192 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:49:57,192 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:49:57,192 >>   Batch size = 64
+{'eval_loss': 4.488200664520264, 'eval_accuracy': 0.25592904862819127, 'eval_runtime': 81.505, 'eval_samples_per_second': 218.416, 'eval_steps_per_second': 0.859, 'epoch': 5.03}
+{'loss': 4.7976, 'grad_norm': 0.46807917952537537, 'learning_rate': 0.0004996344998488546, 'epoch': 5.07}
+[INFO|trainer.py:3376] 2024-03-24 11:57:15,137 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 11:57:15,137 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 11:57:15,137 >>   Batch size = 64
+{'eval_loss': 4.517890453338623, 'eval_accuracy': 0.251366026509038, 'eval_runtime': 81.4563, 'eval_samples_per_second': 218.547, 'eval_steps_per_second': 0.859, 'epoch': 5.07}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 11:58:40,232 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-23000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 11:58:40,235 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-23000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 11:58:42,756 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-20000] due to args.save_total_limit
+{'loss': 4.8379, 'grad_norm': 0.3656073212623596, 'learning_rate': 0.0004836989360327142, 'epoch': 5.12}
+[INFO|trainer.py:3376] 2024-03-24 12:04:38,831 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:04:38,831 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:04:38,831 >>   Batch size = 64
+{'eval_loss': 4.5420637130737305, 'eval_accuracy': 0.24713784660181326, 'eval_runtime': 81.168, 'eval_samples_per_second': 219.323, 'eval_steps_per_second': 0.862, 'epoch': 5.12}
+{'loss': 4.8572, 'grad_norm': 1.323707103729248, 'learning_rate': 0.00044562197665278024, 'epoch': 5.16}
+[INFO|trainer.py:3376] 2024-03-24 12:11:56,421 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:11:56,421 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:11:56,421 >>   Batch size = 64
+{'eval_loss': 4.541960716247559, 'eval_accuracy': 0.24741497635108173, 'eval_runtime': 80.878, 'eval_samples_per_second': 220.109, 'eval_steps_per_second': 0.866, 'epoch': 5.16}
+{'loss': 4.8509, 'grad_norm': 0.21954676508903503, 'learning_rate': 0.0003890111564022355, 'epoch': 5.21}
+[INFO|trainer.py:3376] 2024-03-24 12:20:54,677 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:20:54,677 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:20:54,677 >>   Batch size = 64
+{'eval_loss': 4.531004428863525, 'eval_accuracy': 0.24900795024899905, 'eval_runtime': 81.0986, 'eval_samples_per_second': 219.511, 'eval_steps_per_second': 0.863, 'epoch': 5.21}
+{'loss': 4.8484, 'grad_norm': 0.16393913328647614, 'learning_rate': 0.00031922996809639236, 'epoch': 5.25}
+[INFO|trainer.py:3376] 2024-03-24 12:28:12,629 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:28:12,629 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:28:12,629 >>   Batch size = 64
+{'eval_loss': 4.5189127922058105, 'eval_accuracy': 0.2506607252510822, 'eval_runtime': 79.6639, 'eval_samples_per_second': 223.464, 'eval_steps_per_second': 0.879, 'epoch': 5.25}
+{'loss': 4.8511, 'grad_norm': 1.480679988861084, 'learning_rate': 0.00024288970795858996, 'epoch': 5.29}
+[INFO|trainer.py:3376] 2024-03-24 12:37:10,223 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:37:10,223 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:37:10,223 >>   Batch size = 64
+{'eval_loss': 4.5073676109313965, 'eval_accuracy': 0.2529918690285465, 'eval_runtime': 79.9372, 'eval_samples_per_second': 222.7, 'eval_steps_per_second': 0.876, 'epoch': 5.29}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 12:38:35,234 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-24000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 12:38:35,237 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-24000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 12:38:37,738 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-21000] due to args.save_total_limit
+{'loss': 4.8313, 'grad_norm': 0.34180790185928345, 'learning_rate': 0.00016722309996202329, 'epoch': 5.34}
+[INFO|trainer.py:3376] 2024-03-24 12:44:34,245 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:44:34,245 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:44:34,245 >>   Batch size = 64
+{'eval_loss': 4.49528694152832, 'eval_accuracy': 0.25453262688881895, 'eval_runtime': 79.7656, 'eval_samples_per_second': 223.179, 'eval_steps_per_second': 0.878, 'epoch': 5.34}
+{'loss': 4.8295, 'grad_norm': 0.2996336817741394, 'learning_rate': 9.939904408999376e-05, 'epoch': 5.38}
+[INFO|trainer.py:3376] 2024-03-24 12:53:30,522 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 12:53:30,522 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 12:53:30,522 >>   Batch size = 64
+{'eval_loss': 4.485784530639648, 'eval_accuracy': 0.25624300442506187, 'eval_runtime': 80.2748, 'eval_samples_per_second': 221.763, 'eval_steps_per_second': 0.872, 'epoch': 5.38}
+{'loss': 4.8248, 'grad_norm': 0.3460446000099182, 'learning_rate': 4.58434114880732e-05, 'epoch': 5.43}
+[INFO|trainer.py:3376] 2024-03-24 13:00:46,972 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:00:46,972 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:00:46,972 >>   Batch size = 64
+{'eval_loss': 4.47895622253418, 'eval_accuracy': 0.25742847337234914, 'eval_runtime': 80.4975, 'eval_samples_per_second': 221.15, 'eval_steps_per_second': 0.87, 'epoch': 5.43}
+{'loss': 4.8219, 'grad_norm': 0.29265910387039185, 'learning_rate': 1.1630236579517672e-05, 'epoch': 5.47}
+[INFO|trainer.py:3376] 2024-03-24 13:08:04,160 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:08:04,160 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:08:04,160 >>   Batch size = 64
+{'eval_loss': 4.474989891052246, 'eval_accuracy': 0.2579096304181834, 'eval_runtime': 80.0863, 'eval_samples_per_second': 222.285, 'eval_steps_per_second': 0.874, 'epoch': 5.47}
+{'loss': 4.8269, 'grad_norm': 0.10002733767032623, 'learning_rate': 0.0004999990134214724, 'epoch': 5.52}
+[INFO|trainer.py:3376] 2024-03-24 13:15:20,473 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:15:20,473 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:15:20,473 >>   Batch size = 64
+{'eval_loss': 4.476509094238281, 'eval_accuracy': 0.25775858865876455, 'eval_runtime': 81.0985, 'eval_samples_per_second': 219.511, 'eval_steps_per_second': 0.863, 'epoch': 5.52}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 13:16:45,138 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-25000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 13:16:45,141 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-25000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 13:16:47,610 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-22000] due to args.save_total_limit
+{'loss': 4.8535, 'grad_norm': 0.38039490580558777, 'learning_rate': 0.00048794254563233944, 'epoch': 5.56}
+[INFO|trainer.py:3376] 2024-03-24 13:22:43,989 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:22:43,989 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:22:43,989 >>   Batch size = 64
+{'eval_loss': 4.532970905303955, 'eval_accuracy': 0.24788843840189465, 'eval_runtime': 78.5262, 'eval_samples_per_second': 226.701, 'eval_steps_per_second': 0.891, 'epoch': 5.56}
+{'loss': 4.8747, 'grad_norm': 0.35775479674339294, 'learning_rate': 0.0004533426289352315, 'epoch': 5.6}
+[INFO|trainer.py:3376] 2024-03-24 13:30:01,039 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:30:01,039 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:30:01,039 >>   Batch size = 64
+{'eval_loss': 4.524724960327148, 'eval_accuracy': 0.24984571534982217, 'eval_runtime': 79.7616, 'eval_samples_per_second': 223.19, 'eval_steps_per_second': 0.878, 'epoch': 5.6}
+{'loss': 4.8716, 'grad_norm': 0.7947030067443848, 'learning_rate': 0.00039947737171639066, 'epoch': 5.65}
+[INFO|trainer.py:3376] 2024-03-24 13:38:57,202 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:38:57,202 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:38:57,204 >>   Batch size = 64
+{'eval_loss': 4.513960361480713, 'eval_accuracy': 0.2511452900804259, 'eval_runtime': 80.2575, 'eval_samples_per_second': 221.811, 'eval_steps_per_second': 0.872, 'epoch': 5.65}
+{'loss': 4.8479, 'grad_norm': 0.9915564060211182, 'learning_rate': 0.00033145014324002846, 'epoch': 5.69}
+[INFO|trainer.py:3376] 2024-03-24 13:47:54,216 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:47:54,216 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:47:54,216 >>   Batch size = 64
+{'eval_loss': 4.50459098815918, 'eval_accuracy': 0.25285984489968033, 'eval_runtime': 80.7305, 'eval_samples_per_second': 220.512, 'eval_steps_per_second': 0.867, 'epoch': 5.69}
+{'loss': 4.856, 'grad_norm': 0.4619581401348114, 'learning_rate': 0.000255706063883555, 'epoch': 5.74}
+[INFO|trainer.py:3376] 2024-03-24 13:56:51,995 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 13:56:51,995 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 13:56:51,995 >>   Batch size = 64
+{'eval_loss': 4.491367340087891, 'eval_accuracy': 0.25465640638016224, 'eval_runtime': 79.4819, 'eval_samples_per_second': 223.976, 'eval_steps_per_second': 0.881, 'epoch': 5.74}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 14:16:35,237 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-26000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 14:16:35,240 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-26000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 14:17:26,647 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-23000] due to args.save_total_limit
+{'loss': 4.8425, 'grad_norm': 0.14256000518798828, 'learning_rate': 0.00017942137351831022, 'epoch': 5.78}
+[INFO|trainer.py:3376] 2024-03-24 14:23:22,822 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 14:23:22,822 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 14:23:22,822 >>   Batch size = 64
+{'eval_loss': 4.478614807128906, 'eval_accuracy': 0.25659400612653516, 'eval_runtime': 80.8839, 'eval_samples_per_second': 220.093, 'eval_steps_per_second': 0.865, 'epoch': 5.78}
+{'loss': 4.83, 'grad_norm': 0.17253665626049042, 'learning_rate': 0.00010982353125690378, 'epoch': 5.82}
+[INFO|trainer.py:3376] 2024-03-24 14:30:39,882 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 14:30:39,882 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 14:30:39,883 >>   Batch size = 64
+{'eval_loss': 4.468912601470947, 'eval_accuracy': 0.25835934791293047, 'eval_runtime': 78.9438, 'eval_samples_per_second': 225.502, 'eval_steps_per_second': 0.887, 'epoch': 5.82}
+{'loss': 4.8277, 'grad_norm': 0.12101252377033234, 'learning_rate': 5.350646252346278e-05, 'epoch': 5.87}
+[INFO|trainer.py:3376] 2024-03-24 14:37:56,538 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 14:37:56,539 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 14:37:56,539 >>   Batch size = 64
+{'eval_loss': 4.460918426513672, 'eval_accuracy': 0.2595842811918272, 'eval_runtime': 79.4235, 'eval_samples_per_second': 224.14, 'eval_steps_per_second': 0.881, 'epoch': 5.87}
+{'loss': 4.836, 'grad_norm': 0.41948777437210083, 'learning_rate': 1.5805829161332468e-05, 'epoch': 5.91}
+[INFO|trainer.py:3376] 2024-03-24 14:46:53,487 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 14:46:53,487 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 14:46:53,488 >>   Batch size = 64
+{'eval_loss': 4.457150936126709, 'eval_accuracy': 0.2601993311510327, 'eval_runtime': 79.5948, 'eval_samples_per_second': 223.658, 'eval_steps_per_second': 0.879, 'epoch': 5.91}
+{'loss': 4.8243, 'grad_norm': 0.24912381172180176, 'learning_rate': 2.935115155719703e-07, 'epoch': 5.96}
+[INFO|trainer.py:3376] 2024-03-24 14:54:09,771 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 14:54:09,773 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 14:54:09,773 >>   Batch size = 64
+{'eval_loss': 4.4563093185424805, 'eval_accuracy': 0.26033850063241865, 'eval_runtime': 80.0539, 'eval_samples_per_second': 222.375, 'eval_steps_per_second': 0.874, 'epoch': 5.96}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 14:55:33,805 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-27000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 14:55:33,809 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-27000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 14:55:36,306 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-24000] due to args.save_total_limit
+{'loss': 4.8521, 'grad_norm': 0.4040406048297882, 'learning_rate': 0.0004915608031018581, 'epoch': 6.0}
+[INFO|trainer.py:3376] 2024-03-24 15:01:34,381 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:01:34,381 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:01:34,381 >>   Batch size = 64
+{'eval_loss': 4.508404731750488, 'eval_accuracy': 0.25251928640573595, 'eval_runtime': 79.1911, 'eval_samples_per_second': 224.798, 'eval_steps_per_second': 0.884, 'epoch': 6.0}
+{'loss': 4.8129, 'grad_norm': 0.28719663619995117, 'learning_rate': 0.0004605288633572348, 'epoch': 6.04}
+[INFO|trainer.py:3376] 2024-03-24 15:10:30,958 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:10:30,959 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:10:30,959 >>   Batch size = 64
+{'eval_loss': 4.516646862030029, 'eval_accuracy': 0.2512456548012042, 'eval_runtime': 78.2603, 'eval_samples_per_second': 227.472, 'eval_steps_per_second': 0.894, 'epoch': 6.04}
+{'loss': 4.8223, 'grad_norm': 0.4656484127044678, 'learning_rate': 0.00040955073592207123, 'epoch': 6.09}
+[INFO|trainer.py:3376] 2024-03-24 15:17:47,327 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:17:47,327 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:17:47,327 >>   Batch size = 64
+{'eval_loss': 4.513192653656006, 'eval_accuracy': 0.2515278412614867, 'eval_runtime': 79.738, 'eval_samples_per_second': 223.256, 'eval_steps_per_second': 0.878, 'epoch': 6.09}
+{'loss': 4.8295, 'grad_norm': 0.9989855885505676, 'learning_rate': 0.0003434562540159972, 'epoch': 6.13}
+[INFO|trainer.py:3376] 2024-03-24 15:25:03,258 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:25:03,258 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:25:03,258 >>   Batch size = 64
+{'eval_loss': 4.499166488647461, 'eval_accuracy': 0.25399507652232833, 'eval_runtime': 79.7269, 'eval_samples_per_second': 223.287, 'eval_steps_per_second': 0.878, 'epoch': 6.13}
+{'loss': 4.8208, 'grad_norm': 0.893942654132843, 'learning_rate': 0.0002685074233345018, 'epoch': 6.18}
+[INFO|trainer.py:3376] 2024-03-24 15:32:19,719 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:32:19,719 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:32:19,720 >>   Batch size = 64
+{'eval_loss': 4.486593723297119, 'eval_accuracy': 0.25598643130535037, 'eval_runtime': 179.5031, 'eval_samples_per_second': 99.174, 'eval_steps_per_second': 0.39, 'epoch': 6.18}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 15:35:22,478 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-28000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 15:35:22,482 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-28000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 15:35:25,154 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-25000] due to args.save_total_limit
+{'loss': 4.8075, 'grad_norm': 0.27805814146995544, 'learning_rate': 0.00019180513930883524, 'epoch': 6.22}
+[INFO|trainer.py:3376] 2024-03-24 15:41:21,766 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:41:21,766 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:41:21,766 >>   Batch size = 64
+{'eval_loss': 4.476247310638428, 'eval_accuracy': 0.2578248755444484, 'eval_runtime': 79.29, 'eval_samples_per_second': 224.518, 'eval_steps_per_second': 0.883, 'epoch': 6.22}
+{'loss': 4.7923, 'grad_norm': 0.0981430634856224, 'learning_rate': 0.00012061642523011349, 'epoch': 6.27}
+[INFO|trainer.py:3376] 2024-03-24 15:50:19,316 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:50:19,317 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:50:19,317 >>   Batch size = 64
+{'eval_loss': 4.465019702911377, 'eval_accuracy': 0.25965749357303025, 'eval_runtime': 79.509, 'eval_samples_per_second': 223.899, 'eval_steps_per_second': 0.88, 'epoch': 6.27}
+{'loss': 4.7943, 'grad_norm': 0.6599658727645874, 'learning_rate': 6.168593088088365e-05, 'epoch': 6.31}
+[INFO|trainer.py:3376] 2024-03-24 15:57:36,272 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 15:57:36,273 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 15:57:36,273 >>   Batch size = 64
+{'eval_loss': 4.455686092376709, 'eval_accuracy': 0.2611336134751235, 'eval_runtime': 79.3405, 'eval_samples_per_second': 224.375, 'eval_steps_per_second': 0.882, 'epoch': 6.31}
+{'loss': 4.7915, 'grad_norm': 0.09485867619514465, 'learning_rate': 2.0596922528024753e-05, 'epoch': 6.35}
+[INFO|trainer.py:3376] 2024-03-24 16:04:52,171 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:04:52,171 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:04:52,171 >>   Batch size = 64
+{'eval_loss': 4.451508045196533, 'eval_accuracy': 0.2618728826396735, 'eval_runtime': 79.8501, 'eval_samples_per_second': 222.943, 'eval_steps_per_second': 0.877, 'epoch': 6.35}
+{'loss': 4.7931, 'grad_norm': 0.0942590981721878, 'learning_rate': 1.2423061586496476e-06, 'epoch': 6.4}
+[INFO|trainer.py:3376] 2024-03-24 16:13:49,582 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:13:49,582 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:13:49,582 >>   Batch size = 64
+{'eval_loss': 4.4500017166137695, 'eval_accuracy': 0.2620681156562149, 'eval_runtime': 79.5949, 'eval_samples_per_second': 223.658, 'eval_steps_per_second': 0.879, 'epoch': 6.4}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 16:15:12,524 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-29000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 16:15:12,528 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-29000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 16:15:15,038 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-26000] due to args.save_total_limit
+{'loss': 4.8186, 'grad_norm': 0.3721272945404053, 'learning_rate': 0.0004945441990657629, 'epoch': 6.44}
+[INFO|trainer.py:3376] 2024-03-24 16:21:11,525 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:21:11,525 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:21:11,525 >>   Batch size = 64
+{'eval_loss': 4.496838092803955, 'eval_accuracy': 0.2544677690736391, 'eval_runtime': 79.393, 'eval_samples_per_second': 224.226, 'eval_steps_per_second': 0.882, 'epoch': 6.44}
+{'loss': 4.8305, 'grad_norm': 0.4040428102016449, 'learning_rate': 0.0004671617933132415, 'epoch': 6.49}
+[INFO|trainer.py:3376] 2024-03-24 16:28:28,181 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:28:28,181 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:28:28,182 >>   Batch size = 64
+{'eval_loss': 4.499326229095459, 'eval_accuracy': 0.2536201104077886, 'eval_runtime': 79.2115, 'eval_samples_per_second': 224.74, 'eval_steps_per_second': 0.884, 'epoch': 6.49}
+{'loss': 4.8358, 'grad_norm': 0.4401031732559204, 'learning_rate': 0.00041920477456197636, 'epoch': 6.53}
+[INFO|trainer.py:3376] 2024-03-24 16:35:44,996 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:35:44,996 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:35:44,997 >>   Batch size = 64
+{'eval_loss': 4.492030620574951, 'eval_accuracy': 0.2543192556697273, 'eval_runtime': 79.2328, 'eval_samples_per_second': 224.68, 'eval_steps_per_second': 0.883, 'epoch': 6.53}
+{'loss': 4.8382, 'grad_norm': 0.8608337044715881, 'learning_rate': 0.00035521674639124704, 'epoch': 6.57}
+[INFO|trainer.py:3376] 2024-03-24 16:43:01,390 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:43:01,390 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:43:01,390 >>   Batch size = 64
+{'eval_loss': 4.484081268310547, 'eval_accuracy': 0.2561110902246961, 'eval_runtime': 78.4598, 'eval_samples_per_second': 226.893, 'eval_steps_per_second': 0.892, 'epoch': 6.57}
+{'loss': 4.8332, 'grad_norm': 0.31773027777671814, 'learning_rate': 0.0002812601422341133, 'epoch': 6.62}
+[INFO|trainer.py:3376] 2024-03-24 16:50:17,744 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:50:17,744 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:50:17,744 >>   Batch size = 64
+{'eval_loss': 4.472416877746582, 'eval_accuracy': 0.2575433486551677, 'eval_runtime': 79.3714, 'eval_samples_per_second': 224.287, 'eval_steps_per_second': 0.882, 'epoch': 6.62}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 16:51:42,147 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-30000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 16:51:42,151 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-30000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 16:51:44,594 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-27000] due to args.save_total_limit
+{'loss': 4.8208, 'grad_norm': 0.4959224462509155, 'learning_rate': 0.0002043418507610872, 'epoch': 6.66}
+[INFO|trainer.py:3376] 2024-03-24 16:57:41,242 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 16:57:41,242 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 16:57:41,242 >>   Batch size = 64
+{'eval_loss': 4.460984706878662, 'eval_accuracy': 0.2594885334680617, 'eval_runtime': 79.2811, 'eval_samples_per_second': 224.543, 'eval_steps_per_second': 0.883, 'epoch': 6.66}
+{'loss': 4.8032, 'grad_norm': 0.30756014585494995, 'learning_rate': 0.00013174936050979908, 'epoch': 6.71}
+[INFO|trainer.py:3376] 2024-03-24 17:04:57,280 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:04:57,280 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:04:57,280 >>   Batch size = 64
+{'eval_loss': 4.447676658630371, 'eval_accuracy': 0.26171194731522723, 'eval_runtime': 78.4107, 'eval_samples_per_second': 227.035, 'eval_steps_per_second': 0.893, 'epoch': 6.71}
+{'loss': 4.7997, 'grad_norm': 0.09605976939201355, 'learning_rate': 7.036031957270711e-05, 'epoch': 6.75}
+[INFO|trainer.py:3376] 2024-03-24 17:12:13,757 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:12:13,757 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:12:13,757 >>   Batch size = 64
+{'eval_loss': 4.439630508422852, 'eval_accuracy': 0.2632009288518562, 'eval_runtime': 78.2892, 'eval_samples_per_second': 227.388, 'eval_steps_per_second': 0.894, 'epoch': 6.75}
+{'loss': 4.796, 'grad_norm': 0.1282692402601242, 'learning_rate': 2.5990924898520534e-05, 'epoch': 6.79}
+[INFO|trainer.py:3376] 2024-03-24 17:19:30,544 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:19:30,544 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:19:30,544 >>   Batch size = 64
+{'eval_loss': 4.4343953132629395, 'eval_accuracy': 0.26387654941472966, 'eval_runtime': 77.9743, 'eval_samples_per_second': 228.306, 'eval_steps_per_second': 0.898, 'epoch': 6.79}
+{'loss': 4.7901, 'grad_norm': 0.12203336507081985, 'learning_rate': 2.844876919447181e-06, 'epoch': 6.84}
+[INFO|trainer.py:3376] 2024-03-24 17:26:46,627 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:26:46,627 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:26:46,627 >>   Batch size = 64
+{'eval_loss': 4.43264627456665, 'eval_accuracy': 0.2642304092572109, 'eval_runtime': 79.4739, 'eval_samples_per_second': 223.998, 'eval_steps_per_second': 0.881, 'epoch': 6.84}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 17:28:09,972 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-31000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 17:28:09,976 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-31000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 17:28:12,408 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-28000] due to args.save_total_limit
+{'loss': 4.8247, 'grad_norm': 0.10339687019586563, 'learning_rate': 0.0004968848926689594, 'epoch': 6.88}
+[INFO|trainer.py:3376] 2024-03-24 17:34:08,760 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:34:08,760 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:34:08,760 >>   Batch size = 64
+{'eval_loss': 4.477949142456055, 'eval_accuracy': 0.25646604935218037, 'eval_runtime': 79.2669, 'eval_samples_per_second': 224.583, 'eval_steps_per_second': 0.883, 'epoch': 6.88}
+{'loss': 4.8373, 'grad_norm': 2.0080113410949707, 'learning_rate': 0.00047322398637280537, 'epoch': 6.93}
+[INFO|trainer.py:3376] 2024-03-24 17:41:25,279 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:41:25,280 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:41:25,280 >>   Batch size = 64
+{'eval_loss': 4.4841461181640625, 'eval_accuracy': 0.25530960152897353, 'eval_runtime': 79.6533, 'eval_samples_per_second': 223.493, 'eval_steps_per_second': 0.879, 'epoch': 6.93}
+{'loss': 4.8285, 'grad_norm': 0.4842897653579712, 'learning_rate': 0.0004284141152353421, 'epoch': 6.97}
+[INFO|trainer.py:3376] 2024-03-24 17:48:42,806 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:48:42,806 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:48:42,806 >>   Batch size = 64
+{'eval_loss': 4.4777679443359375, 'eval_accuracy': 0.2560684379665778, 'eval_runtime': 78.1195, 'eval_samples_per_second': 227.882, 'eval_steps_per_second': 0.896, 'epoch': 6.97}
+{'loss': 4.8224, 'grad_norm': 0.14600737392902374, 'learning_rate': 0.0003667007118582756, 'epoch': 7.02}
+[INFO|trainer.py:3376] 2024-03-24 17:57:39,835 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 17:57:39,835 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 17:57:39,835 >>   Batch size = 64
+{'eval_loss': 4.4774980545043945, 'eval_accuracy': 0.2570078869301829, 'eval_runtime': 79.8699, 'eval_samples_per_second': 222.888, 'eval_steps_per_second': 0.876, 'epoch': 7.02}
+{'loss': 4.7805, 'grad_norm': 0.4265090823173523, 'learning_rate': 0.0002939307043404484, 'epoch': 7.06}
+[INFO|trainer.py:3376] 2024-03-24 18:04:56,168 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:04:56,168 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:04:56,168 >>   Batch size = 64
+{'eval_loss': 4.466977596282959, 'eval_accuracy': 0.25910422343099604, 'eval_runtime': 79.5617, 'eval_samples_per_second': 223.751, 'eval_steps_per_second': 0.88, 'epoch': 7.06}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 18:06:20,317 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-32000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 18:06:20,321 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-32000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 18:06:22,894 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-29000] due to args.save_total_limit
+{'loss': 4.7728, 'grad_norm': 0.37754881381988525, 'learning_rate': 0.00021699855933620367, 'epoch': 7.1}
+[INFO|trainer.py:3376] 2024-03-24 18:12:19,400 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:12:19,401 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:12:19,401 >>   Batch size = 64
+{'eval_loss': 4.455592155456543, 'eval_accuracy': 0.2611233901245952, 'eval_runtime': 79.7971, 'eval_samples_per_second': 223.091, 'eval_steps_per_second': 0.877, 'epoch': 7.1}
+{'loss': 4.7604, 'grad_norm': 0.8703383207321167, 'learning_rate': 0.0001431930779116763, 'epoch': 7.15}
+[INFO|trainer.py:3376] 2024-03-24 18:19:36,112 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:19:36,113 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:19:36,113 >>   Batch size = 64
+{'eval_loss': 4.445762634277344, 'eval_accuracy': 0.2629041219010331, 'eval_runtime': 79.2742, 'eval_samples_per_second': 224.562, 'eval_steps_per_second': 0.883, 'epoch': 7.15}
+{'loss': 4.7656, 'grad_norm': 0.117415651679039, 'learning_rate': 7.950683087928926e-05, 'epoch': 7.19}
+[INFO|trainer.py:3376] 2024-03-24 18:26:51,975 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:26:51,975 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:26:51,975 >>   Batch size = 64
+{'eval_loss': 4.436679363250732, 'eval_accuracy': 0.26453436156055377, 'eval_runtime': 79.328, 'eval_samples_per_second': 224.41, 'eval_steps_per_second': 0.882, 'epoch': 7.19}
+{'loss': 4.7505, 'grad_norm': 0.33619505167007446, 'learning_rate': 3.197365994776269e-05, 'epoch': 7.24}
+[INFO|trainer.py:3376] 2024-03-24 18:34:08,563 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:34:08,563 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:34:08,563 >>   Batch size = 64
+{'eval_loss': 4.431349754333496, 'eval_accuracy': 0.265496565723722, 'eval_runtime': 79.3678, 'eval_samples_per_second': 224.298, 'eval_steps_per_second': 0.882, 'epoch': 7.24}
+{'loss': 4.749, 'grad_norm': 0.1710672527551651, 'learning_rate': 5.097011978526189e-06, 'epoch': 7.28}
+[INFO|trainer.py:3376] 2024-03-24 18:41:25,230 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 18:41:25,230 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 18:41:25,230 >>   Batch size = 64
+{'eval_loss': 4.4293084144592285, 'eval_accuracy': 0.26577314583048894, 'eval_runtime': 79.0328, 'eval_samples_per_second': 225.248, 'eval_steps_per_second': 0.886, 'epoch': 7.28}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 18:52:49,378 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-33000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 18:52:49,382 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-33000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 19:02:50,708 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-30000] due to args.save_total_limit
+{'loss': 4.7523, 'grad_norm': 0.5590619444847107, 'learning_rate': 0.0004985767321838252, 'epoch': 7.32}
+[INFO|trainer.py:3376] 2024-03-24 19:08:46,582 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:08:46,582 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:08:46,582 >>   Batch size = 64
+{'eval_loss': 4.462103843688965, 'eval_accuracy': 0.26022241613609676, 'eval_runtime': 79.3463, 'eval_samples_per_second': 224.358, 'eval_steps_per_second': 0.882, 'epoch': 7.32}
+{'loss': 4.7973, 'grad_norm': 0.32014191150665283, 'learning_rate': 0.0004786995100958778, 'epoch': 7.37}
+[INFO|trainer.py:3376] 2024-03-24 19:16:02,436 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:16:02,437 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:16:02,439 >>   Batch size = 64
+{'eval_loss': 4.472568511962891, 'eval_accuracy': 0.2576781209965414, 'eval_runtime': 79.5671, 'eval_samples_per_second': 223.736, 'eval_steps_per_second': 0.88, 'epoch': 7.37}
+{'loss': 4.8038, 'grad_norm': 0.14153265953063965, 'learning_rate': 0.00043715455428076515, 'epoch': 7.41}
+[INFO|trainer.py:3376] 2024-03-24 19:23:18,578 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:23:18,578 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:23:18,578 >>   Batch size = 64
+{'eval_loss': 4.474201679229736, 'eval_accuracy': 0.2574086862422943, 'eval_runtime': 78.0544, 'eval_samples_per_second': 228.072, 'eval_steps_per_second': 0.897, 'epoch': 7.41}
+{'loss': 4.8025, 'grad_norm': 3.5320639610290527, 'learning_rate': 0.00037787796866774973, 'epoch': 7.46}
+[INFO|trainer.py:3376] 2024-03-24 19:30:34,892 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:30:34,892 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:30:34,892 >>   Batch size = 64
+{'eval_loss': 4.46807861328125, 'eval_accuracy': 0.25850258474882765, 'eval_runtime': 79.1167, 'eval_samples_per_second': 225.009, 'eval_steps_per_second': 0.885, 'epoch': 7.46}
+{'loss': 4.7911, 'grad_norm': 1.417837381362915, 'learning_rate': 0.00030648580933312044, 'epoch': 7.5}
+[INFO|trainer.py:3376] 2024-03-24 19:37:51,097 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:37:51,097 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:37:51,097 >>   Batch size = 64
+{'eval_loss': 4.454878330230713, 'eval_accuracy': 0.2606476195752758, 'eval_runtime': 79.3267, 'eval_samples_per_second': 224.414, 'eval_steps_per_second': 0.882, 'epoch': 7.5}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 19:40:54,094 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-34000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 19:40:54,097 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-34000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 19:40:56,795 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-31000] due to args.save_total_limit
+{'loss': 4.8002, 'grad_norm': 0.10293706506490707, 'learning_rate': 0.00022974200112315968, 'epoch': 7.54}
+[INFO|trainer.py:3376] 2024-03-24 19:46:53,448 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:46:53,448 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:46:53,448 >>   Batch size = 64
+{'eval_loss': 4.4412760734558105, 'eval_accuracy': 0.2629152246795639, 'eval_runtime': 79.4004, 'eval_samples_per_second': 224.205, 'eval_steps_per_second': 0.882, 'epoch': 7.54}
+{'loss': 4.7895, 'grad_norm': 0.395759254693985, 'learning_rate': 0.0001549175014649513, 'epoch': 7.59}
+[INFO|trainer.py:3376] 2024-03-24 19:54:10,080 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 19:54:10,080 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 19:54:10,080 >>   Batch size = 64
+{'eval_loss': 4.431824684143066, 'eval_accuracy': 0.26475729655917196, 'eval_runtime': 79.1067, 'eval_samples_per_second': 225.038, 'eval_steps_per_second': 0.885, 'epoch': 7.59}
+{'loss': 4.7904, 'grad_norm': 0.6060778498649597, 'learning_rate': 8.910142626513934e-05, 'epoch': 7.63}
+[INFO|trainer.py:3376] 2024-03-24 20:01:26,742 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:01:26,742 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:01:26,742 >>   Batch size = 64
+{'eval_loss': 4.422053813934326, 'eval_accuracy': 0.26638149015117585, 'eval_runtime': 79.2212, 'eval_samples_per_second': 224.712, 'eval_steps_per_second': 0.884, 'epoch': 7.63}
+{'loss': 4.7774, 'grad_norm': 0.09291432052850723, 'learning_rate': 3.852940406441788e-05, 'epoch': 7.68}
+[INFO|trainer.py:3376] 2024-03-24 20:08:44,093 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:08:44,093 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:08:44,095 >>   Batch size = 64
+{'eval_loss': 4.416304111480713, 'eval_accuracy': 0.2673621623023953, 'eval_runtime': 79.4533, 'eval_samples_per_second': 224.056, 'eval_steps_per_second': 0.881, 'epoch': 7.68}
+{'loss': 4.7703, 'grad_norm': 0.11155726760625839, 'learning_rate': 7.992792354677119e-06, 'epoch': 7.72}
+[INFO|trainer.py:3376] 2024-03-24 20:16:00,267 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:16:00,267 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:16:00,267 >>   Batch size = 64
+{'eval_loss': 4.413884162902832, 'eval_accuracy': 0.26786486533428927, 'eval_runtime': 79.2225, 'eval_samples_per_second': 224.709, 'eval_steps_per_second': 0.884, 'epoch': 7.72}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 20:19:04,222 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-35000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 20:19:04,225 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-35000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 20:19:06,690 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-32000] due to args.save_total_limit
+{'loss': 4.7689, 'grad_norm': 0.4017554819583893, 'learning_rate': 0.0004996152711779589, 'epoch': 7.77}
+[INFO|trainer.py:3376] 2024-03-24 20:25:02,884 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:25:02,884 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:25:02,884 >>   Batch size = 64
+{'eval_loss': 4.440669059753418, 'eval_accuracy': 0.2635151045057274, 'eval_runtime': 79.4396, 'eval_samples_per_second': 224.095, 'eval_steps_per_second': 0.881, 'epoch': 7.77}
+{'loss': 4.801, 'grad_norm': 0.34722962975502014, 'learning_rate': 0.00048357397390588465, 'epoch': 7.81}
+[INFO|trainer.py:3376] 2024-03-24 20:32:19,364 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:32:19,364 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:32:19,364 >>   Batch size = 64
+{'eval_loss': 4.4605488777160645, 'eval_accuracy': 0.25950128517409704, 'eval_runtime': 79.2812, 'eval_samples_per_second': 224.542, 'eval_steps_per_second': 0.883, 'epoch': 7.81}
+{'loss': 4.8016, 'grad_norm': 0.7010796666145325, 'learning_rate': 0.0004454031203874206, 'epoch': 7.85}
+[INFO|trainer.py:3376] 2024-03-24 20:39:35,604 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:39:35,604 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:39:35,604 >>   Batch size = 64
+{'eval_loss': 4.460958957672119, 'eval_accuracy': 0.25956009692176013, 'eval_runtime': 79.0885, 'eval_samples_per_second': 225.09, 'eval_steps_per_second': 0.885, 'epoch': 7.85}
+{'loss': 4.8029, 'grad_norm': 0.49231335520744324, 'learning_rate': 0.0003887191411511235, 'epoch': 7.9}
+[INFO|trainer.py:3376] 2024-03-24 20:46:52,255 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:46:52,255 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:46:52,255 >>   Batch size = 64
+{'eval_loss': 4.4513750076293945, 'eval_accuracy': 0.26064509121976887, 'eval_runtime': 79.8009, 'eval_samples_per_second': 223.08, 'eval_steps_per_second': 0.877, 'epoch': 7.9}
+{'loss': 4.7967, 'grad_norm': 0.2876608073711395, 'learning_rate': 0.0003188924603320226, 'epoch': 7.94}
+[INFO|trainer.py:3376] 2024-03-24 20:54:09,365 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 20:54:09,366 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 20:54:09,366 >>   Batch size = 64
+{'eval_loss': 4.442750930786133, 'eval_accuracy': 0.26229731657935046, 'eval_runtime': 79.4918, 'eval_samples_per_second': 223.948, 'eval_steps_per_second': 0.881, 'epoch': 7.94}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 21:03:02,414 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-36000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 21:03:02,418 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-36000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 21:07:14,698 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-33000] due to args.save_total_limit
+{'loss': 4.7971, 'grad_norm': 0.22862455248832703, 'learning_rate': 0.00024253868426178456, 'epoch': 7.99}
+[INFO|trainer.py:3376] 2024-03-24 21:13:11,482 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:13:11,483 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:13:11,483 >>   Batch size = 64
+{'eval_loss': 4.429853439331055, 'eval_accuracy': 0.2644935780869407, 'eval_runtime': 79.3835, 'eval_samples_per_second': 224.253, 'eval_steps_per_second': 0.882, 'epoch': 7.99}
+{'loss': 4.7531, 'grad_norm': 0.7071111798286438, 'learning_rate': 0.00016689181745690868, 'epoch': 8.03}
+[INFO|trainer.py:3376] 2024-03-24 21:20:29,323 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:20:29,324 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:20:29,324 >>   Batch size = 64
+{'eval_loss': 4.42880392074585, 'eval_accuracy': 0.2660204849561748, 'eval_runtime': 79.3698, 'eval_samples_per_second': 224.292, 'eval_steps_per_second': 0.882, 'epoch': 8.03}
+{'loss': 4.7185, 'grad_norm': 0.7463630437850952, 'learning_rate': 9.911888955613188e-05, 'epoch': 8.07}
+[INFO|trainer.py:3376] 2024-03-24 21:27:46,042 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:27:46,042 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:27:46,042 >>   Batch size = 64
+{'eval_loss': 4.421482086181641, 'eval_accuracy': 0.2674977041432711, 'eval_runtime': 79.8385, 'eval_samples_per_second': 222.975, 'eval_steps_per_second': 0.877, 'epoch': 8.07}
+{'loss': 4.7124, 'grad_norm': 0.1259281486272812, 'learning_rate': 4.5640927675118435e-05, 'epoch': 8.12}
+[INFO|trainer.py:3376] 2024-03-24 21:36:41,905 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:36:41,905 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:36:41,905 >>   Batch size = 64
+{'eval_loss': 4.417201042175293, 'eval_accuracy': 0.2684672735159597, 'eval_runtime': 179.7964, 'eval_samples_per_second': 99.012, 'eval_steps_per_second': 0.389, 'epoch': 8.12}
+{'loss': 4.7154, 'grad_norm': 0.3009824752807617, 'learning_rate': 1.1524607460976555e-05, 'epoch': 8.16}
+[INFO|trainer.py:3376] 2024-03-24 21:45:38,297 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:45:38,298 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:45:38,298 >>   Batch size = 64
+{'eval_loss': 4.414366722106934, 'eval_accuracy': 0.2690008664564394, 'eval_runtime': 79.3133, 'eval_samples_per_second': 224.452, 'eval_steps_per_second': 0.883, 'epoch': 8.16}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 21:47:02,223 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-37000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 21:47:02,226 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-37000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 21:47:04,732 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-34000] due to args.save_total_limit
+{'loss': 4.7212, 'grad_norm': 12.170061111450195, 'learning_rate': 0.0004999977802001377, 'epoch': 8.21}
+[INFO|trainer.py:3376] 2024-03-24 21:53:01,660 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 21:53:01,660 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 21:53:01,660 >>   Batch size = 64
+{'eval_loss': 4.421084880828857, 'eval_accuracy': 0.2683868058537366, 'eval_runtime': 79.1755, 'eval_samples_per_second': 224.842, 'eval_steps_per_second': 0.884, 'epoch': 8.21}
+{'loss': 4.7527, 'grad_norm': 0.6739580631256104, 'learning_rate': 0.00048783456691051975, 'epoch': 8.25}
+[INFO|trainer.py:3376] 2024-03-24 22:00:18,833 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:00:18,833 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:00:18,833 >>   Batch size = 64
+{'eval_loss': 4.456148624420166, 'eval_accuracy': 0.2607854699146581, 'eval_runtime': 79.4344, 'eval_samples_per_second': 224.11, 'eval_steps_per_second': 0.881, 'epoch': 8.25}
+{'loss': 4.7677, 'grad_norm': 0.7685383558273315, 'learning_rate': 0.0004531381349674279, 'epoch': 8.29}
+[INFO|trainer.py:3376] 2024-03-24 22:07:35,366 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:07:35,366 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:07:35,366 >>   Batch size = 64
+{'eval_loss': 4.459397792816162, 'eval_accuracy': 0.2607040128959322, 'eval_runtime': 79.3712, 'eval_samples_per_second': 224.288, 'eval_steps_per_second': 0.882, 'epoch': 8.29}
+{'loss': 4.7801, 'grad_norm': 0.3421250581741333, 'learning_rate': 0.00039919573692470667, 'epoch': 8.34}
+[INFO|trainer.py:3376] 2024-03-24 22:16:31,504 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:16:31,504 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:16:31,504 >>   Batch size = 64
+{'eval_loss': 4.4513139724731445, 'eval_accuracy': 0.2614076652263835, 'eval_runtime': 79.9349, 'eval_samples_per_second': 222.706, 'eval_steps_per_second': 0.876, 'epoch': 8.34}
+{'loss': 4.7692, 'grad_norm': 0.6435883641242981, 'learning_rate': 0.0003311180506185455, 'epoch': 8.38}
+[INFO|trainer.py:3376] 2024-03-24 22:23:48,350 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:23:48,350 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:23:48,350 >>   Batch size = 64
+{'eval_loss': 4.440283298492432, 'eval_accuracy': 0.2633768144523439, 'eval_runtime': 79.1155, 'eval_samples_per_second': 225.013, 'eval_steps_per_second': 0.885, 'epoch': 8.38}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 22:25:13,059 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-38000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 22:25:13,063 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-38000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 22:25:15,495 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-36000] due to args.save_total_limit
+{'loss': 4.7666, 'grad_norm': 0.501370370388031, 'learning_rate': 0.00025535497696488866, 'epoch': 8.43}
+[INFO|trainer.py:3376] 2024-03-24 22:31:11,788 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:31:11,788 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:31:11,788 >>   Batch size = 64
+{'eval_loss': 4.431056022644043, 'eval_accuracy': 0.2650206852459024, 'eval_runtime': 79.2816, 'eval_samples_per_second': 224.542, 'eval_steps_per_second': 0.883, 'epoch': 8.43}
+{'loss': 4.7554, 'grad_norm': 1.2640657424926758, 'learning_rate': 0.00017908455541642578, 'epoch': 8.47}
+[INFO|trainer.py:3376] 2024-03-24 22:38:28,452 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:38:28,452 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:38:28,452 >>   Batch size = 64
+{'eval_loss': 4.421667575836182, 'eval_accuracy': 0.2666075031478026, 'eval_runtime': 79.1963, 'eval_samples_per_second': 224.783, 'eval_steps_per_second': 0.884, 'epoch': 8.47}
+{'loss': 4.7516, 'grad_norm': 0.5944293737411499, 'learning_rate': 0.0001095328932117683, 'epoch': 8.52}
+[INFO|trainer.py:3376] 2024-03-24 22:45:45,190 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:45:45,190 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:45:45,190 >>   Batch size = 64
+{'eval_loss': 4.4115471839904785, 'eval_accuracy': 0.2683300827475793, 'eval_runtime': 79.3026, 'eval_samples_per_second': 224.482, 'eval_steps_per_second': 0.883, 'epoch': 8.52}
+{'loss': 4.7517, 'grad_norm': 0.11264557391405106, 'learning_rate': 5.32895405266052e-05, 'epoch': 8.56}
+[INFO|trainer.py:3376] 2024-03-24 22:54:41,756 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 22:54:41,756 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 22:54:41,756 >>   Batch size = 64
+{'eval_loss': 4.405102729797363, 'eval_accuracy': 0.26951401269586234, 'eval_runtime': 79.2614, 'eval_samples_per_second': 224.599, 'eval_steps_per_second': 0.883, 'epoch': 8.56}
+{'loss': 4.7473, 'grad_norm': 0.13356375694274902, 'learning_rate': 1.5683175106657204e-05, 'epoch': 8.6}
+[INFO|trainer.py:3376] 2024-03-24 23:01:57,460 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:01:57,460 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:01:57,460 >>   Batch size = 64
+{'eval_loss': 4.402400970458984, 'eval_accuracy': 0.270119718732542, 'eval_runtime': 79.4644, 'eval_samples_per_second': 224.025, 'eval_steps_per_second': 0.881, 'epoch': 8.6}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 23:03:21,657 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-39000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 23:03:21,660 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-39000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 23:03:24,159 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-35000] due to args.save_total_limit
+{'loss': 4.7368, 'grad_norm': 0.12060581147670746, 'learning_rate': 2.767460462371196e-07, 'epoch': 8.65}
+[INFO|trainer.py:3376] 2024-03-24 23:09:20,463 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:09:20,463 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:09:20,463 >>   Batch size = 64
+{'eval_loss': 4.401571750640869, 'eval_accuracy': 0.2702558102159194, 'eval_runtime': 79.3186, 'eval_samples_per_second': 224.437, 'eval_steps_per_second': 0.883, 'epoch': 8.65}
+{'loss': 4.7628, 'grad_norm': 0.42926934361457825, 'learning_rate': 0.000491470091570883, 'epoch': 8.69}
+[INFO|trainer.py:3376] 2024-03-24 23:16:37,190 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:16:37,190 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:16:37,190 >>   Batch size = 64
+{'eval_loss': 4.443182468414307, 'eval_accuracy': 0.2625991802411875, 'eval_runtime': 179.0571, 'eval_samples_per_second': 99.421, 'eval_steps_per_second': 0.391, 'epoch': 8.69}
+{'loss': 4.7828, 'grad_norm': 1.015149712562561, 'learning_rate': 0.0004603392691307576, 'epoch': 8.74}
+[INFO|trainer.py:3376] 2024-03-24 23:25:33,880 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:25:33,880 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:25:33,880 >>   Batch size = 64
+{'eval_loss': 4.444850444793701, 'eval_accuracy': 0.2622917102258349, 'eval_runtime': 79.2946, 'eval_samples_per_second': 224.505, 'eval_steps_per_second': 0.883, 'epoch': 8.74}
+{'loss': 4.7896, 'grad_norm': 0.3387964069843292, 'learning_rate': 0.0004092802217723494, 'epoch': 8.78}
+[INFO|trainer.py:3376] 2024-03-24 23:34:30,349 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:34:30,350 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:34:30,350 >>   Batch size = 64
+{'eval_loss': 4.440016746520996, 'eval_accuracy': 0.2631423369611937, 'eval_runtime': 79.1577, 'eval_samples_per_second': 224.893, 'eval_steps_per_second': 0.884, 'epoch': 8.78}
+{'loss': 4.7669, 'grad_norm': 0.7230139374732971, 'learning_rate': 0.00034313044933140734, 'epoch': 8.82}
+[INFO|trainer.py:3376] 2024-03-24 23:41:46,985 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:41:46,985 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:41:46,985 >>   Batch size = 64
+{'eval_loss': 4.428464889526367, 'eval_accuracy': 0.26492339852313257, 'eval_runtime': 79.2311, 'eval_samples_per_second': 224.685, 'eval_steps_per_second': 0.883, 'epoch': 8.82}
+[INFO|tokenization_utils_base.py:2459] 2024-03-24 23:43:10,754 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-40000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-24 23:43:10,758 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-40000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-24 23:43:13,248 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-37000] due to args.save_total_limit
+{'loss': 4.7683, 'grad_norm': 0.6304987072944641, 'learning_rate': 0.00026815719590811345, 'epoch': 8.87}
+[INFO|trainer.py:3376] 2024-03-24 23:49:09,550 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:49:09,550 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:49:09,550 >>   Batch size = 64
+{'eval_loss': 4.417280197143555, 'eval_accuracy': 0.266886391753076, 'eval_runtime': 79.5903, 'eval_samples_per_second': 223.671, 'eval_steps_per_second': 0.88, 'epoch': 8.87}
+{'loss': 4.7661, 'grad_norm': 1.863990306854248, 'learning_rate': 0.00019146367082352895, 'epoch': 8.91}
+[INFO|trainer.py:3376] 2024-03-24 23:56:25,378 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-24 23:56:25,378 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-24 23:56:25,378 >>   Batch size = 64
+{'eval_loss': 4.406952857971191, 'eval_accuracy': 0.26874407347972734, 'eval_runtime': 79.3564, 'eval_samples_per_second': 224.33, 'eval_steps_per_second': 0.882, 'epoch': 8.91}
+{'loss': 4.7593, 'grad_norm': 0.25159433484077454, 'learning_rate': 0.00012031606751827087, 'epoch': 8.96}
+[INFO|trainer.py:3376] 2024-03-25 00:03:41,441 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:03:41,441 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:03:41,441 >>   Batch size = 64
+{'eval_loss': 4.396695137023926, 'eval_accuracy': 0.2705160109761409, 'eval_runtime': 79.3679, 'eval_samples_per_second': 224.297, 'eval_steps_per_second': 0.882, 'epoch': 8.96}
+{'loss': 4.7538, 'grad_norm': 0.2078956663608551, 'learning_rate': 6.145514080679788e-05, 'epoch': 9.0}
+[INFO|trainer.py:3376] 2024-03-25 00:11:00,361 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:11:00,361 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:11:00,361 >>   Batch size = 64
+{'eval_loss': 4.392721652984619, 'eval_accuracy': 0.27172687340699864, 'eval_runtime': 80.4206, 'eval_samples_per_second': 221.361, 'eval_steps_per_second': 0.87, 'epoch': 9.0}
+{'loss': 4.684, 'grad_norm': 0.11392740905284882, 'learning_rate': 2.045756589223702e-05, 'epoch': 9.04}
+[INFO|trainer.py:3376] 2024-03-25 00:18:18,094 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:18:18,095 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:18:18,095 >>   Batch size = 64
+{'eval_loss': 4.3993635177612305, 'eval_accuracy': 0.2717188486264764, 'eval_runtime': 80.1519, 'eval_samples_per_second': 222.103, 'eval_steps_per_second': 0.873, 'epoch': 9.04}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 00:19:42,284 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-41000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 00:19:42,288 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-41000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-25 00:19:44,817 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-38000] due to args.save_total_limit
+{'loss': 4.682, 'grad_norm': 0.15699145197868347, 'learning_rate': 1.2075860610552825e-06, 'epoch': 9.09}
+[INFO|trainer.py:3376] 2024-03-25 00:25:41,476 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:25:41,477 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:25:41,477 >>   Batch size = 64
+{'eval_loss': 4.398737907409668, 'eval_accuracy': 0.2719008902229812, 'eval_runtime': 180.6876, 'eval_samples_per_second': 98.524, 'eval_steps_per_second': 0.387, 'epoch': 9.09}
+{'loss': 4.692, 'grad_norm': 1.278327465057373, 'learning_rate': 0.00049447099313045, 'epoch': 9.13}
+[INFO|trainer.py:3376] 2024-03-25 00:34:38,539 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:34:38,539 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:34:38,539 >>   Batch size = 64
+{'eval_loss': 4.439395904541016, 'eval_accuracy': 0.2641635727290256, 'eval_runtime': 79.4509, 'eval_samples_per_second': 224.063, 'eval_steps_per_second': 0.881, 'epoch': 9.13}
+{'loss': 4.753, 'grad_norm': 0.30373117327690125, 'learning_rate': 0.0004669875971128882, 'epoch': 9.18}
+[INFO|trainer.py:3376] 2024-03-25 00:43:35,719 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:43:35,720 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:43:35,720 >>   Batch size = 64
+{'eval_loss': 4.448971748352051, 'eval_accuracy': 0.26264117292830397, 'eval_runtime': 79.6777, 'eval_samples_per_second': 223.425, 'eval_steps_per_second': 0.879, 'epoch': 9.18}
+{'loss': 4.7447, 'grad_norm': 0.12246811389923096, 'learning_rate': 0.0004189460920098796, 'epoch': 9.22}
+[INFO|trainer.py:3376] 2024-03-25 00:50:51,797 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:50:51,797 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:50:51,797 >>   Batch size = 64
+{'eval_loss': 4.4450554847717285, 'eval_accuracy': 0.262959965579188, 'eval_runtime': 80.7301, 'eval_samples_per_second': 220.513, 'eval_steps_per_second': 0.867, 'epoch': 9.22}
+{'loss': 4.7564, 'grad_norm': 1.4661756753921509, 'learning_rate': 0.000354898085911832, 'epoch': 9.27}
+[INFO|trainer.py:3376] 2024-03-25 00:59:49,721 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 00:59:49,721 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 00:59:49,721 >>   Batch size = 64
+{'eval_loss': 4.4377312660217285, 'eval_accuracy': 0.2645557976181132, 'eval_runtime': 78.6458, 'eval_samples_per_second': 226.357, 'eval_steps_per_second': 0.89, 'epoch': 9.27}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 01:01:14,516 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-42000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 01:01:14,520 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-42000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-25 01:01:17,146 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-39000] due to args.save_total_limit
+{'loss': 4.7415, 'grad_norm': 0.1769549697637558, 'learning_rate': 0.000280911694755266, 'epoch': 9.31}
+[INFO|trainer.py:3376] 2024-03-25 01:07:14,067 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:07:14,067 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:07:14,067 >>   Batch size = 64
+{'eval_loss': 4.426856994628906, 'eval_accuracy': 0.26672820464113733, 'eval_runtime': 80.2454, 'eval_samples_per_second': 221.845, 'eval_steps_per_second': 0.872, 'epoch': 9.31}
+{'loss': 4.7429, 'grad_norm': 0.9342959523200989, 'learning_rate': 0.00020399662932768083, 'epoch': 9.35}
+[INFO|trainer.py:3376] 2024-03-25 01:14:32,351 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:14:32,351 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:14:32,351 >>   Batch size = 64
+{'eval_loss': 4.412106037139893, 'eval_accuracy': 0.2685729148047527, 'eval_runtime': 80.5469, 'eval_samples_per_second': 221.014, 'eval_steps_per_second': 0.869, 'epoch': 9.35}
+{'loss': 4.7385, 'grad_norm': 0.25137442350387573, 'learning_rate': 0.00013144007252069567, 'epoch': 9.4}
+[INFO|trainer.py:3376] 2024-03-25 01:21:50,776 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:21:50,776 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:21:50,777 >>   Batch size = 64
+{'eval_loss': 4.403415679931641, 'eval_accuracy': 0.2703937704838019, 'eval_runtime': 79.6161, 'eval_samples_per_second': 223.598, 'eval_steps_per_second': 0.879, 'epoch': 9.4}
+{'loss': 4.7268, 'grad_norm': 0.39251863956451416, 'learning_rate': 7.011626797564843e-05, 'epoch': 9.44}
+[INFO|trainer.py:3376] 2024-03-25 01:30:49,577 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:30:49,577 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:30:49,577 >>   Batch size = 64
+{'eval_loss': 4.395544052124023, 'eval_accuracy': 0.27169983099592365, 'eval_runtime': 80.3231, 'eval_samples_per_second': 221.63, 'eval_steps_per_second': 0.871, 'epoch': 9.44}
+{'loss': 4.7223, 'grad_norm': 0.10733895748853683, 'learning_rate': 2.5835231933770826e-05, 'epoch': 9.49}
+[INFO|trainer.py:3376] 2024-03-25 01:39:46,939 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:39:46,939 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:39:46,939 >>   Batch size = 64
+{'eval_loss': 4.391279220581055, 'eval_accuracy': 0.2725680462913312, 'eval_runtime': 180.7005, 'eval_samples_per_second': 98.517, 'eval_steps_per_second': 0.387, 'epoch': 9.49}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 01:42:51,727 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-43000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 01:42:51,730 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-43000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-25 01:42:54,290 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-40000] due to args.save_total_limit
+{'loss': 4.7112, 'grad_norm': 0.09830255061388016, 'learning_rate': 2.7922934437178418e-06, 'epoch': 9.53}
+[INFO|trainer.py:3376] 2024-03-25 01:48:51,072 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:48:51,073 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:48:51,073 >>   Batch size = 64
+{'eval_loss': 4.389707565307617, 'eval_accuracy': 0.27284638525410304, 'eval_runtime': 79.6499, 'eval_samples_per_second': 223.503, 'eval_steps_per_second': 0.879, 'epoch': 9.53}
+{'loss': 4.7335, 'grad_norm': 0.15569455921649933, 'learning_rate': 0.0004968293847265421, 'epoch': 9.57}
+[INFO|trainer.py:3376] 2024-03-25 01:56:08,786 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 01:56:08,786 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 01:56:08,786 >>   Batch size = 64
+{'eval_loss': 4.4246931076049805, 'eval_accuracy': 0.26626782408186067, 'eval_runtime': 80.673, 'eval_samples_per_second': 220.669, 'eval_steps_per_second': 0.868, 'epoch': 9.57}
+{'loss': 4.7486, 'grad_norm': 0.5462217330932617, 'learning_rate': 0.00047306564601483093, 'epoch': 9.62}
+[INFO|trainer.py:3376] 2024-03-25 02:05:07,384 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:05:07,384 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:05:07,385 >>   Batch size = 64
+{'eval_loss': 4.428383827209473, 'eval_accuracy': 0.26517909221484165, 'eval_runtime': 79.5579, 'eval_samples_per_second': 223.761, 'eval_steps_per_second': 0.88, 'epoch': 9.62}
+{'loss': 4.7585, 'grad_norm': 0.14902541041374207, 'learning_rate': 0.00042816794414114734, 'epoch': 9.66}
+[INFO|trainer.py:3376] 2024-03-25 02:12:23,740 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:12:23,740 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:12:23,740 >>   Batch size = 64
+{'eval_loss': 4.433527946472168, 'eval_accuracy': 0.2644394932647907, 'eval_runtime': 80.8827, 'eval_samples_per_second': 220.097, 'eval_steps_per_second': 0.865, 'epoch': 9.66}
+{'loss': 4.7667, 'grad_norm': 1.7018007040023804, 'learning_rate': 0.00036639003307616135, 'epoch': 9.71}
+[INFO|trainer.py:3376] 2024-03-25 02:19:41,475 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:19:41,476 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:19:41,476 >>   Batch size = 64
+{'eval_loss': 4.420756816864014, 'eval_accuracy': 0.2664542628183777, 'eval_runtime': 80.1538, 'eval_samples_per_second': 222.098, 'eval_steps_per_second': 0.873, 'epoch': 9.71}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 02:21:05,553 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-44000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 02:21:05,556 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-44000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-25 02:21:08,104 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-41000] due to args.save_total_limit
+{'loss': 4.75, 'grad_norm': 0.44738781452178955, 'learning_rate': 0.0002935849525864008, 'epoch': 9.75}
+[INFO|trainer.py:3376] 2024-03-25 02:27:04,802 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:27:04,802 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:27:04,802 >>   Batch size = 64
+{'eval_loss': 4.407882213592529, 'eval_accuracy': 0.26866943202802035, 'eval_runtime': 80.6111, 'eval_samples_per_second': 220.838, 'eval_steps_per_second': 0.868, 'epoch': 9.75}
+{'loss': 4.7605, 'grad_norm': 1.5403437614440918, 'learning_rate': 0.00021665049225338067, 'epoch': 9.79}
+[INFO|trainer.py:3376] 2024-03-25 02:34:23,717 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:34:23,718 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:34:23,718 >>   Batch size = 64
+{'eval_loss': 4.397663593292236, 'eval_accuracy': 0.2703432033736617, 'eval_runtime': 80.5451, 'eval_samples_per_second': 221.019, 'eval_steps_per_second': 0.869, 'epoch': 9.79}
+{'loss': 4.7376, 'grad_norm': 0.11750781536102295, 'learning_rate': 0.0001428756725050012, 'epoch': 9.84}
+[INFO|trainer.py:3376] 2024-03-25 02:41:41,658 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:41:41,658 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:41:41,658 >>   Batch size = 64
+{'eval_loss': 4.388402462005615, 'eval_accuracy': 0.2723196078806423, 'eval_runtime': 79.1839, 'eval_samples_per_second': 224.818, 'eval_steps_per_second': 0.884, 'epoch': 9.84}
+{'loss': 4.7422, 'grad_norm': 0.15451760590076447, 'learning_rate': 7.925015916698317e-05, 'epoch': 9.88}
+[INFO|trainer.py:3376] 2024-03-25 02:48:58,522 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:48:58,522 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:48:58,522 >>   Batch size = 64
+{'eval_loss': 4.380612373352051, 'eval_accuracy': 0.2738699295204413, 'eval_runtime': 80.7457, 'eval_samples_per_second': 220.47, 'eval_steps_per_second': 0.867, 'epoch': 9.88}
+{'loss': 4.7211, 'grad_norm': 0.09153079986572266, 'learning_rate': 3.180203984076055e-05, 'epoch': 9.93}
+[INFO|trainer.py:3376] 2024-03-25 02:56:16,393 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 02:56:16,393 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 02:56:16,393 >>   Batch size = 64
+{'eval_loss': 4.375485420227051, 'eval_accuracy': 0.27460370225997605, 'eval_runtime': 180.9624, 'eval_samples_per_second': 98.374, 'eval_steps_per_second': 0.387, 'epoch': 9.93}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 02:59:20,824 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-45000/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 02:59:20,827 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tmp-checkpoint-45000/special_tokens_map.json
+[INFO|trainer.py:3159] 2024-03-25 02:59:23,442 >> Deleting older checkpoint [/home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-42000] due to args.save_total_limit
+{'loss': 4.7292, 'grad_norm': 0.08916594088077545, 'learning_rate': 5.026703322681236e-06, 'epoch': 9.97}
+[INFO|trainer.py:3376] 2024-03-25 03:05:20,027 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 03:05:20,027 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 03:05:20,027 >>   Batch size = 64
+{'eval_loss': 4.37307596206665, 'eval_accuracy': 0.27498031730202044, 'eval_runtime': 80.5702, 'eval_samples_per_second': 220.95, 'eval_steps_per_second': 0.869, 'epoch': 9.97}
+[INFO|trainer.py:2067] 2024-03-25 03:12:13,307 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+[INFO|trainer.py:2271] 2024-03-25 03:12:13,320 >> Loading best model from /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/checkpoint-45000 (score: 4.375485420227051).
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/share/huadjyin/home/baiyong01/.local/lib/python3.9/site-packages/torch/_utils.py:776: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+{'train_runtime': 110231.1354, 'train_samples_per_second': 105.267, 'train_steps_per_second': 0.411, 'train_loss': 4.905621989578594, 'epoch': 10.0}
+[INFO|tokenization_utils_base.py:2459] 2024-03-25 03:12:18,478 >> tokenizer config file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2468] 2024-03-25 03:12:18,482 >> Special tokens file saved in /home/share/huadjyin/home/baiyong01/projects/biomlm/biomlm/outputs/special_tokens_map.json
+***** train metrics *****
+  epoch                    =              10.0
+  train_loss               =            4.9056
+  train_runtime            = 1 day, 6:37:11.13
+  train_samples            =           1160366
+  train_samples_per_second =           105.267
+  train_steps_per_second   =             0.411
+[INFO|trainer.py:3376] 2024-03-25 03:12:18,510 >> ***** Running Evaluation *****
+[INFO|trainer.py:3378] 2024-03-25 03:12:18,510 >>   Num examples = 17802
+[INFO|trainer.py:3381] 2024-03-25 03:12:18,510 >>   Batch size = 64
+{'eval_loss': 4.375485420227051, 'eval_accuracy': 0.27460370225997605, 'eval_runtime': 82.1092, 'eval_samples_per_second': 216.809, 'eval_steps_per_second': 0.853, 'epoch': 10.0}
+***** eval metrics *****
+  epoch                   =       10.0
+  eval_accuracy           =     0.2746
+  eval_loss               =     4.3755
+  eval_runtime            = 0:01:22.10
+  eval_samples            =      17802
+  eval_samples_per_second =    216.809
+  eval_steps_per_second   =      0.853
+  perplexity              =    79.4784
+03/25/2024 03:13:40 - INFO - __main__ - <<<<<<<<<<<<<<<<Done

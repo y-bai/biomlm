@@ -1,0 +1,38 @@
+.DS_Store
+
+.idea
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+data/
+pretrained/
+
+biomlm/datasets/
+biomlm/DNAMamba/
+biomlm/mambaDNA/
+biomlm/mambaDNA_bak20240404/
+
+biomlm/models/__pycache__/
+
+biomlm/outputs/
+
+biomlm/tokens/T2T/
+biomlm/tokens/train_corpus/
+biomlm/train/tmp/
+
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+.vscode
+# IPython
+profile_default/
+ipython_config.py
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
