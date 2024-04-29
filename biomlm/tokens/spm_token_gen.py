@@ -53,7 +53,7 @@ def _gen_token(
     if token_type == "SPM_BPE":
         model_type = 'bpe'
     elif token_type == "SPM_Unigram":
-        model_type = 'unigram'
+        model_type = 'unigram'  # default
 
     model_prefix = os.path.join(saved_dir, 'spm_vocab')
 
