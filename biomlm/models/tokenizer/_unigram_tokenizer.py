@@ -210,9 +210,9 @@ class BioSeqUnigramTokenizer(PreTrainedTokenizer):
         vocab_file,
         bos_token: str = "<BOS>",
         eos_token: str = "<EOS>",   
-        pad_token: str = "<PAD>",   
+        # pad_token: str = "<PAD>",   
         unk_token: str = "<UNK>",
-        mask_token: str = "<MASK>",
+        # mask_token: str = "<MASK>",
         add_bos_token: bool=False,
         add_eos_token: bool=True,
         model_max_length: Optional[int] =512, 
@@ -243,21 +243,21 @@ class BioSeqUnigramTokenizer(PreTrainedTokenizer):
         bos_token = AddedToken(bos_token, lstrip=False, rstrip=False) if isinstance(bos_token, str) else bos_token
         eos_token = AddedToken(eos_token, lstrip=False, rstrip=False) if isinstance(eos_token, str) else eos_token
         unk_token = AddedToken(unk_token, lstrip=False, rstrip=False) if isinstance(unk_token, str) else unk_token
-        pad_token = AddedToken(pad_token, lstrip=False, rstrip=False) if isinstance(pad_token, str) else pad_token
+        # pad_token = AddedToken(pad_token, lstrip=False, rstrip=False) if isinstance(pad_token, str) else pad_token
         # In bioseq, mask token does not behave like a normal word, i.e. not include the space before it
         # mask_token = (
         #     AddedToken(mask_token, lstrip=True, rstrip=False, normalized=False)
         #     if isinstance(mask_token, str)
         #     else mask_token
         # )
-        mask_token = AddedToken(mask_token, lstrip=False, rstrip=False) if isinstance(mask_token, str) else mask_token
+        # mask_token = AddedToken(mask_token, lstrip=False, rstrip=False) if isinstance(mask_token, str) else mask_token
 
         super().__init__(
             unk_token=unk_token,
             bos_token=bos_token,
             eos_token=eos_token,
-            pad_token=pad_token,
-            mask_token=mask_token,
+            # pad_token=pad_token,
+            # mask_token=mask_token,
             add_prefix_space=add_prefix_space,
             do_lower_case=do_lower_case,
             model_max_length=model_max_length,
