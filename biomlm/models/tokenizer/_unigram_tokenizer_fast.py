@@ -39,13 +39,16 @@ VOCAB_FILES_NAMES = {"vocab_file": "unigram.json", "tokenizer_file": "tokenizer.
 
 class BioSeqUnigramConverter(Converter):
     def converted(self) -> Tokenizer:
-        vocab_file = self.original_tokenizer.vocab_file
+        
+        # vocab_file = self.original_tokenizer.vocab_file
 
-        base_tokenizer = BioSeqBaseUnigramTokenizer.from_file(
-                vocab_filename=vocab_file,
-                unk_token=str(self.original_tokenizer.unk_token),
-                **self.original_tokenizer.base_model_kwarg,
-        )
+        # base_tokenizer = BioSeqBaseUnigramTokenizer.from_file(
+        #         vocab_filename=vocab_file,
+        #         unk_token=str(self.original_tokenizer.unk_token),
+        #         **self.original_tokenizer.base_model_kwarg,
+        # )
+        base_tokenizer = self.original_tokenizer.base_tokenier
+
         bos_token = str(self.original_tokenizer.bos_token)
         eos_token = str(self.original_tokenizer.eos_token)
 
