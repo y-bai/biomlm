@@ -19,7 +19,9 @@
                 See the License for the specific language governing permissions and
                 limitations under the License.
 
-@Desc    :   	Input data tokenization for model 
+@Desc    :   	Input data tokenization for model
+
+legacy implementation!
 
 """
 
