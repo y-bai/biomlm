@@ -25,7 +25,8 @@ reference:
 # https://github.com/huggingface/transformers/blob/main/src/transformers/models/xlnet/tokenization_xlnet.py
 
 """
-
+import os
+from shutil import copyfile
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import sentencepiece as spm
@@ -262,3 +263,22 @@ class BioSeqSPMTokenizer(PreTrainedTokenizer):
         if (is_split_into_words or add_prefix_space) and (len(seq) > 0 and not seq[0].isspace()):
             seq = " " + seq
         return (seq, kwargs)
+    
+    def save_vocabulary(self, save_directory: str, filename_prefix: Optional[str] = None) -> Tuple[str]:
+        if not self.can_save_slow_tokenizer:
+            raise ValueError(
+                "Your fast tokenizer does not have the necessary information to save the vocabulary for a slow "
+                "tokenizer."
+            )
+
+        if not os.path.isdir(save_directory):
+            logger.error(f"Vocabulary path ({save_directory}) should be a directory")
+            return
+        out_vocab_file = os.path.join(
+            save_directory, (filename_prefix + "-" if filename_prefix else "") + VOCAB_FILES_NAMES["vocab_file"]
+        )
+
+        if os.path.abspath(self.vocab_file) != os.path.abspath(out_vocab_file):
+            copyfile(self.vocab_file, out_vocab_file)
+
+        return (out_vocab_file,)
