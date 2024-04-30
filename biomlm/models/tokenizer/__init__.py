@@ -35,6 +35,8 @@ from ._bpe_tokenizer import BioSeqBaseBPETokenizer, BioSeqBPETokenizer
 from ._bpe_tokenizer_fast import BioSeqBPETokenizerFast
 from ._unigram_tokenizer import BioSeqBaseUnigramTokenizer, BioSeqUnigramTokenizer
 from ._unigram_tokenizer_fast import BioSeqUnigramTokenizerFast
+from ._sentencepiece_tokenizer import BioSeqSPMTokenizer
+from ._sentencepiece_tokenizer_fast import BioSeqSPMTokenizerFast
 
 from ._tokenizer_map import BioSeqTokenizerMap
 
