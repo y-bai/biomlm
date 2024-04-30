@@ -38,15 +38,18 @@ VOCAB_FILES_NAMES = {"vocab_file": "vocab.json", "merges_file": "merges.txt", "t
 
 class BioSeqBPEConverter(Converter):
     def converted(self) -> Tokenizer:
-        vocab_file = self.original_tokenizer.vocab_file
-        merges_file = self.original_tokenizer.merges_file
+        # vocab_file = self.original_tokenizer.vocab_file
+        # merges_file = self.original_tokenizer.merges_file
 
-        base_tokenizer = BioSeqBaseBPETokenizer.from_file(
-                vocab_filename=vocab_file,
-                merges_filename=merges_file,
-                unk_token=str(self.original_tokenizer.unk_token),
-                **self.original_tokenizer.base_model_kwarg,
-        )
+        # base_tokenizer = BioSeqBaseBPETokenizer.from_file(
+        #         vocab_filename=vocab_file,
+        #         merges_filename=merges_file,
+        #         unk_token=str(self.original_tokenizer.unk_token),
+        #         **self.original_tokenizer.base_model_kwarg,
+        # )
+
+        base_tokenizer = self.original_tokenizer.base_tokenier
+
         bos_token = str(self.original_tokenizer.bos_token)
         eos_token = str(self.original_tokenizer.eos_token)
 
