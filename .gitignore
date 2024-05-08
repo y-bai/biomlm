@@ -16,8 +16,8 @@ biomlm/models/__pycache__/
 
 biomlm/outputs/
 
-biomlm/tokens/T2T/
-biomlm/tokens/train_corpus/
+biomlm/tokens/20000_200/
+biomlm/tokens/train_corpus_txt/
 biomlm/train/tmp/
 
 *.py[cod]

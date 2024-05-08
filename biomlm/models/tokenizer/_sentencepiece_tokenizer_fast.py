@@ -21,6 +21,8 @@
 
 @Desc    :   	None
 
+https://github.com/huggingface/transformers/blob/main/src/transformers/models/xlnet/tokenization_xlnet_fast.py
+
 """
 import os
 from shutil import copyfile
@@ -28,8 +30,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from transformers.utils import logging
 from transformers import PreTrainedTokenizerFast
-from tokenizers import Tokenizer, processors
-from transformers.convert_slow_tokenizer import Converter
+from tokenizers import Tokenizer, processors, normalizers, Regex
+from transformers.convert_slow_tokenizer import SpmConverter
 
 from ._sentencepiece_tokenizer import BioSeqSPMTokenizer
 
@@ -37,10 +39,36 @@ logger = logging.get_logger(__name__)
 
 VOCAB_FILES_NAMES = {"vocab_file": "spm_vocab.model", "tokenizer_file": "tokenizer.json"}
 
-class BioSeqSPMConverter(Converter):
-    def converted(self) -> Tokenizer:
+def check_number_comma(piece: str) -> bool:
+    return len(piece) < 2 or piece[-1] != "," or not piece[-2].isdigit()
 
-        base_tokenizer = self.original_tokenizer.sp_model
+class BioSeqSPMConverter(SpmConverter):
+    def vocab(self, proto):
+        return [
+            (piece.piece, piece.score) if check_number_comma(piece.piece) else (piece.piece, piece.score - 100)
+            for piece in proto.pieces
+        ]
+
+    def normalizer(self, proto):
+        list_normalizers = [
+            normalizers.Replace("``", '"'),
+            normalizers.Replace("''", '"'),
+        ]
+        # if not self.original_tokenizer.keep_accents:
+        #     list_normalizers.append(normalizers.NFKD())
+        #     list_normalizers.append(normalizers.StripAccents())
+        if self.original_tokenizer.do_lower_case:
+            list_normalizers.append(normalizers.Lowercase())
+
+        precompiled_charsmap = proto.normalizer_spec.precompiled_charsmap
+
+        if precompiled_charsmap:
+            list_normalizers.append(normalizers.Precompiled(precompiled_charsmap))
+
+        list_normalizers.append(normalizers.Replace(Regex(" {2,}"), " "))
+        return normalizers.Sequence(list_normalizers)
+
+    def post_processor(self):
 
         bos_token = str(self.original_tokenizer.bos_token)
         eos_token = str(self.original_tokenizer.eos_token)
@@ -50,35 +78,20 @@ class BioSeqSPMConverter(Converter):
         add_bos = self.original_tokenizer.add_bos_token
         add_eos = self.original_tokenizer.add_eos_token
 
-        # print(f"add_bos: {add_bos}, eos_token: {add_eos}")
-        # print(f"bos_token_id: {base_tokenizer.PieceToId(bos_token)}")
-        # print(f"eos_token_id: {base_tokenizer.PieceToId(eos_token)}")
-
         single = f"{(bos_token+':0 ') if add_bos else ''}$A:0{(' ' + eos_token +':0') if add_eos else ''}"
         pair = f"{single} $B:1{(' ' + eos_token +':1') if add_eos else ''}"
 
         special_tokens = []
         if add_bos:
-            special_tokens.append((bos_token, base_tokenizer.PieceToId(bos_token)))
+            special_tokens.append((bos_token, self.original_tokenizer.convert_tokens_to_ids(bos_token)))
         if add_eos:
-            special_tokens.append((eos_token, base_tokenizer.PieceToId(eos_token)))
+            special_tokens.append((eos_token, self.original_tokenizer.convert_tokens_to_ids(eos_token)))
 
-        # print(f"single: \n{single}")
-        # print(f"pair: \n{pair}")
-        # print(f"special_tokens: \n{special_tokens}")
-        
-        if not add_bos and not add_eos:
-            # XXX trim_offsets=False actually means this post_processor doesn't
-            # really do anything.
-            base_tokenizer.post_processor = processors.ByteLevel(trim_offsets=False)
-        else:
-            base_tokenizer.post_processor = processors.TemplateProcessing(
-                single=single,
-                pair=pair,
-                special_tokens=special_tokens
-            )
-        # https://github.com/huggingface/tokenizers/issues/1105
-        return base_tokenizer._tokenizer
+        return processors.TemplateProcessing(
+            single=single,
+            pair=pair,
+            special_tokens=special_tokens,
+        )
 
 class BioSeqSPMTokenizerFast(PreTrainedTokenizerFast):
     vocab_files_names = VOCAB_FILES_NAMES
@@ -160,6 +173,40 @@ class BioSeqSPMTokenizerFast(PreTrainedTokenizerFast):
     @property
     def can_save_slow_tokenizer(self) -> bool:
         return os.path.isfile(self.vocab_file) if self.vocab_file else False
+    
+    def build_inputs_with_special_tokens(
+        self, 
+        token_ids_0: List[int], 
+        token_ids_1: Optional[List[int]] = None
+    ) -> List[int]:
+        """
+        Build model inputs from a sequence or a pair of sequence for sequence classification tasks by concatenating and
+        adding special tokens when `add_special_tokens`=True in `__call__` function, which will call `tokenize` function 
+        with the same of `add_special_tokens` parameter. A sequence has the following format:
+
+        - single sequence: `<BOS> X <EOS>`
+        - pair of sequences: `<BOS> A <EOS> B <EOS>`
+
+        Args:
+            token_ids_0 (`List[int]`):
+                List of IDs to which the special tokens will be added.
+            token_ids_1 (`List[int]`, *optional*):
+                Optional second list of IDs for sequence pairs.
+
+        Returns:
+            `List[int]`: List of [input IDs](../glossary#input-ids) with the appropriate special tokens.
+        """
+
+        bos_token_id = [self.bos_token_id] if self.add_bos_token else []
+        eos_token_id = [self.eos_token_id] if self.add_eos_token else []
+
+        output = bos_token_id + token_ids_0 + eos_token_id
+
+        if token_ids_1 is not None:
+            output = output + token_ids_1 + eos_token_id
+
+        return output
+    
 
     def create_token_type_ids_from_sequences(
         self, token_ids_0: List[int], token_ids_1: Optional[List[int]] = None
