@@ -36,17 +36,16 @@ from transformers.trainer_pt_utils import LabelSmoother
 # from ._trainer_optimization import CosineAnnealingWarmupRestarts
 
 class BioSeqMambaCausalLMTrainer(Trainer):
-
+    
     def compute_loss(self, model, inputs, return_outputs=False):
         """
         How the loss is computed by Trainer. By default, all models return the loss in the first element.
 
         Subclass and override for custom behavior.
+
+        Adaped from transformers.trainer.compute_loss
         """
-        if self.label_smoother is not None and "labels" in inputs:
-            labels = inputs.pop("labels")
-        else:
-            labels = None
+        labels = inputs.pop("labels")
         outputs = model(**inputs)
         # Save past state if it exists
         # TODO: this needs to be fixed and made cleaner later.
@@ -54,15 +53,8 @@ class BioSeqMambaCausalLMTrainer(Trainer):
             self._past = outputs[self.args.past_index]
 
         if labels is not None:
-            # NOTE: we are not supporting peft model 
-            unwrapped_model = unwrap_model(model)
-            model_name = unwrapped_model._get_name()
-            # print(f"compute_loss, model_name = {model_name}")
             loss_cls = LabelSmoother(epsilon=self.args.label_smoothing_factor)
-            if model_name.endswith('ForCausalLM') or model_name.endswith('LMHeadModel'):
-                loss = loss_cls(outputs, labels, shift_labels=True)
-            else:
-                loss = loss_cls(outputs, labels)
+            loss = loss_cls(outputs, labels, shift_labels=True)
         else:
             if isinstance(outputs, dict) and "loss" not in outputs:
                 raise ValueError(
@@ -73,7 +65,7 @@ class BioSeqMambaCausalLMTrainer(Trainer):
             loss = outputs["loss"] if isinstance(outputs, dict) else outputs[0]
 
         return (loss, outputs) if return_outputs else loss
-
+    
     # def compute_loss(
     #     self,
     #     model,
