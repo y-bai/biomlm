@@ -113,6 +113,11 @@ def main():
     ))
     training_config, dataset_config, tokenization_config = parser.parse_args_into_dataclasses()
 
+    if training_config.tf32:
+        training_config.tf32 = False
+    if training_config.disable_tqdm:
+        training_config.disable_tqdm = False
+    
     # Setup logging
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
