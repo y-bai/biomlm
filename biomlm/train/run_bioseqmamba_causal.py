@@ -44,8 +44,9 @@ import os
 #   - Avoid using `tokenizers` before the fork if possible
 #   - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
 # ------------------------
-# Caused by fast tokenizer in streaming mode
+# Caused by fast tokenizer in streaming mode or DataCollatorForLanguageModeling
 # See: https://stackoverflow.com/questions/62691279/how-to-disable-tokenizers-parallelism-true-false-warning
+# and  https://github.com/huggingface/transformers/issues/5486#issuecomment-833768404
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import copy
@@ -84,6 +85,8 @@ from models.tokenizer import (
     BioSeqUnigramTokenizer,
     BioSeqBPETokenizerFast,
     BioSeqUnigramTokenizerFast,
+    BioSeqSPMTokenizer,
+    BioSeqSPMTokenizerFast,
     BioSeqTokenizerMap
 )
 from models.utils import model_size
