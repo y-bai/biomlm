@@ -60,18 +60,17 @@ class BioSeqDataCollatorCausalLM(DataCollatorForLanguageModeling):
         batch = super().__call__(examples)
 
         # NOTE
-        # `DataCollatorForLanguageModeling`` set the pad tokens (0) to -100 to be
-        # ignored by the CrossEntropy loss, thus we don't need to recover it.
-        # So in our training, we do NOT use `BioSeqDataCollator` to recover pad_id,
-        # instead, we still use `DataCollatorForLanguageModeling`. 
-        # See `run_bioseqmamba_causal.py`.
-        input_ids = batch["input_ids"].clone()
-        input_ids[input_ids == -100] = self.replaced_padding_id
-        batch["input_ids"] = input_ids
+        # The value -100 is used as the pad_token_id because, in PyTorch, the nn.CrossEntropyLoss function 
+        # (commonly used in training language models) ignores all targets with the value -100. 
+        # This means that any output corresponding to a position with -100 in the target tensor will not 
+        # contribute to the loss during training.
+        labels = batch["labels"].clone()
+        labels[labels == -100] = self.replaced_padding_id
+        batch["labels"] = labels
         # 
         # Tensor should use `.clone()`
         # See: https://discuss.pytorch.org/t/copy-deepcopy-vs-clone/55022/7
-        batch["labels"] = input_ids.clone() 
+        # batch["labels"] = input_ids.clone() 
         # print(f"batch['input_ids']: {batch['input_ids']}")
         # print(f"batch['labels']:{batch['labels']}")
         
