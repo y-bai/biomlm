@@ -26,7 +26,28 @@
 from dataclasses import dataclass, field
 import os
 from typing import List, Optional, Union
+from enum import Enum
 from transformers import TrainingArguments
+
+class TokenModel(Enum):
+    BPE = 'BPE'
+    UNIGRAM = 'Unigram'
+    SPM_BPE = 'SPM_BPE'
+    SPM_UNIGRAM = 'SPM_Unigram'  # default
+
+class SpeciesType(Enum):
+    T2T = 'T2T'
+    MULTI_SPECIES = 'Multi_species'
+    ONEKG = '1000G'
+
+# full sequence without chunking 
+RAW_DATASET_DIRNAMES={
+    'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'],
+    'Multi_species': ['raw_dataset_multi'],
+    '1000G': [], # TODO
+}
+
+PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
 
 # for raw datasets generation
 USE_STREAMING = True
@@ -36,31 +57,16 @@ USE_STREAMING = True
 USE_FAST_TOKENIZER = True
 
 # -----------
-# SPECIFY chunk_size when USE_STREAMING = True
-CHUNK_SIZE = 20000 # 20000 # CHUNK_SIZE shoule be None when USE_STREAMING = False
-OVERLAP = 0
-# -----------
-
 # for tokenization
-VOCAB_SIZE = 50010
-TOKEN_MODEL = "BPE"  # BPE
-SPECIES = "T2T"
-
-MAX_LEN = 512
+VOCAB_SIZE = 50008
+TOKEN_MODEL = TokenModel.SPM_UNIGRAM
+SPECIES = SpeciesType.T2T
 
 RESUME_FROM_CHECKPOINT = False
+MAX_LEN = 512 # 512 or 1024: max number of tokens in the sequence that feed into the model
 
-# 10 for 3010. but 10 for 30010 out of memory.
-DATA_MAP_NUM_PROCS = {
-    3010: 10,
-    30010: 6,
-    50010: 5,
-    100010: 4,
-    150010: 3,
-    200010: 2
-}
-
-PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
+# for dataset mapping operation.
+NUM_PROCS = 5
 
 @dataclass
 class BioSeqMambaModelConfig:
@@ -213,7 +219,9 @@ class BioSeqMambaModelConfig:
 
     ####################
     # for init model weight in SSM
-    initializer_range: float = 0.01  # or 0.02
+    # see https://huggingface.co/state-spaces/mamba-2.8b-hf/blob/main/config.json
+    # and https://github.com/state-spaces/mamba/blob/main/mamba_ssm/models/config_mamba.py
+    initializer_range: float = 0.1  # 0.1, or 0.01 or 0.02
     rescale_prenorm_residual: bool = False
     n_residuals_per_layer: int = 1
 
@@ -231,50 +239,23 @@ class BioSeqMambaModelConfig:
 class BioSeqDataSetConfig:
 
     dataset_name: Optional[str] = field(
-        default=SPECIES,
+        default=SPECIES.value,
         metadata={
             "help": (
-                "Raw data type, currently could be 'T2T' or 'Multi_species'."
+                "Raw data type, currently could be 'T2T', 'Multi_species' or '1000G'."
             )
         },
     )
 
-    origin_dataset_cache_dir: Optional[str] = field(
-        default=os.path.join(PROJECT_ROOT_PATH, f"biomlm/datasets/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}"),
-        metadata={
-            "help": (
-                "Directory saved the generated datasets before tokenizer compuation."
-            )
-        },
-    )
-
+    raw_dataset_dirs: Optional[Union[List[str], str]] = None
     use_streaming: bool = USE_STREAMING
-    dataset_chunk_len: Optional[int] = CHUNK_SIZE
-    dataset_chunk_overlap: int = OVERLAP
-
-    raw_data_files: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.use_streaming and self.dataset_chunk_len is None:
-            self.dataset_chunk_len = 20000 # default chunk length
-
-        if self.dataset_name == "T2T":
-            self.raw_data_files["seq_info"]=os.path.join(
-                PROJECT_ROOT_PATH, 
-                r"data/T2T/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna")
-            self.local_script = os.path.join(
-                PROJECT_ROOT_PATH, 
-                r"biomlm/datasets/_dataset_t2t.py")  
-            self.raw_data_local_dir = None
-
-        if self.dataset_name == "Multi_species":
-            self.raw_data_files["seq_info"]=os.path.join(
-                PROJECT_ROOT_PATH, r"data/multi_species_genomes/original_urls.csv")
-            self.local_script = os.path.join(
-                PROJECT_ROOT_PATH, r"biomlm/datasets/_dataset_multi.py")
-            self.raw_data_local_dir = os.path.join(
-                PROJECT_ROOT_PATH, r"data/multi_species_genomes/original_urls_data")
         
+        if self.raw_dataset_dirs is None:
+            self.raw_dataset_dirs = [os.path.join(PROJECT_ROOT_PATH, f'biomlm/datasets/{i_dir}') for i_dir in RAW_DATASET_DIRNAMES[self.dataset_name]]
+        elif isinstance(self.raw_dataset_dirs, str):
+            self.raw_dataset_dirs = [self.raw_dataset_dirs]
 
 @dataclass
 class BioSeqTokenizationConfig:
@@ -295,9 +276,7 @@ class BioSeqTokenizationConfig:
     
     bos_token: str = "<BOS>"
     eos_token: str = "<EOS>"
-    pad_token: str = "<PAD>"
     unk_token: str = "<UNK>"
-    mask_token: str = "<MASK>"
 
     add_bos_token: bool=False
     add_eos_token: bool=True
@@ -314,25 +293,43 @@ class BioSeqTokenizationConfig:
 
     # too large will cause memery out leakage
     # RuntimeError: One of the subprocesses has abruptly died during map operation.To debug the error, disable multiprocessing.
-    token_num_proc: Optional[int] = DATA_MAP_NUM_PROCS[VOCAB_SIZE]   
+    token_num_proc: Optional[int] = NUM_PROCS   
 
     truncation: Optional[bool] = True
     padding: Optional[str] = "max_length"
-    stride: Optional[int] = 10
+    stride: Optional[int] = 16
     return_overflowing_tokens: Optional[bool] = True
-    token_min_ctx_fraction: Optional[float] = 0.8
 
-    tokenizer_pretrained_dir: Optional[str] = os.path.join(
-        PROJECT_ROOT_PATH, 
-        f"biomlm/mambaDNA/tokens/{SPECIES}/1K/{TOKEN_MODEL}/{VOCAB_SIZE}"
-    )
+    token_min_ctx_fraction: Optional[float] = 1 # when training, we only use the full sequence without padding.
+    tokenizer_pretrained_dir: Optional[str] = None
+
+    tokenized_dataset_dir: Optional[str] = None
+    
+    def __post_init__(self):
+
+        if self.tokenizer_pretrained_dir is None:
+            if SPECIES in [SpeciesType.T2T, SpeciesType.ONEKG]:
+                t_type = 'T2T'
+            else:
+                t_type = SPECIES.value
+            self.tokenizer_pretrained_dir = os.path.join(
+                PROJECT_ROOT_PATH, 
+                f"biomlm/tokens/20000_200/{t_type}/{TOKEN_MODEL.value}/{VOCAB_SIZE}"
+            )
+        
+        if self.tokenized_dataset_dir is None:
+            self.tokenized_dataset_dir = os.path.join(
+                PROJECT_ROOT_PATH, 
+                f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}"
+            )
+
 
 @dataclass
 class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/")
     overwrite_output_dir: bool = True
 
     # The weight decay to apply (if not zero) to all layers 
@@ -428,7 +425,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/log")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/log")
     logging_steps: int = 500 #
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
@@ -465,7 +462,9 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     seed: int = 42
     data_seed: int = 42
 
-    label_smoothing_factor: float = 0.01
+    # -----------------
+    # only used for fine tuning
+    label_smoothing_factor: Optional[float] = None # or 0.01
 
     #
     # If input does not contained labels, then we need to use this
@@ -526,7 +525,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/")
     overwrite_output_dir: bool = True
 
     # The weight decay to apply (if not zero) to all layers 
@@ -622,7 +621,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/log")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/log")
     logging_steps: int = 2 # full train 100  for training loss displaying every two steps
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
@@ -660,14 +659,16 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     seed: int = 42
     data_seed: int = 42
 
-    label_smoothing_factor: float = 0.01
+    # ----------
+    # Only used for fine-tuning
+    label_smoothing_factor: Optional[float] = None # or 0.01
 
     #
     # If input does not contained labels, then we need to use this
     # include_inputs_for_metrics: bool = True
 
     #
-    disable_tqdm: bool = True # full train True
+    disable_tqdm: bool = False # full train True
 
     # NOTE
     # BF16 can represent a wider range of integers, but with less precision in the mantissa; 
@@ -678,7 +679,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     #
     # bf16: bool = True # v100 not support , residual_in_fp32 not support
     #
-    tf32: bool = True # full train True
+    tf32: bool = False # full train True
 
     # NOTE
     # fine tuning
