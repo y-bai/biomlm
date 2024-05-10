@@ -87,6 +87,7 @@ class BioSeqMixerModel(nn.Module):
             norm_epsilon=norm_epsilon,
             pad_vocab_size_multiple = pad_vocab_size_multiple,
             tie_embeddings=tie_embeddings,
+            **kwargs
         )
         # self.config ={
         #     "d_model": d_model,

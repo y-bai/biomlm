@@ -57,6 +57,7 @@ class BioSeqForCausalLM(nn.Module, GenerationMixin):
         dtype=None,
         **kwargs,
     ) -> None:
+        
         # this is only for save the config
         self.config = BioSeqMambaVanlinaConfig(
             d_model=d_model,
