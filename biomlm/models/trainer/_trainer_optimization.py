@@ -18,7 +18,7 @@
                 limitations under the License.
 
 @Desc    :   	None
-
+legacy 
 Adapted from 
 https://github.com/katsura-jp/pytorch-cosine-annealing-with-warmup/blob/master/cosine_annealing_warmup/scheduler.py
 """
