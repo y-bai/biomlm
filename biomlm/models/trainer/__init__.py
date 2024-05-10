@@ -5,6 +5,7 @@ from ._trainer_config import (
     BioSeqMambaCausalLMTrainingConfig,
     BioSeqDataSetConfig,
     BioSeqTokenizationConfig,
+    TokenModel,
 
     BioSeqMambaCausalLMTrainingConfigDebug,
 )
