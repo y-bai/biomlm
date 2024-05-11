@@ -37,66 +37,66 @@ from transformers.trainer_pt_utils import LabelSmoother
 
 class BioSeqMambaCausalLMTrainer(Trainer):
     
-    def compute_loss(self, model, inputs, return_outputs=False):
-        """
-        How the loss is computed by Trainer. By default, all models return the loss in the first element.
-
-        Subclass and override for custom behavior.
-
-        Adaped from transformers.trainer.compute_loss
-        """
-        labels = inputs.pop("labels")
-        outputs = model(**inputs)
-        # Save past state if it exists
-        # TODO: this needs to be fixed and made cleaner later.
-        if self.args.past_index >= 0:
-            self._past = outputs[self.args.past_index]
-
-        if labels is not None:
-            loss_cls = LabelSmoother(epsilon=self.args.label_smoothing_factor)
-            loss = loss_cls(outputs, labels, shift_labels=True)
-        else:
-            if isinstance(outputs, dict) and "loss" not in outputs:
-                raise ValueError(
-                    "The model did not return a loss from the inputs, only the following keys: "
-                    f"{','.join(outputs.keys())}. For reference, the inputs it received are {','.join(inputs.keys())}."
-                )
-            # We don't use .loss here since the model may return tuples instead of ModelOutput.
-            loss = outputs["loss"] if isinstance(outputs, dict) else outputs[0]
-
-        return (loss, outputs) if return_outputs else loss
-    
-    # def compute_loss(
-    #     self,
-    #     model,
-    #     inputs,
-    #     return_outputs: bool = False            
-    # ):
-    #     """ override loss function
-
+    # def compute_loss(self, model, inputs, return_outputs=False):
     #     """
-    #     input_ids = inputs.pop("input_ids")
-    #     # input_ids = inputs.get("input_ids")
-    #     # clm_logits = model(input_ids).logits # model return a namedtuple
-    #     # update: model return a dict
-    #     clm_output = model(input_ids)
-    #     clm_logits = clm_output["logits"]
+    #     How the loss is computed by Trainer. By default, all models return the loss in the first element.
 
-    #     labels = input_ids.to(clm_logits.device)
-    #     # labels = inputs.pop("labels")
-    #     # labels = inputs.get("labels")
-    #     # print(f"loss_clm_logits: {clm_logits.shape}")
-    #     # print(f"loss_labels: {labels.shape}")
-    #     # labels: torch.Size([2, 511])
-    #     # clm_logits: torch.Size([2, 512, 3016])
+    #     Subclass and override for custom behavior.
 
-    #     shift_logits = clm_logits[:, :-1, :].contiguous()
-    #     labels = labels[:, 1:].contiguous()
+    #     Adaped from transformers.trainer.compute_loss
+    #     """
+    #     labels = inputs.pop("labels")
+    #     outputs = model(**inputs)
+    #     # Save past state if it exists
+    #     # TODO: this needs to be fixed and made cleaner later.
+    #     if self.args.past_index >= 0:
+    #         self._past = outputs[self.args.past_index]
 
-    #     loss_fct = nn.CrossEntropyLoss()
-    #     lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), labels.view(-1))
+    #     if labels is not None:
+    #         loss_cls = LabelSmoother(epsilon=self.args.label_smoothing_factor)
+    #         loss = loss_cls(outputs, labels, shift_labels=True)
+    #     else:
+    #         if isinstance(outputs, dict) and "loss" not in outputs:
+    #             raise ValueError(
+    #                 "The model did not return a loss from the inputs, only the following keys: "
+    #                 f"{','.join(outputs.keys())}. For reference, the inputs it received are {','.join(inputs.keys())}."
+    #             )
+    #         # We don't use .loss here since the model may return tuples instead of ModelOutput.
+    #         loss = outputs["loss"] if isinstance(outputs, dict) else outputs[0]
 
-    #     return (lm_loss, clm_output) if return_outputs else lm_loss
+    #     return (loss, outputs) if return_outputs else loss
+    
+    def compute_loss(
+        self,
+        model,
+        inputs,
+        return_outputs: bool = False            
+    ):
+        """ override loss function
+
+        """
+        input_ids = inputs.pop("input_ids")
+        # input_ids = inputs.get("input_ids")
+        # clm_logits = model(input_ids).logits # model return a namedtuple
+        # update: model return a dict
+        clm_output = model(input_ids)
+        clm_logits = clm_output["logits"] if isinstance(clm_output, dict) else clm_output[0]
+
+        labels = input_ids.to(clm_logits.device)
+        # labels = inputs.pop("labels")
+        # labels = inputs.get("labels")
+        # print(f"loss_clm_logits: {clm_logits.shape}")
+        # print(f"loss_labels: {labels.shape}")
+        # labels: torch.Size([2, 511])
+        # clm_logits: torch.Size([2, 512, 3016])
+
+        shift_logits = clm_logits[:, :-1, :].contiguous()
+        labels = labels[:, 1:].contiguous()
+
+        loss_fct = nn.CrossEntropyLoss(label_smoothing=self.args.label_smoothing_factor)
+        lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), labels.view(-1))
+
+        return (lm_loss, clm_output) if return_outputs else lm_loss
     
     # Overried the `create_scheduler` function.
     def create_scheduler(
