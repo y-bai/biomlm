@@ -47,32 +47,59 @@ RAW_DATASET_DIRNAMES={
     '1000G': [], # TODO
 }
 
-PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
-
-# for raw datasets generation
-USE_STREAMING = True
-
-# alway True, otherwise pay more attention 
-# to dataset.map in _tokenizer_map.py
-USE_FAST_TOKENIZER = True
-
 # -----------
 # for tokenization
 VOCAB_SIZE = 50008
 TOKEN_MODEL = TokenModel.SPM_UNIGRAM
 SPECIES = SpeciesType.T2T
+# SPECIES = SpeciesType.MULTI_SPECIES
 
 RESUME_FROM_CHECKPOINT = False
-MAX_LEN = 512 # 512 or 1024: max number of tokens in the sequence that feed into the model
+MAX_LEN = 1024 # 512 or 1024: max number of tokens in the sequence that feed into the model
 
+PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
+# for raw datasets generation
+USE_STREAMING = True
+# alway True, otherwise pay more attention 
+# to dataset.map in _tokenizer_map.py
+USE_FAST_TOKENIZER = True
 # for dataset mapping operation.
 NUM_PROCS = 5
+
+D_MODEL = 768  # default value
+MODEL_N_LAYER={
+    512: 24, # d_model: n_layer
+    768: 24, # d_model: n_layer
+    1024: 48,  
+    1536: 48,
+    2048: 48,
+    2560: 64,
+}
+
+# max batch_size, otherwise GPU out_of_memory
+BATCH_SIZE={
+    50008:{ # vocab_size
+        512: { # max_length
+            1024: 16, # d_model: batch_size
+            2048: 4,
+        },
+        1024:{
+            768:16,
+            1024: 8,
+        },
+        2048:{
+            512:16,
+            768:8,
+            1024: 4,
+        },
+    },
+}
 
 @dataclass
 class BioSeqMambaModelConfig:
 
     d_model: int = field(
-        default=1024,
+        default=D_MODEL,
         metadata={
             "help": (
                 "The maximum dimension for the input token embedding."
@@ -80,7 +107,7 @@ class BioSeqMambaModelConfig:
         },
     )
     n_layer: int = field(
-        default=48,
+        default=MODEL_N_LAYER[D_MODEL],
         metadata={
             "help": (
                 "The number of mamba blocks."
@@ -329,7 +356,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/")
     overwrite_output_dir: bool = True
 
     # The weight decay to apply (if not zero) to all layers 
@@ -348,7 +375,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     
     # 
     # https://discuss.huggingface.co/t/streaming-dataset-into-trainer-does-not-implement-len-max-steps-has-to-be-specified/32893/7
-    max_steps:int = 80000  #   
+    max_steps:int = 200000  #   
     #   
     # NOTE: to complete the whole training data during one epoch, 
     # there needs  steps = (n_whole_training_samples / (per_device_train_batch_size * n_GPU * gradient_accumulation_steps))
@@ -358,7 +385,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # optim: str = "adamw_torch" # default optimizer is adamw_torch
     #
 
-    learning_rate: float = 1e-4   # 1e-4
+    learning_rate: float = 5e-4   # 1e-4
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -369,11 +396,11 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402
     lr_scheduler_type: str = "cosine_with_restarts" 
     # `num_steps_per_cycle` used for computing the `num_cycles`  
-    num_steps_per_cycle: int = 2000
+    num_steps_per_cycle: int = 10000
 
     ############
     # warmup_ratio:float = 0.05           
-    warmup_steps: int = 600      # full train 600
+    warmup_steps: int = 2000      # full train 500
 
     dataloader_num_workers: int = 16
 
@@ -384,8 +411,11 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     #############
     gradient_accumulation_steps: int = 2  # full train 2
     
-    per_device_train_batch_size: int = 8 #  8
-    per_device_eval_batch_size: int = 8 #   8
+    # 16: 50008-512-1024: GPU: 26813MiB, (vocab_size, max_length, d_model)
+    #  4: 50008-512-2048, GPU: 39641MiB
+    #  8: 50008-1024-1024, GPU < 40G 
+    per_device_train_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL] 
+    per_device_eval_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL]
 
     # NOTE: config for evaluation, NOT take too long
     evaluation_strategy: str = "steps"  # "epoch" would wait for long time to have output next epoch
@@ -410,7 +440,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # # EarlyStoppingCallback requires load_best_model_at_end = True
     early_stop: bool = True
     # # config for early stop call back
-    early_stopping_patience: int = 200
+    early_stopping_patience: int = 1000
     early_stopping_threshold: float = 0.0001
  
     # NOTE: save config
@@ -425,7 +455,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/log")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/log")
     logging_steps: int = 500 #
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
@@ -464,7 +494,8 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
     # -----------------
     # only used for fine tuning
-    label_smoothing_factor: Optional[float] = None # or 0.01
+    # 0: not using label smoother, see _trainer.loss.
+    label_smoothing_factor: float = 0.0 # or 0.01, 
 
     #
     # If input does not contained labels, then we need to use this
@@ -525,7 +556,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/")
     overwrite_output_dir: bool = True
 
     # The weight decay to apply (if not zero) to all layers 
@@ -554,7 +585,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     # optim: str = "adamw_torch" # default optimizer is adamw_torch
     #
 
-    learning_rate: float = 1e-4   # 1e-4
+    learning_rate: float = 5e-4   # 1e-4
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -578,7 +609,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     max_grad_norm:float = 1.0
     #############
-    gradient_accumulation_steps: int = 1  # full train 2
+    gradient_accumulation_steps: int = 2  # full train 2
     
     per_device_train_batch_size: int = 4 # full train 32, (3009 vocab)
     per_device_eval_batch_size: int = 4 # full train 64
@@ -621,7 +652,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/log")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/log")
     logging_steps: int = 2 # full train 100  for training loss displaying every two steps
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
@@ -661,7 +692,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     # ----------
     # Only used for fine-tuning
-    label_smoothing_factor: Optional[float] = None # or 0.01
+    label_smoothing_factor: float=0.0 # or 0.01
 
     #
     # If input does not contained labels, then we need to use this
