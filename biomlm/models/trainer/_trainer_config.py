@@ -54,19 +54,9 @@ TOKEN_MODEL = TokenModel.SPM_UNIGRAM
 SPECIES = SpeciesType.T2T
 # SPECIES = SpeciesType.MULTI_SPECIES
 
-RESUME_FROM_CHECKPOINT = False
-MAX_LEN = 1024 # 512 or 1024: max number of tokens in the sequence that feed into the model
+MAX_LEN = 512 # 512 or 1024: max number of tokens in the sequence that feed into the model
 
-PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
-# for raw datasets generation
-USE_STREAMING = True
-# alway True, otherwise pay more attention 
-# to dataset.map in _tokenizer_map.py
-USE_FAST_TOKENIZER = True
-# for dataset mapping operation.
-NUM_PROCS = 5
-
-D_MODEL = 768  # default value
+D_MODEL = 1024  # default value
 MODEL_N_LAYER={
     512: 24, # d_model: n_layer
     768: 24, # d_model: n_layer
@@ -80,12 +70,14 @@ MODEL_N_LAYER={
 BATCH_SIZE={
     50008:{ # vocab_size
         512: { # max_length
-            1024: 16, # d_model: batch_size
+            512: 32,
+            768: 32,
+            1024: 24, # d_model: batch_size
             2048: 4,
         },
         1024:{
             768:16,
-            1024: 8,
+            1024: 12,
         },
         2048:{
             512:16,
@@ -94,6 +86,24 @@ BATCH_SIZE={
         },
     },
 }
+
+MAX_STEPS={
+    512: 101000, # d_model: max_steps
+    768: 101000,
+    1024:120000,
+    2048: 61000,
+}
+
+PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
+# for raw datasets generation
+USE_STREAMING = True
+# alway True, otherwise pay more attention 
+# to dataset.map in _tokenizer_map.py
+USE_FAST_TOKENIZER = True
+# for dataset mapping operation.
+NUM_PROCS = 5
+
+RESUME_FROM_CHECKPOINT = False
 
 @dataclass
 class BioSeqMambaModelConfig:
@@ -350,42 +360,19 @@ class BioSeqTokenizationConfig:
                 f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}"
             )
 
-
 @dataclass
 class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
         f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/")
-    overwrite_output_dir: bool = True
-
-    # The weight decay to apply (if not zero) to all layers 
-    # except all bias and LayerNorm weights in AdamW optimizer.
-    weight_decay: float = 1e-4          # 1e-4          
-    adam_beta1:float = 0.9              # default for AdamW
-    adam_beta2:float = 0.99             # default: 0.99
-    adam_epsilon:float = 1e-8
-    
-    # NOTE: such setting, almost 15 minutes for 100 step (training + evaluation)
-    #
-    # update: training: 100 steps: 3 minutes, eval: 80 second
-    #
-    # 3009 run 20 epoch done
-    # num_train_epochs:float = 45        # full train: 10 (every run) 
-    
-    # 
-    # https://discuss.huggingface.co/t/streaming-dataset-into-trainer-does-not-implement-len-max-steps-has-to-be-specified/32893/7
-    max_steps:int = 200000  #   
+    overwrite_output_dir: bool = True 
     #   
     # NOTE: to complete the whole training data during one epoch, 
     # there needs  steps = (n_whole_training_samples / (per_device_train_batch_size * n_GPU * gradient_accumulation_steps))
-    # 1 epoch ~= almost 4533 steps (T2T training, 512 token_seq_len)
-    
+    # 1 epoch ~= almost 4533 steps (T2T training, 512 token_seq_len) 
     #
-    # optim: str = "adamw_torch" # default optimizer is adamw_torch
-    #
-
-    learning_rate: float = 5e-4   # 1e-4
+    learning_rate: float = 6e-4   # 6e-4, 1e-3
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -393,27 +380,24 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # constant: transformers.get_constant_schedule
     # constant_with_warmup: transformers.get_constant_schedule_with_warmup
     # inverse_sqrt: transformers.get_inverse_sqrt_schedule
-    # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402
-    lr_scheduler_type: str = "cosine_with_restarts" 
-    # `num_steps_per_cycle` used for computing the `num_cycles`  
-    num_steps_per_cycle: int = 10000
-
+    # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402 
+    # lr_scheduler_type: str = "constant_with_warmup"
+    lr_scheduler_type: str = "linear"
+    # NOTE `num_steps_per_cycle` used for computing the `num_cycles`  
+    num_steps_per_cycle: int = 2000  # should be smaller, like 1000, during training to improve accuracy quickly. But larger during fine-tuning.
     ############
     # warmup_ratio:float = 0.05           
-    warmup_steps: int = 2000      # full train 500
+    warmup_steps: int = 1000   
+    # 
+    # https://discuss.huggingface.co/t/streaming-dataset-into-trainer-does-not-implement-len-max-steps-has-to-be-specified/32893/7
+    max_steps:int = MAX_STEPS[D_MODEL]  #  50008-512-1024-24: ~100 epoch, ~ 2.8 days to finish training
 
-    dataloader_num_workers: int = 16
-
-    do_train: bool = True
-    do_eval: bool = True       
-
-    max_grad_norm:float = 1.0
+    dataloader_num_workers: int = 24      
     #############
-    gradient_accumulation_steps: int = 2  # full train 2
-    
-    # 16: 50008-512-1024: GPU: 26813MiB, (vocab_size, max_length, d_model)
+    gradient_accumulation_steps: int = 2  
+    # 24: 50008-512-1024: GPU: 35813MiB, (vocab_size, max_length, d_model)
     #  4: 50008-512-2048, GPU: 39641MiB
-    #  8: 50008-1024-1024, GPU < 40G 
+    #  12: 50008-1024-1024, GPU: 35435MiB
     per_device_train_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL] 
     per_device_eval_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL]
 
@@ -423,32 +407,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # if evaluation_strategy="steps". eval_steps will default to the same 
     # value as logging_steps if not set.
     # eval_steps must be an integer if bigger than 1
-    eval_steps: int = 500               # full train 200
-    #
-    # Number of predictions steps to accumulate the output tensors for, 
-    # before moving the results to the CPU. 
-    # If left unset, the whole predictions are accumulated on 
-    # GPU/NPU/TPU before being moved to the CPU (faster but requires more memory).
-    eval_accumulation_steps: int = 100 
-    # 
-    # NOTE: model load config
-    # load_best_model_at_end requires the save and eval strategy to match.
-    load_best_model_at_end: bool = True 
-    # metric_for_best_model: str = None # for using loss if None
-    greater_is_better: bool = False
-    # 
-    # # EarlyStoppingCallback requires load_best_model_at_end = True
-    early_stop: bool = True
-    # # config for early stop call back
-    early_stopping_patience: int = 1000
-    early_stopping_threshold: float = 0.0001
- 
-    # NOTE: save config
-    save_steps: int = 1000       # full train 500
-    save_strategy: str = "steps"
-    # If a value is passed, will limit the total amount of checkpoints. 
-    # Deletes the older checkpoints in output_dir.
-    save_total_limit: int = 3 
+    eval_steps: int = 200
     
     # NOTE: logging config 
     # https://stackoverflow.com/questions/73281901/is-there-a-way-to-plot-training-and-validation-losses-on-the-same-graph-with-hug
@@ -456,7 +415,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
         f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/log")
-    logging_steps: int = 500 #
+    logging_steps: int = 200 #
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
     # AttributeError: dict object has no attribute 'to_json_string'
@@ -465,6 +424,47 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     report_to: str = "tensorboard"
     # If there multiple events in the log_dir, plot will be mass in the tensorboard.
     # Thus, need to delete the previous results. 
+
+    # NOTE: save config
+    save_steps: int = 2000 
+    save_strategy: str = "steps"
+    # If a value is passed, will limit the total amount of checkpoints. 
+    # Deletes the older checkpoints in output_dir.
+    save_total_limit: int = 3
+
+    #
+    # optim: str = "adamw_torch" # default optimizer is adamw_torch
+    #
+    # The weight decay to apply (if not zero) to all layers 
+    # except all bias and LayerNorm weights in AdamW optimizer.
+    weight_decay: float = 1e-2          #          
+    adam_beta1:float = 0.9              # default for AdamW
+    adam_beta2:float = 0.999             # default: 0.999
+    adam_epsilon:float = 1e-8
+
+    do_train: bool = True
+    do_eval: bool = True 
+    max_grad_norm:float = 1.0  # lib defult value
+
+    #
+    # Number of predictions steps to accumulate the output tensors for, 
+    # before moving the results to the CPU. 
+    # If left unset, the whole predictions are accumulated on 
+    # GPU/NPU/TPU before being moved to the CPU (faster but requires more memory).
+    eval_accumulation_steps: int = 100 
+    
+    # # 
+    # # NOTE: best model load config
+    # # load_best_model_at_end requires the save and eval strategy to match.
+    # load_best_model_at_end: bool = True 
+    # # metric_for_best_model: str = None # for using eval loss if None
+    # greater_is_better: bool = False
+    # # 
+    # # # EarlyStoppingCallback requires load_best_model_at_end = True
+    # early_stop: bool = True
+    # # # config for early stop call back
+    # early_stopping_patience: int = 1000
+    # early_stopping_threshold: float = 0.0001
 
     # If True, For the first run, when runing `training_config.main_process_first(desc="dataset map tokenization")` could cause
     # RuntimeError: [3] is setting up NCCL communicator 
