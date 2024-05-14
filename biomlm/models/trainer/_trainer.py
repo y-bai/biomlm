@@ -36,6 +36,16 @@ from transformers.trainer_pt_utils import LabelSmoother
 # from ._trainer_optimization import CosineAnnealingWarmupRestarts
 
 class BioSeqMambaCausalLMTrainer(Trainer):
+
+    # def _load_optimizer_and_scheduler(self, checkpoint):
+    #     """Not load"""
+    #     return
+
+    def compute_loss(self, model, inputs, return_outputs=False):
+        if self.args.label_smoothing_factor != 0:
+            return super().compute_loss(model, inputs, return_outputs=return_outputs)
+        else:
+            return self.ce_loss(model, inputs, return_outputs=return_outputs)
     
     # def compute_loss(self, model, inputs, return_outputs=False):
     #     """
@@ -66,12 +76,7 @@ class BioSeqMambaCausalLMTrainer(Trainer):
 
     #     return (loss, outputs) if return_outputs else loss
     
-    def compute_loss(
-        self,
-        model,
-        inputs,
-        return_outputs: bool = False            
-    ):
+    def ce_loss(self, model, inputs, return_outputs: bool = False):
         """ override loss function
 
         """
