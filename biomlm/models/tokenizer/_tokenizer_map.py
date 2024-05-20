@@ -79,9 +79,14 @@ class BioSeqTokenizerMap(BioSeqTokenizerMapMinxi):
                 return_overflowing_tokens=False if self.streaming else return_overflowing_tokens,
                 stride= 0 if self.streaming else self.stride,
                 add_special_tokens=True, # default value in the __call__ function
-                return_special_tokens_mask=False if self.streaming else True, # for performance improvement
+                # return_special_tokens_mask=False if self.streaming else True, # for performance improvement
             )
-            return token_encodes
+            # return token_encodes
+            return {
+                "input_ids": token_encodes["input_ids"],
+                # "token_type_ids": token_type_batch,
+                "attention_mask": token_encodes["attention_mask"],
+            }
         
         _min_frac = 0 if self.streaming else self.min_len_frac
         min_tokenized_seq_len = int(self.max_length * _min_frac)
