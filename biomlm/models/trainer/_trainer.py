@@ -81,27 +81,32 @@ class BioSeqMambaCausalLMTrainer(Trainer):
 
         """
         input_ids = inputs.pop("input_ids")
-        # input_ids = inputs.get("input_ids")
-        # clm_logits = model(input_ids).logits # model return a namedtuple
-        # update: model return a dict
-        clm_output = model(input_ids)
-        clm_logits = clm_output["logits"] if isinstance(clm_output, dict) else clm_output[0]
+        labels = inputs.pop("labels")
+        clm_output = model(input_ids, labels, return_dict=True)
+        
+        clm_loss = None
+        if "loss" in clm_output:
+            clm_loss = clm_output["loss"] 
 
-        labels = input_ids.to(clm_logits.device)
-        # labels = inputs.pop("labels")
-        # labels = inputs.get("labels")
-        # print(f"loss_clm_logits: {clm_logits.shape}")
-        # print(f"loss_labels: {labels.shape}")
-        # labels: torch.Size([2, 511])
-        # clm_logits: torch.Size([2, 512, 3016])
+        if clm_loss is not None:
+            return (clm_loss, clm_output) if return_outputs else clm_loss
+        else:
+            clm_logits = clm_output["logits"]
+            labels = labels.to(clm_logits.device)
+            # labels = inputs.pop("labels")
+            # labels = inputs.get("labels")
+            # print(f"loss_clm_logits: {clm_logits.shape}")
+            # print(f"loss_labels: {labels.shape}")
+            # labels: torch.Size([2, 511])
+            # clm_logits: torch.Size([2, 512, 3016])
 
-        shift_logits = clm_logits[:, :-1, :].contiguous()
-        labels = labels[:, 1:].contiguous()
+            shift_logits = clm_logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
 
-        loss_fct = nn.CrossEntropyLoss(label_smoothing=self.args.label_smoothing_factor)
-        lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), labels.view(-1))
+            loss_fct = nn.CrossEntropyLoss(label_smoothing=self.args.label_smoothing_factor)
+            lm_loss = loss_fct(shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1))
 
-        return (lm_loss, clm_output) if return_outputs else lm_loss
+            return (lm_loss, clm_output) if return_outputs else lm_loss
     
     # Overried the `create_scheduler` function.
     def create_scheduler(
@@ -137,6 +142,6 @@ class BioSeqMambaCausalLMTrainer(Trainer):
     # More information at https://huggingface.co/docs/safetensors/torch_shared_tensors
     def save_model(self, output_dir, _internal_call:bool = False):
         self.model.save_pretrained(output_dir)
-        self.model.backbone.save_pretrained(output_dir)
+        # self.model.backbone.save_pretrained(output_dir)
         self.tokenizer.save_pretrained(output_dir)
 
