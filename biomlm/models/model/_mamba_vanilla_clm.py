@@ -145,7 +145,7 @@ class BioSeqForCausalLM(nn.Module, GenerationMixin):
         lm_logits = self.lm_head(hidden_states)
         # CausalLMOutput = namedtuple("CausalLMOutput", ["logits"])
         # return CausalLMOutput(logits=lm_logits)
-        return {"logits": lm_logits}
+        return {"logits": lm_logits, 'hidden_states': hidden_states}
 
     @classmethod
     def from_pretrained(
