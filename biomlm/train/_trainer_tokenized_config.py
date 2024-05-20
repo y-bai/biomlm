@@ -42,7 +42,8 @@ class SpeciesType(Enum):
 
 # full sequence without chunking 
 RAW_DATASET_DIRNAMES={
-    'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'],
+    'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'], # After tokenizing data invividually, combine them together
+    # 'T2T': ['raw_dataset_chm13_t2t'], # tokenizing data invividually 
     'Multi_species': ['raw_dataset_multi'],
     '1000G': [], # TODO
 }
@@ -50,21 +51,21 @@ RAW_DATASET_DIRNAMES={
 # -----------
 # for tokenization
 VOCAB_SIZE = 50008
-TOKEN_MODEL = TokenModel.SPM_UNIGRAM
-# SPECIES = SpeciesType.T2T
-SPECIES = SpeciesType.MULTI_SPECIES
+TOKEN_MODEL = TokenModel.BPE
+SPECIES = SpeciesType.T2T
+# SPECIES = SpeciesType.MULTI_SPECIES
 
 RESUME_FROM_CHECKPOINT = False
-MAX_LEN = 1024 # 512 or 1024: max number of tokens in the sequence that feed into the model
+MAX_LEN = 512 # 512 or 1024: max number of tokens in the sequence that feed into the model
 
 PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
 # for raw datasets generation
-USE_STREAMING = True
+USE_STREAMING = False
 # alway True, otherwise pay more attention 
 # to dataset.map in _tokenizer_map.py
 USE_FAST_TOKENIZER = True
 # for dataset mapping operation.
-NUM_PROCS = 5
+NUM_PROCS = 10
 
 @dataclass
 class BioSeqMambaModelConfig:
@@ -245,13 +246,14 @@ class BioSeqDataSetConfig:
         },
     )
 
+    raw_dataset_names = RAW_DATASET_DIRNAMES[SPECIES.value]
+
     raw_dataset_dirs: Optional[Union[List[str], str]] = None
-    use_streaming: bool = USE_STREAMING
 
     def __post_init__(self):
         
         if self.raw_dataset_dirs is None:
-            self.raw_dataset_dirs = [os.path.join(PROJECT_ROOT_PATH, f'biomlm/datasets/{i_dir}') for i_dir in RAW_DATASET_DIRNAMES[self.dataset_name]]
+            self.raw_dataset_dirs = [os.path.join(PROJECT_ROOT_PATH, f'biomlm/datasets/{i_dir}') for i_dir in RAW_DATASET_DIRNAMES[SPECIES.value]]
         elif isinstance(self.raw_dataset_dirs, str):
             self.raw_dataset_dirs = [self.raw_dataset_dirs]
 
@@ -277,7 +279,7 @@ class BioSeqTokenizationConfig:
     unk_token: str = "<UNK>"
 
     add_bos_token: bool=False
-    add_eos_token: bool=True
+    add_eos_token: bool=False
 
     overwrite_cache: bool = field(
         default=False, 
@@ -301,8 +303,12 @@ class BioSeqTokenizationConfig:
     token_min_ctx_fraction: Optional[float] = 1 # when training, we only use the full sequence without padding.
     tokenizer_pretrained_dir: Optional[str] = None
 
+    tokenized_dataset_root_dir: Optional[str] = None
     tokenized_dataset_dir: Optional[str] = None
+    tokenized_shuffled_dataset_dir: Optional[str] = None
     
+    use_streaming: bool = USE_STREAMING
+
     def __post_init__(self):
 
         if self.tokenizer_pretrained_dir is None:
@@ -314,11 +320,29 @@ class BioSeqTokenizationConfig:
                 PROJECT_ROOT_PATH, 
                 f"biomlm/tokens/20000_200/{t_type}/{TOKEN_MODEL.value}/{VOCAB_SIZE}"
             )
-        
+        if self.tokenized_dataset_root_dir is None:
+            self.tokenized_dataset_root_dir = os.path.join(
+                    PROJECT_ROOT_PATH, 
+                    f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}"
+                )
         if self.tokenized_dataset_dir is None:
-            self.tokenized_dataset_dir = os.path.join(
+            if len(RAW_DATASET_DIRNAMES[SPECIES.value]) > 1:
+                # combining tokenized dataset together
+                self.tokenized_dataset_dir = os.path.join(
+                    PROJECT_ROOT_PATH, 
+                    f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/COMB"
+                )
+            else:
+                # tokenizing dataset individually
+                self.tokenized_dataset_dir = os.path.join(
+                    PROJECT_ROOT_PATH, 
+                    f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/{RAW_DATASET_DIRNAMES[SPECIES.value][0]}"
+                )
+        
+        if self.tokenized_shuffled_dataset_dir is None:
+            self.tokenized_shuffled_dataset_dir = os.path.join(
                 PROJECT_ROOT_PATH, 
-                f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}"
+                f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/SHUFFLED"
             )
 
 

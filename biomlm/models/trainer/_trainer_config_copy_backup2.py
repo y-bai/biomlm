@@ -26,47 +26,90 @@
 from dataclasses import dataclass, field
 import os
 from typing import List, Optional, Union
+from enum import Enum
 from transformers import TrainingArguments
 
-# for raw datasets generation
-USE_STREAMING = True
+class TokenModel(Enum):
+    BPE = 'BPE'
+    UNIGRAM = 'Unigram'
+    SPM_BPE = 'SPM_BPE'
+    SPM_UNIGRAM = 'SPM_Unigram'  # default
 
-# alway True, otherwise pay more attention 
-# to dataset.map in _tokenizer_map.py
-USE_FAST_TOKENIZER = True
+class SpeciesType(Enum):
+    T2T = 'T2T'
+    MULTI_SPECIES = 'Multi_species'
+    ONEKG = '1000G'
+
+# full sequence without chunking 
+RAW_DATASET_DIRNAMES={
+    'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'],
+    'Multi_species': ['raw_dataset_multi'],
+    '1000G': [], # TODO
+}
 
 # -----------
-# SPECIFY chunk_size when USE_STREAMING = True
-CHUNK_SIZE = 20000 # 20000 # CHUNK_SIZE shoule be None when USE_STREAMING = False
-OVERLAP = 0
-# -----------
-
 # for tokenization
-VOCAB_SIZE = 50010
-TOKEN_MODEL = "BPE"  # BPE
-SPECIES = "T2T"
+VOCAB_SIZE = 50008
+TOKEN_MODEL = TokenModel.SPM_UNIGRAM
+SPECIES = SpeciesType.T2T
+# SPECIES = SpeciesType.MULTI_SPECIES
 
-MAX_LEN = 512
+MAX_LEN = 512 # 512 or 1024: max number of tokens in the sequence that feed into the model
 
-RESUME_FROM_CHECKPOINT = False
+D_MODEL = 1024  # default value
+MODEL_N_LAYER={
+    512: 24, # d_model: n_layer
+    768: 24, # d_model: n_layer
+    1024: 48,  
+    1536: 48,
+    2048: 48,
+    2560: 64,
+}
 
-# 10 for 3010. but 10 for 30010 out of memory.
-DATA_MAP_NUM_PROCS = {
-    3010: 10,
-    30010: 6,
-    50010: 5,
-    100010: 4,
-    150010: 3,
-    200010: 2
+# max batch_size, otherwise GPU out_of_memory
+BATCH_SIZE={
+    50008:{ # vocab_size
+        512: { # max_length
+            512: 32,
+            768: 32,
+            1024: 24, # d_model: batch_size
+            2048: 4,
+        },
+        1024:{
+            768:16,
+            1024: 12,
+        },
+        2048:{
+            512:16,
+            768:8,
+            1024: 4,
+        },
+    },
+}
+
+MAX_STEPS={
+    512: 101000, # d_model: max_steps
+    768: 101000,
+    1024:120000,
+    2048: 61000,
 }
 
 PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
+# for raw datasets generation
+USE_STREAMING = True
+# alway True, otherwise pay more attention 
+# to dataset.map in _tokenizer_map.py
+USE_FAST_TOKENIZER = True
+# for dataset mapping operation.
+NUM_PROCS = 5
+
+RESUME_FROM_CHECKPOINT = False
 
 @dataclass
 class BioSeqMambaModelConfig:
 
     d_model: int = field(
-        default=1024,
+        default=D_MODEL,
         metadata={
             "help": (
                 "The maximum dimension for the input token embedding."
@@ -74,7 +117,7 @@ class BioSeqMambaModelConfig:
         },
     )
     n_layer: int = field(
-        default=48,
+        default=MODEL_N_LAYER[D_MODEL],
         metadata={
             "help": (
                 "The number of mamba blocks."
@@ -213,7 +256,9 @@ class BioSeqMambaModelConfig:
 
     ####################
     # for init model weight in SSM
-    initializer_range: float = 0.01  # or 0.02
+    # see https://huggingface.co/state-spaces/mamba-2.8b-hf/blob/main/config.json
+    # and https://github.com/state-spaces/mamba/blob/main/mamba_ssm/models/config_mamba.py
+    initializer_range: float = 0.1  # 0.1, or 0.01 or 0.02
     rescale_prenorm_residual: bool = False
     n_residuals_per_layer: int = 1
 
@@ -231,50 +276,23 @@ class BioSeqMambaModelConfig:
 class BioSeqDataSetConfig:
 
     dataset_name: Optional[str] = field(
-        default=SPECIES,
+        default=SPECIES.value,
         metadata={
             "help": (
-                "Raw data type, currently could be 'T2T' or 'Multi_species'."
+                "Raw data type, currently could be 'T2T', 'Multi_species' or '1000G'."
             )
         },
     )
 
-    origin_dataset_cache_dir: Optional[str] = field(
-        default=os.path.join(PROJECT_ROOT_PATH, f"biomlm/datasets/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}"),
-        metadata={
-            "help": (
-                "Directory saved the generated datasets before tokenizer compuation."
-            )
-        },
-    )
-
+    raw_dataset_dirs: Optional[Union[List[str], str]] = None
     use_streaming: bool = USE_STREAMING
-    dataset_chunk_len: Optional[int] = CHUNK_SIZE
-    dataset_chunk_overlap: int = OVERLAP
-
-    raw_data_files: dict = field(default_factory=dict)
 
     def __post_init__(self):
-        if self.use_streaming and self.dataset_chunk_len is None:
-            self.dataset_chunk_len = 20000 # default chunk length
-
-        if self.dataset_name == "T2T":
-            self.raw_data_files["seq_info"]=os.path.join(
-                PROJECT_ROOT_PATH, 
-                r"data/T2T/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna")
-            self.local_script = os.path.join(
-                PROJECT_ROOT_PATH, 
-                r"biomlm/datasets/_dataset_t2t.py")  
-            self.raw_data_local_dir = None
-
-        if self.dataset_name == "Multi_species":
-            self.raw_data_files["seq_info"]=os.path.join(
-                PROJECT_ROOT_PATH, r"data/multi_species_genomes/original_urls.csv")
-            self.local_script = os.path.join(
-                PROJECT_ROOT_PATH, r"biomlm/datasets/_dataset_multi.py")
-            self.raw_data_local_dir = os.path.join(
-                PROJECT_ROOT_PATH, r"data/multi_species_genomes/original_urls_data")
         
+        if self.raw_dataset_dirs is None:
+            self.raw_dataset_dirs = [os.path.join(PROJECT_ROOT_PATH, f'biomlm/datasets/{i_dir}') for i_dir in RAW_DATASET_DIRNAMES[self.dataset_name]]
+        elif isinstance(self.raw_dataset_dirs, str):
+            self.raw_dataset_dirs = [self.raw_dataset_dirs]
 
 @dataclass
 class BioSeqTokenizationConfig:
@@ -295,7 +313,7 @@ class BioSeqTokenizationConfig:
     
     bos_token: str = "<BOS>"
     eos_token: str = "<EOS>"
-    pad_token: str = "<PAD>"
+    unk_token: str = "<UNK>"
 
     add_bos_token: bool=False
     add_eos_token: bool=True
@@ -312,54 +330,49 @@ class BioSeqTokenizationConfig:
 
     # too large will cause memery out leakage
     # RuntimeError: One of the subprocesses has abruptly died during map operation.To debug the error, disable multiprocessing.
-    token_num_proc: Optional[int] = DATA_MAP_NUM_PROCS[VOCAB_SIZE]   
+    token_num_proc: Optional[int] = NUM_PROCS   
 
     truncation: Optional[bool] = True
     padding: Optional[str] = "max_length"
-    stride: Optional[int] = 10
+    stride: Optional[int] = 16
     return_overflowing_tokens: Optional[bool] = True
-    token_min_ctx_fraction: Optional[float] = 0.8
 
-    tokenizer_pretrained_dir: Optional[str] = os.path.join(
-        PROJECT_ROOT_PATH, 
-        f"biomlm/mambaDNA/tokens/{SPECIES}/1K/{TOKEN_MODEL}/{VOCAB_SIZE}"
-    )
+    token_min_ctx_fraction: Optional[float] = 1 # when training, we only use the full sequence without padding.
+    tokenizer_pretrained_dir: Optional[str] = None
+
+    tokenized_dataset_dir: Optional[str] = None
+    
+    def __post_init__(self):
+
+        if self.tokenizer_pretrained_dir is None:
+            if SPECIES in [SpeciesType.T2T, SpeciesType.ONEKG]:
+                t_type = 'T2T'
+            else:
+                t_type = SPECIES.value
+            self.tokenizer_pretrained_dir = os.path.join(
+                PROJECT_ROOT_PATH, 
+                f"biomlm/tokens/20000_200/{t_type}/{TOKEN_MODEL.value}/{VOCAB_SIZE}"
+            )
+        
+        if self.tokenized_dataset_dir is None:
+            self.tokenized_dataset_dir = os.path.join(
+                PROJECT_ROOT_PATH, 
+                f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}"
+            )
 
 @dataclass
 class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/")
-    overwrite_output_dir: bool = True
-
-    # The weight decay to apply (if not zero) to all layers 
-    # except all bias and LayerNorm weights in AdamW optimizer.
-    weight_decay: float = 1e-4          # 1e-4          
-    adam_beta1:float = 0.9              # default for AdamW
-    adam_beta2:float = 0.99             # default: 0.99
-    adam_epsilon:float = 1e-8
-    
-    # NOTE: such setting, almost 15 minutes for 100 step (training + evaluation)
-    #
-    # update: training: 100 steps: 3 minutes, eval: 80 second
-    #
-    # 3009 run 20 epoch done
-    # num_train_epochs:float = 45        # full train: 10 (every run) 
-    
-    # 
-    # https://discuss.huggingface.co/t/streaming-dataset-into-trainer-does-not-implement-len-max-steps-has-to-be-specified/32893/7
-    max_steps:int = 80000  #   
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/")
+    overwrite_output_dir: bool = True 
     #   
     # NOTE: to complete the whole training data during one epoch, 
     # there needs  steps = (n_whole_training_samples / (per_device_train_batch_size * n_GPU * gradient_accumulation_steps))
-    # 1 epoch ~= almost 4533 steps (T2T training, 512 token_seq_len)
-    
+    # 1 epoch ~= almost 4533 steps (T2T training, 512 token_seq_len) 
     #
-    # optim: str = "adamw_torch" # default optimizer is adamw_torch
-    #
-
-    learning_rate: float = 1e-4   # 1e-4
+    learning_rate: float = 6e-4   # 6e-4, 1e-3
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -367,26 +380,26 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # constant: transformers.get_constant_schedule
     # constant_with_warmup: transformers.get_constant_schedule_with_warmup
     # inverse_sqrt: transformers.get_inverse_sqrt_schedule
-    # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402
-    lr_scheduler_type: str = "cosine_with_restarts" 
-    # `num_steps_per_cycle` used for computing the `num_cycles`  
-    num_steps_per_cycle: int = 2000
-
+    # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402 
+    # lr_scheduler_type: str = "constant_with_warmup"
+    lr_scheduler_type: str = "linear"
+    # NOTE `num_steps_per_cycle` used for computing the `num_cycles`  
+    num_steps_per_cycle: int = 2000  # should be smaller, like 1000, during training to improve accuracy quickly. But larger during fine-tuning.
     ############
     # warmup_ratio:float = 0.05           
-    warmup_steps: int = 600      # full train 600
+    warmup_steps: int = 1000   
+    # 
+    # https://discuss.huggingface.co/t/streaming-dataset-into-trainer-does-not-implement-len-max-steps-has-to-be-specified/32893/7
+    max_steps:int = MAX_STEPS[D_MODEL]  #  50008-512-1024-24: ~100 epoch, ~ 2.8 days to finish training
 
-    dataloader_num_workers: int = 16
-
-    do_train: bool = True
-    do_eval: bool = True       
-
-    max_grad_norm:float = 1.0
+    dataloader_num_workers: int = 24      
     #############
-    gradient_accumulation_steps: int = 2  # full train 2
-    
-    per_device_train_batch_size: int = 8 #  8
-    per_device_eval_batch_size: int = 8 #   8
+    gradient_accumulation_steps: int = 2  
+    # 24: 50008-512-1024: GPU: 35813MiB, (vocab_size, max_length, d_model)
+    #  4: 50008-512-2048, GPU: 39641MiB
+    #  12: 50008-1024-1024, GPU: 35435MiB
+    per_device_train_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL] 
+    per_device_eval_batch_size: int = BATCH_SIZE[VOCAB_SIZE][MAX_LEN][D_MODEL]
 
     # NOTE: config for evaluation, NOT take too long
     evaluation_strategy: str = "steps"  # "epoch" would wait for long time to have output next epoch
@@ -394,40 +407,15 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # if evaluation_strategy="steps". eval_steps will default to the same 
     # value as logging_steps if not set.
     # eval_steps must be an integer if bigger than 1
-    eval_steps: int = 500               # full train 200
-    #
-    # Number of predictions steps to accumulate the output tensors for, 
-    # before moving the results to the CPU. 
-    # If left unset, the whole predictions are accumulated on 
-    # GPU/NPU/TPU before being moved to the CPU (faster but requires more memory).
-    eval_accumulation_steps: int = 100 
-    # 
-    # NOTE: model load config
-    # load_best_model_at_end requires the save and eval strategy to match.
-    load_best_model_at_end: bool = True 
-    # metric_for_best_model: str = None # for using loss if None
-    greater_is_better: bool = False
-    # 
-    # # EarlyStoppingCallback requires load_best_model_at_end = True
-    early_stop: bool = True
-    # # config for early stop call back
-    early_stopping_patience: int = 200
-    early_stopping_threshold: float = 0.0001
- 
-    # NOTE: save config
-    save_steps: int = 1000       # full train 500
-    save_strategy: str = "steps"
-    # If a value is passed, will limit the total amount of checkpoints. 
-    # Deletes the older checkpoints in output_dir.
-    save_total_limit: int = 3 
+    eval_steps: int = 200
     
     # NOTE: logging config 
     # https://stackoverflow.com/questions/73281901/is-there-a-way-to-plot-training-and-validation-losses-on-the-same-graph-with-hug
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/log")
-    logging_steps: int = 500 #
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/log")
+    logging_steps: int = 200 #
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
     # AttributeError: dict object has no attribute 'to_json_string'
@@ -436,6 +424,47 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     report_to: str = "tensorboard"
     # If there multiple events in the log_dir, plot will be mass in the tensorboard.
     # Thus, need to delete the previous results. 
+
+    # NOTE: save config
+    save_steps: int = 2000 
+    save_strategy: str = "steps"
+    # If a value is passed, will limit the total amount of checkpoints. 
+    # Deletes the older checkpoints in output_dir.
+    save_total_limit: int = 3
+
+    #
+    # optim: str = "adamw_torch" # default optimizer is adamw_torch
+    #
+    # The weight decay to apply (if not zero) to all layers 
+    # except all bias and LayerNorm weights in AdamW optimizer.
+    weight_decay: float = 1e-2          #          
+    adam_beta1:float = 0.9              # default for AdamW
+    adam_beta2:float = 0.999             # default: 0.999
+    adam_epsilon:float = 1e-8
+
+    do_train: bool = True
+    do_eval: bool = True 
+    max_grad_norm:float = 1.0  # lib defult value
+
+    #
+    # Number of predictions steps to accumulate the output tensors for, 
+    # before moving the results to the CPU. 
+    # If left unset, the whole predictions are accumulated on 
+    # GPU/NPU/TPU before being moved to the CPU (faster but requires more memory).
+    eval_accumulation_steps: int = 100 
+    
+    # # 
+    # # NOTE: best model load config
+    # # load_best_model_at_end requires the save and eval strategy to match.
+    # load_best_model_at_end: bool = True 
+    # # metric_for_best_model: str = None # for using eval loss if None
+    # greater_is_better: bool = False
+    # # 
+    # # # EarlyStoppingCallback requires load_best_model_at_end = True
+    # early_stop: bool = True
+    # # # config for early stop call back
+    # early_stopping_patience: int = 1000
+    # early_stopping_threshold: float = 0.0001
 
     # If True, For the first run, when runing `training_config.main_process_first(desc="dataset map tokenization")` could cause
     # RuntimeError: [3] is setting up NCCL communicator 
@@ -463,7 +492,10 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     seed: int = 42
     data_seed: int = 42
 
-    label_smoothing_factor: float = 0.01
+    # -----------------
+    # only used for fine tuning
+    # 0: not using label smoother, see _trainer.loss.
+    label_smoothing_factor: float = 0.0 # or 0.01, 
 
     #
     # If input does not contained labels, then we need to use this
@@ -524,7 +556,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     output_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/")
     overwrite_output_dir: bool = True
 
     # The weight decay to apply (if not zero) to all layers 
@@ -553,7 +585,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     # optim: str = "adamw_torch" # default optimizer is adamw_torch
     #
 
-    learning_rate: float = 1e-4   # 1e-4
+    learning_rate: float = 5e-4   # 1e-4
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -577,7 +609,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
 
     max_grad_norm:float = 1.0
     #############
-    gradient_accumulation_steps: int = 1  # full train 2
+    gradient_accumulation_steps: int = 2  # full train 2
     
     per_device_train_batch_size: int = 4 # full train 32, (3009 vocab)
     per_device_eval_batch_size: int = 4 # full train 64
@@ -620,7 +652,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     # TensorBorad log dir
     logging_dir: str = os.path.join(
         PROJECT_ROOT_PATH, 
-        f"biomlm/outputs/{SPECIES}_{TOKEN_MODEL}_{VOCAB_SIZE}_{MAX_LEN}/log")
+        f"biomlm/outputs/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{D_MODEL}/log")
     logging_steps: int = 2 # full train 100  for training loss displaying every two steps
     logging_strategy: str = "steps"
     # when installed 'tensorboard', then model_config_json = model.config.to_json_string()
@@ -658,14 +690,16 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     seed: int = 42
     data_seed: int = 42
 
-    label_smoothing_factor: float = 0.01
+    # ----------
+    # Only used for fine-tuning
+    label_smoothing_factor: float=0.0 # or 0.01
 
     #
     # If input does not contained labels, then we need to use this
     # include_inputs_for_metrics: bool = True
 
     #
-    disable_tqdm: bool = True # full train True
+    disable_tqdm: bool = False # full train True
 
     # NOTE
     # BF16 can represent a wider range of integers, but with less precision in the mantissa; 
@@ -676,7 +710,7 @@ class BioSeqMambaCausalLMTrainingConfigDebug(TrainingArguments):
     #
     # bf16: bool = True # v100 not support , residual_in_fp32 not support
     #
-    tf32: bool = True # full train True
+    tf32: bool = False # full train True
 
     # NOTE
     # fine tuning
