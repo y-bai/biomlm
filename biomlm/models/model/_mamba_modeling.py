@@ -26,12 +26,12 @@ import os
 from typing import Optional
 import torch
 import torch.nn as nn
-from transformers import MambaForCausalLM, MambaConfig, PreTrainedModel
+from transformers import MambaForCausalLM, PreTrainedModel, MambaConfig
 
 class MambaCache:
     """
     Arguments:
-        config: MambaConfig
+        config: BioSeqMambaConfig
         batch_size: int
         dtype: torch.dtype
         device: torch.device
@@ -66,7 +66,7 @@ class BioSeqMambaForCausalLM(PreTrainedModel):
 
     def __init__(
         self,
-        config: MambaConfig = None,
+        config = None,
         model_name_or_path: str = None,
         local_files_only: bool = True,
         **kwargs,
@@ -82,8 +82,9 @@ class BioSeqMambaForCausalLM(PreTrainedModel):
                 model_name_or_path,
                 local_files_only=local_files_only,
             )
-            self.model.resize_token_embeddings(config.vocab_size)
-
+            if config.vocab_size != self.model.config.vocab_size:
+                self.model.resize_token_embeddings(config.vocab_size)
+        
         # rewrite config
         self.config = self.model.config
         self.config._name_or_path = 't2t_' + f"{config.vocab_size}_{config.hidden_size}"
