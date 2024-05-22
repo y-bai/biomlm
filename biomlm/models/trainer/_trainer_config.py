@@ -42,8 +42,8 @@ class SpeciesType(Enum):
 
 # full sequence without chunking 
 RAW_DATASET_DIRNAMES={
-    'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'],
-    # 'T2T': ['raw_dataset_chm13_t2t'],
+    # 'T2T': ['raw_dataset_chm13_t2t', 'raw_dataset_crgd_t2t'],
+    'T2T': ['raw_dataset_chm13_t2t'],
     'Multi_species': ['raw_dataset_multi'],
     '1000G': [], # TODO
 }
@@ -55,13 +55,14 @@ SPECIES = SpeciesType.T2T
 # SPECIES = SpeciesType.MULTI_SPECIES
 
 VOCAB_SIZE = 10008
-HIDDENSIZE=768 # 2048: 2048 OR 1536 
+HIDDENSIZE=1536 # 2048: 2048 OR 1536 
 
-USE_HF_PRETAINED_MODEL=False
-USE_MIXED_PRECISION = False
-
+# if both SELF_PRETAINED_MODEL=False and HF_PRETAINED_MODEL=False, then train from scratch.
+HF_PRETAINED_MODEL=False
+SELF_PRETAINED_MODEL=False
 TOKENIZED_DATA_SHUFFLED = False
 
+USE_MIXED_PRECISION = False
 RESUME_FROM_CHECKPOINT = False
 
 D_MODEL = {
@@ -123,15 +124,15 @@ BATCH_SIZE={
 }
 
 MAX_STEPS={ # hidden_size: max_steps
-    512:  61000,
-    768:  61000,
-    1024: 61000,
-    1536: 61000, 
-    2048: 61000,
+    512:  82000,
+    768:  82000,
+    1024: 82000,
+    1536: 82000, 
+    2048: 82000,
 }
 
 PROJECT_ROOT_PATH=r"/home/share/huadjyin/home/baiyong01/projects/biomlm/"
-OUTPUT_SUBDIR = "USE_HF_PRETRAINED" if USE_HF_PRETAINED_MODEL else "TRAINED_FROM_SCRATCH"
+OUTPUT_SUBDIR = "USE_HF_PRETRAINED" if HF_PRETAINED_MODEL else "TRAINED_FROM_SCRATCH"
 
 # for raw datasets generation
 USE_STREAMING = False
@@ -322,11 +323,17 @@ class BioSeqMambaModelConfig:
     # only for mixer
     norm_epsilon: float = 1e-5
 
-    pretrained_name_path: str = None
+    hf_pretrained_name_path: str = None
+    self_pretrained_name_path: str = None
+
+    self_pretrained: bool = SELF_PRETAINED_MODEL
 
     def __post_init__(self):
-        if self.pretrained_name_path is None and USE_HF_PRETAINED_MODEL:
-            self.pretrained_name_path = os.path.join(PROJECT_ROOT_PATH, f"biomlm/hf_pretrained/{HF_PRETRAINED_NAMES[HIDDENSIZE]}")
+        if self.hf_pretrained_name_path is None and HF_PRETAINED_MODEL and not SELF_PRETAINED_MODEL:
+            self.hf_pretrained_name_path = os.path.join(PROJECT_ROOT_PATH, f"biomlm/hf_pretrained/{HF_PRETRAINED_NAMES[HIDDENSIZE]}")
+        
+        if self.self_pretrained_name_path is None and SELF_PRETAINED_MODEL:
+            self.self_pretrained_name_path = os.path.join(PROJECT_ROOT_PATH, f"biomlm/biomlm_checkpoint/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}_{HIDDENSIZE}/{OUTPUT_SUBDIR}")
 
 
 @dataclass
@@ -351,6 +358,7 @@ class BioSeqDataSetConfig:
             self.raw_dataset_dirs = [os.path.join(PROJECT_ROOT_PATH, f'biomlm/datasets/{i_dir}') for i_dir in RAW_DATASET_DIRNAMES[self.dataset_name]]
         elif isinstance(self.raw_dataset_dirs, str):
             self.raw_dataset_dirs = [self.raw_dataset_dirs]
+
 
 @dataclass
 class BioSeqTokenizationConfig:
@@ -442,6 +450,7 @@ class BioSeqTokenizationConfig:
                 f"biomlm/datasets/{SPECIES.value}_{TOKEN_MODEL.value}_{VOCAB_SIZE}_{MAX_LEN}/SHUFFLED"
             )
 
+
 @dataclass
 class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
 
@@ -459,7 +468,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # there needs  steps = (n_whole_training_samples / (per_device_train_batch_size * n_GPU * gradient_accumulation_steps))
     # 1 epoch ~= almost 4533 steps (T2T training, 512 token_seq_len) 
     #
-    learning_rate: float = 6e-4   # 6e-4
+    learning_rate: float = 6e-4 if not SELF_PRETAINED_MODEL else 6e-5
     # linear: transformers.get_linear_schedule_with_warmup
     # cosine: transformers.get_cosine_schedule_with_warmup
     # cosine_with_restarts: transformers.get_cosine_with_hard_restarts_schedule_with_warmup
@@ -470,7 +479,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     # https://github.com/huggingface/transformers/blob/main/src/transformers/trainer_utils.py#L402 
     # lr_scheduler_type: str = "constant_with_warmup"
     # lr_scheduler_type: str = "linear"
-    lr_scheduler_type: str = "cosine_with_restarts"
+    lr_scheduler_type: str = "cosine" # "cosine_with_restarts" if not SELF_PRETAINED_MODEL else "linear"
     # NOTE `num_steps_per_cycle` used for computing the `num_cycles`  
     num_steps_per_cycle: int = 2000  # should be smaller, like 1000, during training to improve accuracy quickly. But larger during fine-tuning.
     ############
@@ -530,9 +539,9 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     #
     # The weight decay to apply (if not zero) to all layers 
     # except all bias and LayerNorm weights in AdamW optimizer.
-    weight_decay: float = 0.1          # 0.1 or 0.01
+    weight_decay: float = 0.01           # 0.1 or 0.01
     adam_beta1:float = 0.9              # default for AdamW
-    adam_beta2:float = 0.999            # default: 0.999 or 0.95
+    adam_beta2:float = 0.999             # default: 0.999 or 0.95
     adam_epsilon:float = 1e-8
 
     do_train: bool = True
@@ -568,7 +577,7 @@ class BioSeqMambaCausalLMTrainingConfig(TrainingArguments):
     sharded_ddp: bool = True   # speed up training under multi-GPU
 
     # https://huggingface.co/docs/transformers/main_classes/trainer#transformers.TrainingArguments.ddp_timeout
-    ddp_timeout: int = 60 * 60 * 1 # 1-hour
+    ddp_timeout: int = 60 * 60 * 2 # 2-hour
 
     # find_unused_parameters in DistributedDataParallel
     # NOTE
