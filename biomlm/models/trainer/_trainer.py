@@ -117,7 +117,7 @@ class BioSeqMambaCausalLMTrainer(Trainer):
         if self.lr_scheduler is None:
             n_warm_steps = self.args.get_warmup_steps(num_training_steps)
             _no_warm_steps = num_training_steps - n_warm_steps
-            if self.args.lr_scheduler_type.startswith("cosine"):
+            if self.args.lr_scheduler_type == "cosine_with_restarts":
                 _scheduler_specific_kwargs = {
                     "num_cycles": max(10, _no_warm_steps//self.args.num_steps_per_cycle)}
                     # "num_cycles": 2}
